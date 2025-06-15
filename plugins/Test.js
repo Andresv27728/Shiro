@@ -6,10 +6,9 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
 ╭━━ I N F O - B O T ━━
 ┃ Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
-┃ Tiempo activo: ${uptime}
+┃ Estado: Conectado
 ┃ Baileys: Multi device
 ┃ Base: Oficial
-┃ Registros: ${totalreg}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
