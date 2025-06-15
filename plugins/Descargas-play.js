@@ -2,11 +2,11 @@ import yts from 'yt-search';
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    throw `Ingresa un nombre o texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Haikyuu AMV`;
+    throw `💬 Ingresa un nombre o texto para buscar en YouTube.\n\n📌 *Ejemplo:* ${usedPrefix + command} Haikyuu AMV`;
   }
 
   try {
-    await m.react('🔍'); // Reacción de búsqueda
+    await m.react('🕒'); // Reacción de búsqueda
 
     const search = await yts(text);
     const videoInfo = search.all?.[0];
@@ -15,25 +15,36 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       throw '❌ No se encontraron resultados. Intenta con otro título.';
     }
 
-    const body = `*「 Resultados 」*
+    const body = `┏━━━━━━━━━━━━━━━━━⬣
+┃ 💎 *MAKIMA - PLAY* 💎
+┗━━━━━━━━━━━━━━━━━⬣
 
-「🩵」 *Título:* » ${videoInfo.title}
-「🩵」 *Canal:* » ${videoInfo.author.name}
-「🩵」 *Duración:* » ${videoInfo.timestamp}
-「🩵」 *Publicado:* » ${videoInfo.ago}
-「🩵」 *Vistas:* » ${videoInfo.views.toLocaleString()}
+🩵 *TÍTULO:* 
+» ${videoInfo.title}
 
-「💎」 *Selecciona una opción para descargar:*`;
+🩵 *CANAL:* 
+» ${videoInfo.author.name}
+
+🩵 *DURACIÓN:* 
+» ${videoInfo.timestamp}
+
+🩵 *PUBLICADO:* 
+» ${videoInfo.ago}
+
+🩵 *VISTAS:* 
+» ${videoInfo.views.toLocaleString()} 
+
+> 💎 *Selecciona una opción para descargar:*`;
 
     await conn.sendMessage(
       m.chat,
       {
         image: { url: videoInfo.thumbnail },
         caption: body,
-        footer: '💎 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ 🔥| ᴘʟᴀʏ',
+        footer: '🩷 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ ✨| ᴘʟᴀʏ',
         buttons: [
-          { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '★ 𝙰𝚄𝙳𝙸𝙾 ★' } },
-          { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '★ 𝚅𝙸𝙳𝙴𝙾 ★' } },
+          { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '🎧 𝗔𝗨𝗗𝗜𝗢 🎧' } },
+          { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '🎬 𝗩𝗜𝗗𝗘𝗢 🎬' } },
         ],
         viewOnce: true,
         headerType: 4,
@@ -43,7 +54,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
     await m.react('✅'); // Reacción de éxito
   } catch (e) {
-    await m.reply(`❌ Error: ${e.message}`);
+    await m.reply(`❌ *Error:* ${e.message}`);
     await m.react('✖️');
   }
 };
