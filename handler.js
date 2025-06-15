@@ -228,9 +228,15 @@ status: 0
 console.error(e)
 }
 
+// Combina todos los JIDs de dueños (s.whatsapp.net y lid)
+global.realOwners = [
+  ...global.owner.map(([n]) => n.replace(/[^0-9]/g, '') + '@s.whatsapp.net'),
+  ...global.owner_lid.map(([lid]) => lid + '@lid')
+]
+
 let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
-const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+const isROwner = global.realOwners.includes(m.sender)
 const isOwner = isROwner || m.fromMe
 const isMods = isROwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 const isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || _user.premium == true
