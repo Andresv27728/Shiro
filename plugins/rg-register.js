@@ -1,65 +1,120 @@
-//código creado x The Carlos 👑
-//no olvides dejar créditos 
-let handler = async (m, { text, usedPrefix, command }) => {
-  const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-  const regex = /^([a-zA-ZÀ-ÿñÑ\s]+)\.(\d{1,2})$/i
-  const user = global.db.data.users[m.sender]
+import axios from 'axios'
+import { createHash } from 'crypto'
+import PhoneNumber from 'awesome-phonenumber'
+import moment from 'moment-timezone'
 
-  if (user.registered === true) {
-    return m.reply(`⚠️ Ya estás registrado, guerrero del Reino.
-Usa *${usedPrefix}perfil* para ver tu grimorio.`)
-  }
+let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
+let handler = async function (m, { conn, text, args, usedPrefix, command }) {
+    let user = global.db.data.users[m.sender]
+    let name2 = conn.getName(m.sender)
+    let whe = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : m.sender
+    let perfil = await conn.profilePictureUrl(whe, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg')
 
-  if (!regex.test(text)) {
-    return m.reply(`⚠️ Formato incorrecto. Usa: *${usedPrefix + command} Nombre.Edad*\n\nEjemplo:\n*${usedPrefix + command} Asta.18*`)
-  }
+    if (user.registered === true) {
+        return m.reply(`《★》𝗬𝗮 𝘁𝗲 𝗲𝗻𝗰𝘂𝗲𝗻𝘁𝗿𝗮𝘀 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗱𝗼.\n\n¿𝗤𝘂𝗶𝗲𝗿𝗲 𝘃𝗼𝗹𝘃𝗲𝗿 𝗮 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗮𝗿𝘀𝗲?\n\n𝗨𝘀𝗲 𝗲𝘀𝘁𝗲 𝗰𝗼𝗺𝗮𝗻𝗱𝗼 𝗽𝗮𝗿𝗮 𝗲𝗹𝗶𝗺𝗶𝗻𝗮𝗿 𝘀𝘂 𝗿𝗲𝗴𝗶𝘀𝘁𝗿𝗼.\n*${usedPrefix}unreg*`)
+    }
+    
+    if (!Reg.test(text)) return m.reply(`《★》Eʟ ғᴏʀᴍᴀᴛᴏ ɪɴɢʀᴇsᴀᴅᴏ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴏ\n\nUsᴏ ᴅᴇʟ ᴄᴏᴍᴀɴᴅᴏ: ${usedPrefix + command} 𝗻𝗼𝗺𝗯𝗿𝗲.𝗲𝗱𝗮𝗱\nEᴊᴇᴍᴘʟᴏ : *${usedPrefix + command} ${name2}.14*`)
+    
+    let [_, name, splitter, age] = text.match(Reg)
+    if (!name) return m.reply('《★》Eʟ ɴᴏʍ𝗯𝗿𝗲 ɴᴏ ᴘᴜᴇᴅᴇ ᴇsᴛᴀʀ ᴠᴀᴄɪᴏ.')
+    if (!age) return m.reply('《★》Lᴀ ᴇᴅᴀᴅ ɴᴏ ᴘᴜᴇᴅᴇ ᴇsᴛᴀʀ ᴠᴀᴄɪ́ᴀ.')
+    if (name.length >= 100) return m.reply('《★》El nombre es demasiado largo.')
+    
+    age = parseInt(age)
+    if (age > 1000) return m.reply('《★》 *ʟᴀ ᴇᴅᴀᴅ ɪɴɢʀᴇsᴀᴅᴀ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴀ*')
+    if (age < 5) return m.reply('《★》 *ʟᴀ ᴇᴅᴀᴅ ɪɴɢʀᴇsᴀᴅᴀ ᴇs ɪɴᴄᴏʀʀᴇᴄᴛᴀ*')
+    
+    user.name = name.trim()
+    user.age = age
+    user.regTime = +new Date
+    user.registered = true
+    global.db.data.users[m.sender].money += 600
+    global.db.data.users[m.sender].estrellas += 10
+    global.db.data.users[m.sender].exp += 245
+    global.db.data.users[m.sender].joincount += 5    
 
-  let [_, name, age] = text.match(regex)
-  age = parseInt(age)
+    let who;
+    if (m.quoted && m.quoted.sender) {
+        who = m.quoted.sender;
+    } else {
+        who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+    }
+    
+    let sn = createHash('md5').update(m.sender).digest('hex')
+    let regbot = `┏━━━━━━━━━━━━━━━━🩵
+┃ 🌟 *🩵 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗢 - Mákima Bot 🩵*
+┗━━━━━━━━━━━━━━━━🩵\n`
 
-  if (age < 5 || age > 100) {
-    return m.reply(`⚠️ Edad no válida. Debe estar entre 5 y 100 años.`)
-  }
+regbot += `╭───────────────╮\n`
+regbot += `│ *👤 Nombre:* ${name}\n`
+regbot += `│ *🎂 Edad:* ${age} años\n`
+regbot += `╰───────────────╯\n`
 
-  // Datos aleatorios
-  const generos = ['Masculino', 'Femenino']
-  const paises = ['Clover', 'Diamond', 'Spade', 'Heart']
-  const afinidades = ['🔥 Fuego', '💧 Agua', '🌪️ Viento', '🌱 Tierra', '⚡ Rayo', '🌑 Oscuridad', '🌞 Luz']
-  const gender = generos[Math.floor(Math.random() * generos.length)]
-  const country = paises[Math.floor(Math.random() * paises.length)]
-  const afinidad = afinidades[Math.floor(Math.random() * afinidades.length)]
-  const nivelMagico = Math.floor(Math.random() * 10) + 1
-  const grimorioColor = gender === 'Masculino' ? '📕 Grimorio Carmesí' : '📘 Grimorio Índigo'
+regbot += `💠───────────────💠\n`
+regbot += `*🎁 𝗥𝗘𝗖𝗢𝗠𝗣𝗘𝗡𝗦𝗔𝗦:*\n`
+regbot += `🩵 15 Estrellas ✨\n`
+regbot += `🩵 5 MakimaCoins 💠\n`
+regbot += `🩵 245 Experiencia 📈\n`
+regbot += `🩵 12 Tokens 💰\n`
 
-  // Guardar datos
-  user.name = name.trim()
-  user.age = age
-  user.gender = gender
-  user.country = country
-  user.registered = true
-  user.regTime = +new Date()
-  user.afinidad = afinidad
-  user.nivelMagico = nivelMagico
+regbot += `💠───────────────💠\n`
+regbot += `📘 Usa *#perfil* para ver tu información detallada.\n`
+regbot += `┗━━━━━━━━━━━━━━━━━━🩵`
 
-  // ⚔️ ANIMACIÓN CORTA ESTILO BLACK CLOVER ⚔️
-  await m.reply(`🔮 *¡El maná responde a tu llamado, ${name.toUpperCase()}!*`)
-  await delay(1000)
+  await conn.sendMessage(m.chat, {
+        text: regbot,
+        contextInfo: {
+            externalAdReply: {
+                title: '⊱『🩵𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥🔥』⊰',
+                thumbnailUrl: 'https://files.catbox.moe/445fzg.jpg',
+                mediaType: 1,
+                renderLargerThumbnail: true
+            }
+        }
+    }, { quoted: m });
 
-  await m.reply(`📕 *Un grimorio desciende desde lo alto del castillo mágico...*`)
-  await delay(1000)
+/*    await m.react('📪')
+  await conn.sendMessage(m.chat, {
+           text: regbot, 
+        contextInfo: {
+            externalAdReply: {
+                showAdAttribution: true,                      
+                containsAutoReply: true,     
+                renderLargerThumbnail": true,
+                title: '⊱『✅𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥✅』⊰',  
+                body: dev,  
+                containsAutoReply: true,
+                showAdAttribution: true,
+                mediaType: 1, 
+                thumbnailUrl: 'https://cdnmega.vercel.app/media/J1ZzFDYC@wNBS8rKd-Ynw264guxMkO8Hx2CuTdAuyfE0ijGbS3Dw' }}}, {quoted: m})
+*/
 
-  await m.reply(`🔥 *¡Tu alma ha sido aceptada por las páginas del destino!*`)
-  await delay(1000)
+let chtxt = `👤 *𝖴𝗌𝖾𝗋* » ${m.pushName || 'Anónimo'}
+🗂 *𝖵𝖾𝗋𝗂𝖿𝗂𝖼𝖺𝖼𝗂𝗈́𝗇* » ${user.name}
+☁ *𝖤𝖽𝖺𝖽* » ${user.age} años
+☔ *𝖨𝖣 𝖽𝖾 𝗋𝖾𝗀𝗂𝗌𝗍𝗋𝗈* »
+⤷ ${sn}`;
 
-  await m.reply(`☠️ *𝑮𝒓𝒊𝒎𝒐𝒓𝒊𝒐 𝒐𝒃𝒕𝒆𝒏𝒊𝒅𝒐:* ${grimorioColor}
-🌌 *Afinidad:* ${afinidad}
-💠 *Nivel Mágico:* ${nivelMagico}
-🏰 *Reino:* ${country}`)
-  await delay(1000)
+    let channelID = '120363403676937867@newsletter';
+        await conn.sendMessage(channelID, {
+        text: chtxt,
+        contextInfo: {
+            externalAdReply: {
+                title: "【 🍫 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 🩵 】",
+                body: '🥳 ᴇɴ ᴍɪsʜɪ ʙᴏᴛ 🙊',
+                thumbnailUrl: perfil,
+                sourceUrl: redes,
+                mediaType: 1,
+                showAdAttribution: false,
+                renderLargerThumbnail: false
+            }
+        }
+    }, { quoted: null });
+};
 
-  await m.reply(`📖 *¡Tu grimorio está ligado a ti por el resto de tus días, guerrero del Reino!*`)
-  await m.react('⚔️')
-}
+handler.help = ['reg']
+handler.tags = ['rg']
+handler.command = ['verify', 'verificar', 'reg', 'register', 'registrar']
 
-handler.command ='reg', /^reg(ister|istrar)?$/i
 export default handler
