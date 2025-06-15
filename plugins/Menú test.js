@@ -100,18 +100,36 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
     let text = _text.replace(/%(\w+)/g, (_, key) => replace[key] || '')
 
-    // Barra de carga visual animada
-    for (let i = 0; i <= 100; i += 20) {
+    // 🔧 SOLUCIÓN: Enviar mensaje inicial y editarlo en lugar de spam
+    let loadingMessage = await conn.sendMessage(m.chat, {
+      text: `⚙️ Iniciando sistema...\n[▒▒▒▒▒▒▒▒▒▒] 0%`,
+      mentions: [m.sender]
+    }, { quoted: m })
+
+    // Barra de carga visual animada (editando el mismo mensaje)
+    for (let i = 20; i <= 100; i += 20) {
       let barLength = 10
       let filledBlocks = Math.floor((i / 100) * barLength)
       let emptyBlocks = barLength - filledBlocks
       let bar = '█'.repeat(filledBlocks) + '▒'.repeat(emptyBlocks)
+      
+      // Editar el mensaje existente en lugar de enviar uno nuevo
       await conn.sendMessage(m.chat, {
         text: `⚙️ Cargando sistema...\n[${bar}] ${i}%`,
-        mentions: [m.sender]
-      }, { quoted: m })
-      await new Promise(resolve => setTimeout(resolve, 500))
+        edit: loadingMessage.key // Clave para editar el mensaje
+      })
+      
+      await new Promise(resolve => setTimeout(resolve, 800))
     }
+
+    // Mensaje final de carga completada
+    await conn.sendMessage(m.chat, {
+      text: `✅ Sistema cargado completamente!\n[██████████] 100%`,
+      edit: loadingMessage.key
+    })
+
+    // Esperar un momento antes de mostrar el menú
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
     // 🔊 Audio de Makima (pendiente)
     // await conn.sendMessage(m.chat, {
@@ -132,6 +150,15 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
       viewOnce: true
     }, { quoted: m })
 
+    // Opcional: Eliminar el mensaje de carga después de mostrar el menú
+    setTimeout(async () => {
+      try {
+        await conn.sendMessage(m.chat, { delete: loadingMessage.key })
+      } catch (e) {
+        console.log('No se pudo eliminar el mensaje de carga:', e)
+      }
+    }, 2000)
+
   } catch (e) {
     console.error(e)
     conn.reply(m.chat, '❎ Error al generar el menú del sistema.', m)
@@ -149,4 +176,7 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, '0')).join(':')
-} 
+}
+
+// Codigo Mejorado por: SoyMaycol
+// GitHub: SoySapo6
