@@ -112,10 +112,10 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     await conn.sendMessage(m.chat, {
       image: { url: 'https://qu.ax/KnKzb.jpg' },
       caption: text,
-      footer: '💎Makima',
+      footer: '💎Nueva actualizacion (Selecciona una opcion)',
       buttons: [
-        { buttonId: `${_p}grupos`, buttonText: { displayText: '🩵 GRUPOS' }, type: 1 },
-        { buttonId: `${_p}code`, buttonText: { displayText: '💎 SERBOT' }, type: 1 }
+        { buttonId: `${_p}grupos`, buttonText: { displayText: '🩵 LINKS' }, type: 1 },
+        { buttonId: `${_p}code`, buttonText: { displayText: '💎 SER SUBBOT' }, type: 1 }
       ],
       viewOnce: true
     }, { quoted: m });
