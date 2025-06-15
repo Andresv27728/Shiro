@@ -1,63 +1,143 @@
-let handler = async (m, { conn, usedPrefix: _p }) => { try { let name = await conn.getName(m.sender)
+let handler = async (m, { conn, usedPrefix: _p }) => {
+  try {
+    let name = await conn.getName(m.sender);
 
-let text = `‼️ ¡Hola! *@${m.sender.split('@')[0]}* soy *Makima ( OficialBot ).*
+    let text = `‼️ ¡Hola! *@${m.sender.split('@')[0]}* soy *Makima (OficialBot)*
 
-╭━━I N F O-B O T━━ ┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪 ┃Tiempo activo: 00:01:26 ┃Baileys: Multi device. ┃Base: Oficial. ┃Registros: 63 ╰━━━━━━━━━━━━━
+╭━━ I N F O - B O T ━━
+┃ Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
+┃ Tiempo activo: 00:01:26
+┃ Baileys: Multi device
+┃ Base: Oficial
+┃ Registros: 63
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮INFO-USER ┃┈➤ Creador: Félix ┃┈➤ Cliente: ${name} ┃┈➤ Rango: Nuv ┃┈➤ Nivel: 0 ┃┈➤ País: Dominican Republic 🇩🇴 ╰━━━━━━━━━━━━━
+╭─❀ INFO-USER ❀─╮
+┃ ➤ Creador: Félix
+┃ ➤ Cliente: ${name}
+┃ ➤ Rango: Nuv
+┃ ➤ Nivel: 0
+┃ ➤ País: Dominican Republic 🇩🇴
+╰━━━━━━━━━━━━━
 
-➪ 𝗟𝗜𝗦𝗧𝗔 ➪  𝗗𝗘 ➪ 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
+➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮PRINCIPALES ┃┈➤ #estado ┃┈➤ #botreglas ┃┈➤ #menu ┃┈➤ #menu2 ┃┈➤ #uptime ┃┈➤ #menulista ╰━━━━━━━━━━━━━
+╭─❀ PRINCIPALES ❀─╮
+┃ ➤ #estado
+┃ ➤ #botreglas
+┃ ➤ #menu
+┃ ➤ #menu2
+┃ ➤ #uptime
+┃ ➤ #menulista
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮BUSCADORES ┃┈➤ #gitthubsearch ┃┈➤ #google [Búsqueda] ┃┈➤ #tiktoksearch ┃┈➤ #pinterest ┃┈➤ #imagen [querry] ╰━━━━━━━━━━━━━━━━━━
+╭─❀ BUSCADORES ❀─╮
+┃ ➤ #gitthubsearch
+┃ ➤ #google [texto]
+┃ ➤ #tiktoksearch
+┃ ➤ #pinterest
+┃ ➤ #imagen [query]
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮JUEGOS ┃┈➤ #abrazar ┃┈➤ #acertijo ┃┈➤ #agarrar ┃┈➤ #ahorcado ┃┈➤ #besar ┃┈➤ #acariciar ┃┈➤ #golpear ┃┈➤ #pregunta ┃┈➤ #reto ┃┈➤ #triste ┃┈➤ #reto ┃┈➤ #bot ┃┈➤ #love ┃┈➤ #consejo ┃┈➤ #dance ┃┈➤ #nombreninja ┃┈➤ #meme ┃┈➤ #dormir ┃┈➤ #rata ┃┈➤ #enamorada ┃┈➤ #gay ┃┈➤ #manco ┃┈➤ #apostar ┃┈➤ #piropo ┃┈➤ #sonrojarse ┃┈➤ #agarrar ╰━━━━━━━━━━━━━━━━━━
+╭─❀ JUEGOS ❀─╮
+┃ ➤ #abrazar #acertijo #agarrar #ahorcado #besar
+┃ ➤ #acariciar #golpear #pregunta #reto #triste
+┃ ➤ #bot #love #consejo #dance #nombreninja
+┃ ➤ #meme #dormir #rata #enamorada #gay #manco
+┃ ➤ #apostar #piropo #sonrojarse
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮WAIFU ┃┈➤ #robarpersonaje ┃┈➤ #obtenidos ┃┈➤ #sacar ┃┈➤ #guardar ┃┈➤ #carrw ┃┈➤ #confirmar ┃┈➤ #character ┃┈➤ #roll ┃┈➤ #top ╰━━━━━━━━━━━━━━━━━━
+╭─❀ WAIFU ❀─╮
+┃ ➤ #robarpersonaje #obtenidos #sacar #guardar #carrw
+┃ ➤ #confirmar #character #roll #top
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮REGISTROS ┃┈➤ #reg ┃┈➤ #unreg ┃┈➤ #profile ┃┈➤ #usuarios ╰━━━━━━━━━━━━━━━━━━
+╭─❀ REGISTROS ❀─╮
+┃ ➤ #reg #unreg #profile #usuarios
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮ECONOMIA ┃┈➤ #daily ┃┈➤ #bank ┃┈➤ #robar ┃┈➤ #robarxp ┃┈➤ #rob2 ┃┈➤ #levelup ┃┈➤ #lb ┃┈➤ #mine ┃┈➤ #retirar ┃┈➤ #trabajar ┃┈➤ #transferir ╰━━━━━━━━━━━━━━━━━━
+╭─❀ ECONOMÍA ❀─╮
+┃ ➤ #daily #bank #robar #robarxp #rob2 #levelup
+┃ ➤ #lb #mine #retirar #trabajar #transferir
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮DESCARGAS ┃┈➤ #fb ┃┈➤ #play ┃┈➤ #playvid ┃┈➤ #mediafire ┃┈➤ #apkmod ┃┈➤ #ytmp3doc ┃┈➤ #ytmp4doc ┃┈➤ #ig ┃┈➤ #gitclone ┃┈➤ #tiktok ┃┈➤ #spotify ┃┈➤ #tw ┃┈➤ #ytmp4 ┃┈➤ #imagen [querry] ╰━━━━━━━━━━━━━━━━━━
+╭─❀ DESCARGAS ❀─╮
+┃ ➤ #fb #play #playvid #mediafire #apkmod
+┃ ➤ #ytmp3doc #ytmp4doc #ig #gitclone #tiktok
+┃ ➤ #spotify #tw #ytmp4 #imagen [query]
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮GRUPOS ┃┈➤ #group abrir ┃┈➤ #group cerrar ┃┈➤ #delete ┃┈➤ #setppgroup ┃┈➤ #encuesta ┃┈➤ #rentar ┃┈➤ #kick ┃┈➤ #promote ┃┈➤ #demote ┃┈➤ #tagall ┃┈➤ #tag ┃┈➤ #invite ╰━━━━━━━━━━━━━━━━━━
+╭─❀ GRUPOS ❀─╮
+┃ ➤ #group abrir/cerrar #delete #setppgroup
+┃ ➤ #encuesta #rentar #kick #promote #demote
+┃ ➤ #tagall #tag #invite
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮STICKERS ┃┈➤ #wm [autor] ┃┈➤ #s ┃┈➤ #qc ┃┈➤ #toimg ╰━━━━━━━━━━━━━━━━━━
+╭─❀ STICKERS ❀─╮
+┃ ➤ #wm [autor] #s #qc #toimg
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮DATABASE ┃┈➤ #delvn ┃┈➤ #demsg ┃┈➤ #delimg ┃┈➤ #delsticker ┃┈➤ #infobot ╰━━━━━━━━━━━━━━━━━━
+╭─❀ DATABASE ❀─╮
+┃ ➤ #delvn #demsg #delimg #delsticker #infobot
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮EXPERIENCIA ┃┈➤ #buy ┃┈➤ #buyall ╰━━━━━━━━━━━━━━━━━━
+╭─❀ EXPERIENCIA ❀─╮
+┃ ➤ #buy #buyall
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮CONFIGURACIÓN ┃┈➤ #enable ┃┈➤ #disable ┃┈➤ #on ┃┈➤ #off ╰━━━━━━━━━━━━━━━━━
+╭─❀ CONFIGURACIÓN ❀─╮
+┃ ➤ #enable #disable #on #off
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮ANIME ┃┈➤ #toanime ┃┈➤ #tts ┃┈➤ #remini ┃┈➤ #enhance ┃┈➤ #hd ┃┈➤ #nuevafotochannel ┃┈➤ #nosilenciarcanal ┃┈➤ #silenciarcanal ┃┈➤ #seguircanal ┃┈➤ #inspect ┃┈➤ #infobot ┃┈➤ #readvo ╰━━━━━━━━━━━━━━━━━━
+╭─❀ ANIME ❀─╮
+┃ ➤ #toanime #tts #remini #enhance #hd
+┃ ➤ #nuevafotochannel #nosilenciarcanal
+┃ ➤ #silenciarcanal #seguircanal #inspect
+┃ ➤ #infobot #readvo
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮INFORMACIÓN ┃┈➤ #creador ┃┈➤ #owner ┃┈➤ #reportar ┃┈➤ #ping ┃┈➤ #links ╰━━━━━━━━━━━━━━━━━━
+╭─❀ INFORMACIÓN ❀─╮
+┃ ➤ #creador #owner #reportar #ping #links
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮CREADOR ┃┈➤ #addprem ┃┈➤ #copia ┃┈➤ #broadcastgroup ┃┈➤ #bcgb ┃┈➤ #bcgb2 ┃┈➤ #broadcast ┃┈➤ #bc ┃┈➤ #cheat ┃┈➤ #delprem ┃┈➤ #dsowner ┃┈➤ #fixmsgespera ┃┈➤ #get ┃┈➤ #prefix ┃┈➤ #reiniciar ┃┈➤ #saveplugin ┃┈➤ #update ┃┈➤ #resetpersonajes ╰━━━━━━━━━━━━━━━━━━
+╭─❀ CREADOR ❀─╮
+┃ ➤ #addprem #copia #broadcastgroup #bcgb
+┃ ➤ #bcgb2 #broadcast #bc #cheat #delprem
+┃ ➤ #dsowner #get #prefix #reiniciar #saveplugin
+┃ ➤ #update #resetpersonajes
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮DESARROLLADORES ┃┈➤ #autoadmin ┃┈➤ #banuser ┃┈➤ #unbanuser ┃┈➤ #banchat ┃┈➤ #unbanchat ┃┈➤ #ip ┃┈➤ #join ╰━━━━━━━━━━━━━━━━━━
+╭─❀ DESARROLLADORES ❀─╮
+┃ ➤ #autoadmin #banuser #unbanuser
+┃ ➤ #banchat #unbanchat #ip #join
+╰━━━━━━━━━━━━━
 
-.       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ ╭ֹ┈ ⵿❀⵿ ┈╮A - I ┃┈➤ #dalle ┃┈➤ #simi ┃┈➤ #ai ┃┈➤ #tovideo ┃┈➤ #togifaud ╰━━━━━━━━━━━━━━━━━━
+╭─❀ A - I ❀─╮
+┃ ➤ #dalle #simi #ai #tovideo #togifaud
+╰━━━━━━━━━━━━━
 
 > © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel`
 
+    await conn.sendMessage(m.chat, {
+      image: { url: 'https://files.catbox.moe/0ro3o9.jpg' },
+      caption: text,
+      footer: '💙makima💎',
+      buttons: [
+        { buttonId: `${_p}grupos`, buttonText: { displayText: '🌐 ＧＲＵＰＯＳ' }, type: 1 },
+        { buttonId: `${_p}code`, buttonText: { displayText: '🕹 ＳＥＲＢＯＴ' }, type: 1 }
+      ],
+      viewOnce: true
+    }, { quoted: m });
 
+  } catch (e) {
+    console.error(e);
+    conn.reply(m.chat, '❎ Error al mostrar el menú.', m);
+  }
+};
 
-await conn.sendMessage(m.chat, {
-  image: { url: 'https://files.catbox.moe/0ro3o9.jpg' },
-  caption: text,
-  footer: '💙makima💎',
-  buttons: [
-    { buttonId: `${_p}grupos`, buttonText: { displayText: '🌐 ＧＲＵＰＯＳ' }, type: 1 },
-    { buttonId: `${_p}code`, buttonText: { displayText: '🕹 ＳＥＲＢＯＴ' }, type: 1 }
-  ],
-  viewOnce: true
-}, { quoted: m })
+handler.help = ['menutest'];
+handler.tags = ['main'];
+handler.command = ['menutest'];
+handler.register = true;
 
-} catch (e) { console.error(e) conn.reply(m.chat, '❎ Error al mostrar el menú.', m) } }
-
-handler.help = ['menutest'] handler.tags = ['main'] handler.command = ['menutest'] handler.register = true export default handler
-
+export default handler;
