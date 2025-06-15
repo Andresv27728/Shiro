@@ -12,12 +12,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ┃ Registros: ${totalreg}
 ╰━━━━━━━━━━━━━
 
-╭─❀ INFO-USER ❀─╮
-┃ ➤ Cliente: ${name}
-┃ ➤ Rango: ${role}
-┃ ➤ Nivel: ${level}
-╰━━━━━━━━━━━━━
-
 ➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
 
 ╭─❀ PRINCIPALES ❀─╮
