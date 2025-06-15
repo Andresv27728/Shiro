@@ -15,9 +15,9 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       throw '❌ No se encontraron resultados. Intenta con otro título.';
     }
 
-    const body = `┏━━━━━━━━━━━━━━━━━⬣
-┃ 💎 *MAKIMA - PLAY* 💎
-┗━━━━━━━━━━━━━━━━━⬣
+    const body = `*┏━━━━━━━━━━━━━━━━━⬣*
+*┃ 💎 MAKIMA - PLAY 💎*
+*┗━━━━━━━━━━━━━━━━━⬣*
 
 🩵 *TÍTULO:* 
 » ${videoInfo.title}
@@ -43,8 +43,8 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
         caption: body,
         footer: '🩷 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ ✨| ᴘʟᴀʏ',
         buttons: [
-          { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '🎧 𝗔𝗨𝗗𝗜𝗢 🎧' } },
-          { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '🎬 𝗩𝗜𝗗𝗘𝗢 🎬' } },
+          { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: 'ᴀᴜᴅɪᴏ' } },
+          { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: 'ᴠɪᴅᴇᴏ' } },
         ],
         viewOnce: true,
         headerType: 4,
