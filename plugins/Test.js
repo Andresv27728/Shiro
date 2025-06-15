@@ -2,22 +2,21 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let name = await conn.getName(m.sender);
 
-    let text = `‼️ ¡Hola! *@${m.sender.split('@')[0]}* soy *Makima (OficialBot)*
+    let text = `¡Hola! @${userId.split('@')[0]} soy *Makima (OficialBot)*
 
 ╭━━ I N F O - B O T ━━
 ┃ Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
-┃ Tiempo activo: 00:01:26
+┃ Tiempo activo: ${uptime}
 ┃ Baileys: Multi device
 ┃ Base: Oficial
-┃ Registros: 63
+┃ Registros: ${totalreg}
 ╰━━━━━━━━━━━━━
 
 ╭─❀ INFO-USER ❀─╮
-┃ ➤ Creador: Félix
 ┃ ➤ Cliente: ${name}
-┃ ➤ Rango: Nuv
-┃ ➤ Nivel: 0
-┃ ➤ País: Dominican Republic 🇩🇴
+┃ ➤ Rango: ${role}
+┃ ➤ Nivel: ${level}
+┃ ➤ País: ${global.userNationality}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
@@ -119,12 +118,12 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 > © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel`
 
     await conn.sendMessage(m.chat, {
-      image: { url: 'https://files.catbox.moe/0ro3o9.jpg' },
+      image: { url: 'https://qu.ax/KnKzb.jpg' },
       caption: text,
-      footer: '💙makima💎',
+      footer: '💎Seleciona una opcion para mejor uso',
       buttons: [
-        { buttonId: `${_p}grupos`, buttonText: { displayText: '🌐 ＧＲＵＰＯＳ' }, type: 1 },
-        { buttonId: `${_p}code`, buttonText: { displayText: '🕹 ＳＥＲＢＯＴ' }, type: 1 }
+        { buttonId: `${_p}grupos`, buttonText: { displayText: '🩵 LINKS' }, type: 1 },
+        { buttonId: `${_p}code`, buttonText: { displayText: '💎 SER SUBBOT' }, type: 1 }
       ],
       viewOnce: true
     }, { quoted: m });
@@ -137,7 +136,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
 handler.help = ['menutest'];
 handler.tags = ['main'];
-handler.command = ['menutest'];
+handler.command = ['menu'];
 handler.register = true;
 
 export default handler;
