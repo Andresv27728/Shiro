@@ -17,7 +17,7 @@ const handler = async (m, {
 
   let vid = json.data[0];
 
-  let caption = `*${vid.title}
+  let caption = `*[🔥] ${vid.title}*
 
 > ✦ *Autor:* » ${vid.author}
 > ✰ *Vistas:* » ${vid.views.toLocaleString()}
