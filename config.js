@@ -48,7 +48,7 @@ global.blackJadibts = true
 //*─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─*
 
 global.packsticker = `♾ ━━━━━━━━\n├ ɓσƭ:\n├ ρяοριєταяιο:\n├ ƒєϲнα ∂є ϲяєαϲιόи:\n├ нοяα:\n♾━━━━━━━━`
-global.packname = `𝕭𝖑𝖆𝖈𝖐 𝕮𝖑𝖔𝖛𝖊𝖗 ☘`
+global.packname = `🩵 Makima 2.0 Bot 🩵`
 global.author = `♾━━━━━━━━\nMakima\nFélix Manuel\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n♾━━━━━━━━\n\n\n\nStickers Makima`;
 global.wm = '⏤͟͞ू⃪  ̸̷͢𝐌a͟𝐤i͟𝐦a͟ 2.0 𝐁𖹭t͟𑁯ᰍ';
 global.titulowm = '⏤͟͞ू⃪  ̸̷͢𝐌a͟𝐤i͟𝐦a͟ 2.0 𝐁𖹭t͟𑁯ᰍ';
