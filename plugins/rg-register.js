@@ -53,10 +53,10 @@ regbot += `╰───────────────╯\n`
 
 regbot += `💠───────────────💠\n`
 regbot += `*🎁 𝗥𝗘𝗖𝗢𝗠𝗣𝗘𝗡𝗦𝗔𝗦:*\n`
-regbot += `🩵 15 Estrellas ✨\n`
-regbot += `🩵 5 MakimaCoins 💠\n`
-regbot += `🩵 245 Experiencia 📈\n`
-regbot += `🩵 12 Tokens 💰\n`
+regbot += `= 🩵 15 Estrellas ✨\n`
+regbot += `= 🩵 5 MakimaCoins 💠\n`
+regbot += `= 🩵 245 Experiencia 📈\n`
+regbot += `=🩵 12 Tokens 💰\n`
 
 regbot += `💠───────────────💠\n`
 regbot += `📘 Usa *#perfil* para ver tu información detallada.\n`
