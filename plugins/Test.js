@@ -16,7 +16,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 ┃ ➤ Cliente: ${name}
 ┃ ➤ Rango: ${role}
 ┃ ➤ Nivel: ${level}
-┃ ➤ País: ${global.userNationality}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
