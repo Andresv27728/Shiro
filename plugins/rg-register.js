@@ -102,7 +102,7 @@ let chtxt = `👤 *𝖴𝗌𝖾𝗋* » ${m.pushName || 'Anónimo'}
         contextInfo: {
             externalAdReply: {
                 title: "【 🍫 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 🩵 】",
-                body: '🥳 ᴇɴ ᴍɪsʜɪ ʙᴏᴛ 🙊',
+                body: '🥳 ᴇɴ ᴍᴀᴋɪᴍᴀ ᴍᴅ 🩶',
                 thumbnailUrl: perfil,
                 sourceUrl: redes,
                 mediaType: 1,
