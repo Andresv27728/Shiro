@@ -11,27 +11,27 @@ async function handler(m, { conn: stars, usedPrefix }) {
   let totalUsers = users.length
   global.totalUsers = totalUsers
 
-  let packname = global.packname || '🤖 𝙱𝙾𝚃'
-  let title = `⭑『 𝗦𝗨𝗕𝗕𝗢𝗧𝗦 𝗖𝗢𝗡𝗘𝗖𝗧𝗔𝗗𝗢𝗦 』⭑`
+  let packname = global.packname || '🩵 𝙱𝙾𝚃'
+  let title = `⭑『 𝐓𝐎𝐓𝐀𝐋 𝐒𝐔𝐁𝐁𝐎𝐓𝐒』⭑`
   let barra = '━━━━━━━━━━━━━━━━'
 
   let listado = users.map((v, i) => {
     let jid = v.user.jid.replace(/[^0-9]/g, '')
-    let nombre = v.user.name || '👤 𝚂𝚄𝙱-𝙱𝙾𝚃'
-    return `╭╼⟪ ${packname} ⟫╾╮
-┃ #${i + 1} 👾 @${jid}
-┃ 🌐 Link: wa.me/${jid}
-┃ 🧠 Nombre: ${nombre}
-╰╼▣`
+    let nombre = v.user.name || 'SubBot'
+    return `╭╼⟪ MAKIMA 2.0 ⟫╾╮
+┃ #${i + 1} 💎 @${jid}
+┃ 💎 Link: wa.me/${jid}
+┃ 💎 Nombre: ${nombre}
+╰╼✰`
   }).join('\n\n')
 
-  let responseMessage = `╭═⬣ ${title}
+  let responseMessage = `╭═✰ ${title}
 ┃ 🔢 Total: *${totalUsers}*
-╰═${barra}⬣
+╰═${barra}✰
 
-${listado || '⚠️ No hay subbots activos en este momento.'}`.trim()
+${listado || '💎 En este momento no hay subbots activos.'}`.trim()
 
-  const imageUrl = 'https://files.catbox.moe/1jkle5.jpg' // ⚠️ Cambia esta URL si quieres usar otra imagen
+  const imageUrl = 'https://qu.ax/dXOUo.jpg' // ⚠️ Cambia esta URL si quieres usar otra imagen
 
   const fkontak = {
     key: {
