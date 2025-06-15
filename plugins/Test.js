@@ -2,7 +2,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let name = await conn.getName(m.sender);
 
-    let text = `¡Hola! @${userId.split('@')[0]} soy *Makima (OficialBot)*
+    let text = `💎 ¡Hola! @${userId.split('@')[0]} soy *Makima (OficialBot)*
 
 ╭━━ I N F O - B O T ━━
 ┃ Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
@@ -120,10 +120,10 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
     await conn.sendMessage(m.chat, {
       image: { url: 'https://qu.ax/KnKzb.jpg' },
       caption: text,
-      footer: '💎Seleciona una opcion para mejor uso',
+      footer: '💎Makima',
       buttons: [
-        { buttonId: `${_p}grupos`, buttonText: { displayText: '🩵 LINKS' }, type: 1 },
-        { buttonId: `${_p}code`, buttonText: { displayText: '💎 SER SUBBOT' }, type: 1 }
+        { buttonId: `${_p}grupos`, buttonText: { displayText: '🩵 GRUPOS' }, type: 1 },
+        { buttonId: `${_p}code`, buttonText: { displayText: '💎 SERBOT' }, type: 1 }
       ],
       viewOnce: true
     }, { quoted: m });
