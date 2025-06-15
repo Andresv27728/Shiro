@@ -44,7 +44,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
         footer: '🩷 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ ✨| ᴘʟᴀʏ',
         buttons: [
           { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: 'ᴀᴜᴅɪᴏ' } },
-          { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: 'ᴠɪᴅᴇᴏ' } },
+          { buttonId: `.play2 ${videoInfo.url}`, buttonText: { displayText: 'ᴠɪᴅᴇᴏ' } },
         ],
         viewOnce: true,
         headerType: 4,
@@ -59,7 +59,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   }
 };
 
-handler.command = ['play', 'playvid', 'play2'];
+handler.command = ['play', 'playvid'];
 handler.tags = ['downloader'];
 handler.group = true;
 handler.limit = 6;
