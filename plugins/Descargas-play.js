@@ -15,15 +15,15 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       throw '❌ No se encontraron resultados. Intenta con otro título.';
     }
 
-    const body = `*「🩵 Resultados 」*
+    const body = `*「 Resultados 」*
 
- *Título:* » ${videoInfo.title}
-🩵 *Canal:* » ${videoInfo.author.name}
-🩵 *Duración:* » ${videoInfo.timestamp}
-🩵 *Publicado:* » ${videoInfo.ago}
-🩵 *Vistas:* » ${videoInfo.views.toLocaleString()}
+「🩵」 *Título:* » ${videoInfo.title}
+「🩵」 *Canal:* » ${videoInfo.author.name}
+「🩵」 *Duración:* » ${videoInfo.timestamp}
+「🩵」 *Publicado:* » ${videoInfo.ago}
+「🩵」 *Vistas:* » ${videoInfo.views.toLocaleString()}
 
-💎 *Selecciona una opción para descargar:*`;
+「💎」 *Selecciona una opción para descargar:*`;
 
     await conn.sendMessage(
       m.chat,
