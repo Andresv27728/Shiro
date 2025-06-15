@@ -258,9 +258,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     try {
       const { audioBuffer, title } = await downloadTrack(track.url)
       await conn.sendMessage(m.chat, {
-        document: audioBuffer,
+        audio: audioBuffer,
         mimetype: "audio/mpeg",
         fileName: `${title}.mp3`,
+        ptt: true,
         caption: `🎶 *${track.title}*\n👤 *Artista:* ${track.artist}\n💽 *Álbum:* ${track.album || "Desconocido"}`,
         contextInfo: {
           isForwarded: true,
