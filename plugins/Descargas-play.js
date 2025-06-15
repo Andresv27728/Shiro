@@ -2,7 +2,7 @@ import yts from 'yt-search';
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    throw `✐ Ingresa un nombre o texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Haikyuu AMV`;
+    throw `Ingresa un nombre o texto para buscar en YouTube.\n> *Ejemplo:* ${usedPrefix + command} Haikyuu AMV`;
   }
 
   try {
@@ -15,22 +15,22 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       throw '❌ No se encontraron resultados. Intenta con otro título.';
     }
 
-    const body = `*「✧ Resultados 」*
+    const body = `*「🩵 Resultados 」*
 
-❀ *Título:* » ${videoInfo.title}
-❀ *Canal:* » ${videoInfo.author.name}
-❀ *Duración:* » ${videoInfo.timestamp}
-❀ *Publicado:* » ${videoInfo.ago}
-❀ *Vistas:* » ${videoInfo.views.toLocaleString()}
+ *Título:* » ${videoInfo.title}
+🩵 *Canal:* » ${videoInfo.author.name}
+🩵 *Duración:* » ${videoInfo.timestamp}
+🩵 *Publicado:* » ${videoInfo.ago}
+🩵 *Vistas:* » ${videoInfo.views.toLocaleString()}
 
-✦ *Selecciona una opción para descargar:*`;
+💎 *Selecciona una opción para descargar:*`;
 
     await conn.sendMessage(
       m.chat,
       {
         image: { url: videoInfo.thumbnail },
         caption: body,
-        footer: '🍨 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ 🎋| ᴘʟᴀʏ',
+        footer: '💎 ᴍᴀᴋɪᴍᴀ ʙᴏᴛ 🔥| ᴘʟᴀʏ',
         buttons: [
           { buttonId: `.ytmp3 ${videoInfo.url}`, buttonText: { displayText: '★ 𝙰𝚄𝙳𝙸𝙾 ★' } },
           { buttonId: `.ytmp4 ${videoInfo.url}`, buttonText: { displayText: '★ 𝚅𝙸𝙳𝙴𝙾 ★' } },
