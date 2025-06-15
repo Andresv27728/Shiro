@@ -21,7 +21,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 ❀ *Canal:* » ${videoInfo.author.name}
 ❀ *Duración:* » ${videoInfo.timestamp}
 ❀ *Publicado:* » ${videoInfo.ago}
-👁❀ *Vistas:* » ${videoInfo.views.toLocaleString()}
+❀ *Vistas:* » ${videoInfo.views.toLocaleString()}
 
 ✦ *Selecciona una opción para descargar:*`;
 
