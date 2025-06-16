@@ -2,7 +2,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
   try {
     let name = await conn.getName(m.sender);
 
-    let text = `¡Hola! ${username} soy *Makima 2.0 Bot*
+    let text = `¡Hola! @${who.replace(/@.+/, '')} soy *Makima 2.0 Bot*
 
 ╭━━ I N F O - B O T ━━
 ┃ Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
