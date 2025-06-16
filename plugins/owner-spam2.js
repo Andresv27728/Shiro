@@ -11,17 +11,17 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   const count = parseInt(countStr, 10);
 
   if (!groupLink.includes('chat.whatsapp.com')) {
-    return m.reply(`${emoji2} Proporcione un enlace válido del grupo.`);
+    return m.reply(`${emoji2} Proporciona un enlace válido del grupo.`);
   }
   if (isNaN(count) || count <= 0) {
-    return m.reply(`${emoji2} Especifique una cantidad válida de mensajes (mayor a 0).`);
+    return m.reply(`${emoji2} Específica una cantidad válida de mensajes (mayor a 0).`);
   }
 
   try {
     const code = groupLink.split('chat.whatsapp.com/')[1];
     const groupId = await conn.groupAcceptInvite(code);
 
-    m.reply(`${done} Unido al grupo con éxito. Iniciando spam de ${count} mensajes...`);
+    m.reply(`${done} Me uní al grupo con éxito. Iniciando spam de ${count} mensajes...`);
 
     for (let i = 0; i < count; i++) {
       await conn.sendMessage(groupId, { text: message });
