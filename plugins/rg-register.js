@@ -74,7 +74,7 @@ regbot += `┗━━━━━━━━━━━━━━━━━━🩵`
         }
     }, { quoted: m });
 
-/*    await m.react('📪')
+/*    await m.react('🩵')
   await conn.sendMessage(m.chat, {
            text: regbot, 
         contextInfo: {
@@ -90,19 +90,19 @@ regbot += `┗━━━━━━━━━━━━━━━━━━🩵`
                 thumbnailUrl: 'https://cdnmega.vercel.app/media/J1ZzFDYC@wNBS8rKd-Ynw264guxMkO8Hx2CuTdAuyfE0ijGbS3Dw' }}}, {quoted: m})
 */
 
-let chtxt = `👤 *𝖴𝗌𝖾𝗋* » ${m.pushName || 'Anónimo'}
+let chtxt = `👤 *𝖴𝗌uario* » ${m.pushName || 'Anónimo'}
 🗂 *𝖵𝖾𝗋𝗂𝖿𝗂𝖼𝖺𝖼𝗂𝗈́𝗇* » ${user.name}
-☁ *𝖤𝖽𝖺𝖽* » ${user.age} años
-☔ *𝖨𝖣 𝖽𝖾 𝗋𝖾𝗀𝗂𝗌𝗍𝗋𝗈* »
+💎 *𝖤𝖽𝖺𝖽* » ${user.age} años
+🩵 *𝖨𝖣 𝖽𝖾 𝗋𝖾𝗀𝗂𝗌𝗍𝗋𝗈* »
 ⤷ ${sn}`;
 
-    let channelID = '120363403676937867@newsletter';
+    let channelID = '120363402615935849@newsletter';
         await conn.sendMessage(channelID, {
         text: chtxt,
         contextInfo: {
             externalAdReply: {
-                title: "【 🍫 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 🩵 】",
-                body: '🥳 ᴇɴ ᴍᴀᴋɪᴍᴀ ᴍᴅ 🩶',
+                title: "【 🩵 𝐍𝐔𝐄𝐕𝐎 𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎 🩵 】",
+                body: '𝚁𝚎𝚐𝚒𝚜𝚝𝚛𝚘𝚜 𝙼𝚊𝚔𝚒𝚖𝚊 2.0 𝙱𝚘𝚝',
                 thumbnailUrl: perfil,
                 sourceUrl: redes,
                 mediaType: 1,
