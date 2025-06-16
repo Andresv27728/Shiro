@@ -1,5 +1,5 @@
-//código creado x The Carlos 👑
-//no olvides dejar créditos 
+//código creado x Félix Manuel 
+//Porfavor deja los créditos 
 
 let handler = async (m, { conn, args, participants }) => {
     let users = Object.entries(global.db.data.users).map(([key, value]) => ({
@@ -25,16 +25,16 @@ let handler = async (m, { conn, args, participants }) => {
         }
     }));
 
-    let text = `╭══ 🎖️ 𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐓𝐎𝐏 𝐄𝐗𝐏 🎖️══╮\n│\n`;
+    let text = `╭══ 𝐓𝐎𝐏 𝐔𝐒𝐔𝐀𝐑𝐈𝐎𝐒 ══╮\n│\n`;
 
     text += usersPage.map((user, i) => {
         let index = startIndex + i + 1;
         let name = participants.some(p => user.jid === p.jid) ? `${names[i]} wa.me/${user.jid.split('@')[0]}` : `@${user.jid.split('@')[0]}`;
-        return `│ ✦ ${index}. *${name}*\n│    ├ 💥 XP: *${user.exp || 0}*\n│    ├ 🎖 Nivel: *${user.level || 0}*\n│    └ 💰 Monedas: *${user.money || 0}*`;
+        return `│ ✰ ${index}. *${name}*\n│    ├ ✨ XP: *${user.exp || 0}*\n│    ├ 🎖 Nivel: *${user.level || 0}*\n│    └ Diamantss 💎: *${user.money || 0}*`;
     }).join('\n│\n');
 
     text += `\n╰════ 📄 Página *${page}* de *${totalPages}* ════╯`;
-    if (page < totalPages) text += `\n\n➡️ Usa *#lb ${page + 1}* para la siguiente página`;
+    if (page < totalPages) text += `\n\n→  Usa *#lb ${page + 1}* para la siguiente página`;
 
     await conn.reply(m.chat, text.trim(), m, {
         mentions: conn.parseMention(text)
