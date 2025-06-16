@@ -128,7 +128,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
 handler.help = ['menutest'];
 handler.tags = ['main'];
-handler.command = ['menutest'];
+handler.command = ['menu'];
 handler.register = true;
 
 export default handler;
