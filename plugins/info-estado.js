@@ -32,22 +32,22 @@ let handler = async (m, { conn, usedPrefix }) => {
   // Mensaje principal
   let blackclover= `
 ╭━━━━◇◇◇━━━━⬣
-┃ ⚙️  *SISTEMA DE ESTADO*
-┃ 🔰 *BLACK CLOVER BOT* ⚔️
+┃ ESTADO DE LA BOT 
+┃ MAKIMA 2.0 BOT
 ╰━━━━◇◇◇━━━━⬣
 
-👑 *Creador:* the-carlos
-📟 *Prefijo:* [ ${usedPrefix} ]
-📦 *Versión:* ${vs}
+🩵 *Creador:* Félix Manuel 
+🩵 *Prefijo:* [ ${usedPrefix} ]
+🩵 *Versión:* ${vs}
 
-📊 *Usuarios registrados:* ${totalreg}
-💬 *Total de chats:* ${chats.length}
-📢 *Grupos:* ${groupsIn.length}
-📩 *Privados:* ${chats.length - groupsIn.length}
-🧪 *SubBots activos:* ${totalUsers || '0'}
+🩵 *Usuarios registrados:* ${totalreg}
+🩵 *Total de chats:* ${chats.length}
+🩵 *Grupos:* ${groupsIn.length}
+🩵 *Privados:* ${chats.length - groupsIn.length}
+🩵 *SubBots activos:* ${totalUsers || '0'}
 
-🕰️ *Actividad:* ${muptime}
-🚀 *Velocidad:* ${(speed * 1000).toFixed(0) / 1000}s
+🩵 *Actividad:* ${muptime}
+🩵 *Velocidad:* ${(speed * 1000).toFixed(0) / 1000}s
 `.trim();
 
   await conn.sendFile(m.chat, pp, 'estado.jpg', blackclover, fkontak, null, rcanal);
