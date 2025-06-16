@@ -13,8 +13,6 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 
 ╭━━ I N F O - USER ━━
 ┃ Nombre: ${username}
-┃ Nivel: ${level}
-┃ Rango: ${role}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 𝗗𝗘 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦
