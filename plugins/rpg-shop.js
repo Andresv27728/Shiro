@@ -11,8 +11,8 @@ const handler = async (m, {conn, command, args}) => {
 ║    𝐍𝐨𝐭𝐚 𝐃𝐞 𝐏𝐚𝐠𝐨 
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
-║│ *Compra Nominal* : + ${count} 🪙
-║│ *Gastado* : -${xppercoin * count} XP
+║│ *Compra Nominal* : + ${count} 💎
+║│ *Gastado* : -${xppercoin * count} Exp ✨
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`, m);
   } else conn.reply(m.chat, `${emoji2} Lo siento, no tienes suficiente *XP* para comprar *${count}* ${moneda} 🪙`, m);
