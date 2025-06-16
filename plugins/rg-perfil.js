@@ -1,5 +1,5 @@
-//código creado x The Carlos 👑
-//no olvides dejar créditos 
+//código creado x Félix Manuel 
+//porfavor deja los créditos 
 
 import PhoneNumber from 'awesome-phonenumber'
 import fetch from 'node-fetch'
@@ -35,69 +35,50 @@ var handler = async (m, { conn }) => {
 
   // 🎬 Animación estilo grimorio
   let animacion = `
-〘 *Sistema Mágico * 〙📖
+〘 CARGANDO PERFIL 〙
 
-🔒 Detectando energía mágica...
-⏳ Analizando grimorio del portador...
-💠 Sincronizando con el maná...
+• La carga demora un poco.
+• Porfavor espra...
 
-✨✨✨ 𝙰𝙲𝚃𝙸𝚅𝙰𝙲𝙸𝙾́𝙽 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙰 ✨✨✨
+💎 Perfil reconocido con exito.
 
-*El grimorio se ha abierto...*
+*Enviando tu perfil...*
 `.trim()
 
   await m.reply(animacion)
 
   // 🧙 Usuarios normales
   let noprem = `
-『 ＧＲＩＭＯＲＩＯ ＢＡＳＥ 』📕
+『 PERFIL DEL USUARIO 』
 
-⚔️ *Portador:* ${username}
-🆔 *Identificador:* @${who.replace(/@.+/, '')}
-📜 *Registrado:* ${registered ? '✅ Activado' : '❌ No'}
+🩵 *usuario:* ${username}
+🩵 *tag:* @${who.replace(/@.+/, '')}
+🩵 *Registrado:* ${registered ? '✅ Activado' : '❌ No'}
 
-🧪 *Estado Mágico:*
-⚡ *Nivel:* ${level}
-✨ *Experiencia:* ${exp}
-📈 *Rango:* ${role}
-🔮 *Premium:* ❌ No activo
-
-📔 *Grimorio:* Básico de 1 hoja 📘
-🔒 *Elemento:* Desconocido
-
-📌 Mejora tu grimorio para desbloquear más magia...
-
-━━━━━━━━━━━━━━━━━━━━
+╭━━━━━━━━━━━━━╮
+┃💎 *Nivel:* ${level}
+┃💎 *Experiencia:* ${exp}
+┃💎 *Rango:* ${role}
+╰━━━━━━━━━━━━━
+> © Desarrollado por Félix 
 `.trim()
 
-  // 🔥 Usuarios Premium (Modo Demonio + Hechizos)
+  // 🔥 Usuarios Premium
   let prem = `
-👹〘 𝐌𝐎𝐃𝐎 𝐃𝐄𝐌𝐎𝐍𝐈𝐎: *𝐀𝐂𝐓𝐈𝐕𝐀𝐃𝐎* 〙👹
+🩵〘 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 〙🩵
 
 🌌 ＧＲＩＭＯＲＩＯ ５ＬＴ（Ａ』
 
-🧛 *Portador Élite:* ${username}
-🧿 *ID:* @${who.replace(/@.+/, '')}
-✅ *Registrado:* ${registered ? 'Sí' : 'No'}
-👑 *Rango:* 🟣 *Supremo Demoníaco*
+🩵 *Usuario:* ${username}
+🩵 *tag:* @${who.replace(/@.+/, '')}
+🩵 *Registrado:* ${registered ? '✅' : '❌'}
 
-🔮 *Energía Oscura:*
-⚡ *Nivel:* ${level}
-🌟 *Experiencia:* ${exp}
-🪄 *Rango Mágico:* ${role}
-💠 *Estado Premium:* ✅ ACTIVADO
-
-📕 *Grimorio:* ☯️ Anti-Magia de 5 hojas
-🔥 *Modo Especial:* ✦ *Despertar Oscuro de Asta*
-🧩 *Elemento:* Anti-Magia & Espada Demoníaca
-
-📜 *Hechizo Desbloqueado:* 
-❖ 「𝙱𝚕𝚊𝚌𝚔 the Legends  ⚡」
-   ↳ Daño masivo a bots enemigos.
-
-📔 *Nota:* Este usuario ha superado sus límites... ☄️
-
-🌌⟣═══════════════⟢🌌
+╭━━━━━━━━━━━━━╮
+┃💎 *Nivel:* ${level}
+┃💎 *Experiencia:* ${exp}
+┃💎 *Rango:* ${role}
+╰━━━━━━━━━━━━━
+> © powered by Félix Manuel 
 `.trim()
 
   await conn.sendFile(m.chat, pp, 'grimorio_demon.jpg', premium ? prem : noprem, m, undefined, { mentions: [who] })
