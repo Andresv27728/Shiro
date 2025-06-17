@@ -221,7 +221,7 @@ self: false,
 restrict: true,
 jadibotmd: true,
 antiPrivate: false,
-autoread: false,
+autoread: true,
 status: 0
 }
 } catch (e) {
