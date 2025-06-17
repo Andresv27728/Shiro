@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
 .       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
  ╭ֹ┈ ⵿❀⵿ ┈╮INFO-USER
 ┃┈➤ Creador: Félix 
-┃┈➤ Cliente: ${name}
+┃┈➤ Client
 ┃┈➤ Rango: Nuv
 ┃┈➤ Nivel: 0
 ┃┈➤ País: Dominican Republic 🇩🇴
