@@ -2,7 +2,7 @@ let handler = async (m, { conn }) => {
   try {
     const nombre = await conn.getName(m.sender);
     const saludo = `╭━━❰ 𝙈𝙀𝙉𝙐 ❱━━⬣
-┃🌟  ¡Hola ${nombre}!
+┃🌟  ¡Hola!
 ┃👋 Bienvenido/a al *Bot Oficial*
 ┃📜 Aquí tienes el menú:
 ╰━━━━━━━━━━━━━━⬣`;
