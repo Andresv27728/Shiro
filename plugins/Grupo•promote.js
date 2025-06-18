@@ -8,8 +8,8 @@ var number = text.split`@`[1]
 var number = text
 }
 
-if (!text && !m.quoted) return conn.reply(m.chat, `🚩 *Responda a un participante del grupo para asignarle admin.*`, m, rcanal)
-if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `✨️ *Debe de responder o mensionar a una persona para usar este comando.*`, m, fake)
+if (!text && !m.quoted) return conn.reply(m.chat, `🩵 *Mensiona a un miembro del grupo para darle admin.*`, m, rcanal)
+if (number.length > 13 || (number.length < 11 && number.length > 0)) return conn.reply(m.chat, `💎 *Debes de responder o mensionar a un miembro para usar este comando.*`, m, fake)
 
 try {
 if (text) {
@@ -22,17 +22,15 @@ var user = number + '@s.whatsapp.net'
 } catch (e) {
 } finally {
 conn.groupParticipantsUpdate(m.chat, [user], 'promote')
-conn.reply(m.chat, `✅ *Fue agregado como admin del grupo con exito.*`, m, fake)
+conn.reply(m.chat, `✅ *Fue puesto como admin del grupo con exito...*`, m, fake)
 }
 
 }
 handler.help = ['promote']
 handler.tags = ['grupo']
-handler.command = ['promote', 'promover']
+handler.command = ['promote','darpija', 'promover']
 
-handler.group = true
 handler.admin = true
 handler.botAdmin = true
-handler.fail = null
 
 export default handler
