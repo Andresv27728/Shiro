@@ -22,7 +22,7 @@ var user = number + '@s.whatsapp.net'
 } catch (e) {
 } finally {
 conn.groupParticipantsUpdate(m.chat, [user], 'demote')
-conn.reply(m.chat, `✅ *Fue quitado de admin com exito...*`, m, fake)
+conn.reply(m.chat, `✅ *Fue quitado de admin con exito...*`, m, fake)
 }
 
 }
