@@ -30,8 +30,8 @@ let crm3 = "SBpbmZvLWRvbmFyLmpz"
 let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = ""
 let drm2 = ""
-let rtx = "*MAKIMA 2.0 SUBBOTS*\n\n✰ Con otro celular o en la PC escanea este QR para convertirte en un *Sub-Bot* Temporal.\n\n💎 ¡Este código QR expira en 45 segundos!."
-let rtx2 = "*MAKIMA 2.0 SUBBOTS*\n\n✰ Usa este Código para convertirte en un *Sub-Bot* Temporal.\n\n✧ Este codigo solo es compatible en el número de la persona que lo acaba de solicitar."
+let rtx = "*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN SUBBOT*\n\n━⧽ MODO CODIGO QR\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n• En la Pc o tu otro teléfono escanea este qr.\n\n➪ Toca en dispositivos vinculados.\n\n➪ Selecciona Vincular con el número de teléfono.\n\n➪ Escanea el código QR.\n\n★ 𝗡𝗼𝘁𝗮: Este código expira después de los 45 segundos."
+let rtx2 = "*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN SUBBOT*\n\n━⧽ MODO CODIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha.\n\n➪ Toca en dispositivos vinculados.\n\n➪ Selecciona Vincular con el número de teléfono.\n\n➪ Pega el siguiente código que te enviaremos.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗈𝖽𝗂𝗀𝗈 𝗌𝗈𝗅𝗈 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́."
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -42,7 +42,7 @@ else global.conns = []
 let handler = async (m, { conn, args, usedPrefix, command, isOwner }) => {
 //if (!globalThis.db.data.settings[conn.user.jid].jadibotmd) return m.reply(`♡ Comando desactivado temporalmente.`)
 let time = global.db.data.users[m.sender].Subs + 120000
-if (new Date - global.db.data.users[m.sender].Subs < 120000) return conn.reply(m.chat, `${emoji} Debes esperar ${msToTime(time - new Date())} para volver a vincular un *Sub-Bot.*`, m)
+if (new Date - global.db.data.users[m.sender].Subs < 120000) return conn.reply(m.chat, `🕐 Debes esperar ${msToTime(time - new Date())} para volver a vincular un *Sub-Bot.*`, m)
 const subBots = [...new Set([...global.conns.filter((conn) => conn.user && conn.ws.socket && conn.ws.socket.readyState !== ws.CLOSED).map((conn) => conn)])]
 const subBotsCount = subBots.length
 if (subBotsCount === 30) {
@@ -109,7 +109,7 @@ printQRInTerminal: false,
 auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({level: 'silent'})) },
 msgRetry,
 msgRetryCache,
-browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['black-clover (Sub Bot)', 'Chrome','2.0.0'],
+browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['Makima (Sub Bot)', 'Chrome','2.0.0'],
 version: version,
 generateHighQualityLinkPreview: true
 };
@@ -122,14 +122,14 @@ msgRetry,
 msgRetryCache,
 version: [2, 3000, 1015901307],
 syncFullHistory: true,
-browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['black-clover-bot (Sub Bot)', 'Chrome','2.0.0'],
+browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['Makima-Bot (Sub Bot)', 'Chrome','2.0.0'],
 defaultQueryTimeoutMs: undefined,
 getMessage: async (key) => {
 if (store) {
 //const msg = store.loadMessage(key.remoteJid, key.id)
 //return msg.message && undefined
 } return {
-conversation: 'black-clover-Bot',
+conversation: 'Makkma-Bot',
 }}}*/
 
 let sock = makeWASocket(connectionOptions)
