@@ -30,7 +30,7 @@ let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://file
 let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
 const vid = ['https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4']
 
-let menu = `¡Hola! soy *Makima  ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
+let menu = `¡Hola! ${taguser} soy Makima 2.0 ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
 
 ╭━━I N F O-B O T━━
 ┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
@@ -43,7 +43,7 @@ let menu = `¡Hola! soy *Makima  ${(conn.user.jid == global.conn.user.jid ? '(Of
 ╭━━INFO USUARIO━╮
 ┃Nombre ${nombre}
 ┃Rango: ${role}
-┃Nivel ${level}
+┃Nivel: ${level}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 
