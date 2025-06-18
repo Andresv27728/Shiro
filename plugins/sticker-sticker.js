@@ -38,9 +38,9 @@ else return m.reply(`🩵 El url es incorrecto`)
 console.error(e)
 if (!stiker) stiker = e
 } finally {
-if (stiker) conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: packname, body: `⏤͟͞ू⃪black-clover࿐`, mediaType: 2, sourceUrl: redes, thumbnail: icons}}}, { quoted: m })
+if (stiker) conn.sendFile(m.chat, stiker, 'sticker.webp', '',m, true, { contextInfo: { 'forwardingScore': 200, 'isForwarded': false, externalAdReply:{ showAdAttribution: false, title: packname, body: `🩵 ̸̷᮫໊᷐͢᷍ᰍ MAKIMA 2.0`, mediaType: 2, sourceUrl: redes, thumbnail: icons}}}, { quoted: m })
 
-else return conn.reply(m.chat, '🩵 *_Debes responder a un Video, Foto o Gif, para generar gu sticker._*', m, rcanal)
+else return conn.reply(m.chat, '🩵 *_Debes responder a un Video, Foto o Gif, para generar su sticker._*', m, rcanal)
 
 
 }}
