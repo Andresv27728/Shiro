@@ -1,8 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Código creado por @gata_dios - Modificado por the Carlos 
+# Código creado por @gata_dios - Modificado por Félix Manuel 
 
 # Comandos sugeridos en caso de fallo
-COMANDOS="pkg install git -y\npkg install nodejs -y\npkg install ffmpeg -y\npkg install imagemagick -y\npkg install -y yarn\ngit clone https://github.com/thecarlos19/black-clover-MD\ncd black-clover-MD\nyarn install\nnpm install\nnpm start"
+COMANDOS="pkg install git -y\npkg install nodejs -y\npkg install ffmpeg -y\npkg install imagemagick -y\npkg install -y yarn\ngit clone https://github.com/mantis-has/Makima\ncd Makima\nyarn install\nnpm install\nnpm start"
 
 # Verifica conexión a internet
 ping -c 1 google.com &>/dev/null
@@ -73,11 +73,11 @@ else
 fi
 
 # Clonar repositorio
-echo -e "\033[1;35mClonando el repositorio de Black Clover-MD...\033[0m"
-git clone https://github.com/thecarlos19/black-clover-MD.git
+echo -e "\033[1;35mClonando el repositorio de Makima...\033[0m"
+git clone https://github.com/mantis-has/Makima.git
 echo -e "\033[01;32mClonación completada correctamente.\033[0m"
 
-cd black-clover-MD || { echo "No se pudo entrar al directorio black-clover-MD"; exit 1; }
+cd Makima || { echo "No se pudo entrar al directorio Makima"; exit 1; }
 
 # Instalar dependencias del proyecto
 echo -e "\033[0;34mInstalando dependencias del proyecto con yarn...\033[0m"
@@ -104,20 +104,20 @@ clear
 echo -e "\e[36m
 ┏━━━━━━━━━⪩
 ┃˚₊ · ͟͟͞͞➳❥ 𝐈𝐍𝐅𝐎𝐑𝐌𝐀𝐂𝐈𝐎́𝐍
-┃⏤͟͟͞͞ Black Clover - MD
+┃⏤͟͟͞͞ Makima-Bot-MD
 ┗━━━━━━━━━⪩
 
 ✰ Mode by:
-» the Carlos 
+» Félix Manuel 
 ✰ Créditos:
-» devdiego 
+» Félix Manuel 
 ✰ GitHub:
-» https://github.com/Dev-Diego
+» https://github.com/mantis-has
 ✰ Número del creador del bot:
-» +52 5544876071
+» +18293142989
 
 𝐆 𝐑 𝐀 𝐂 𝐈 𝐀 𝐒, 𝐏 𝐎 𝐑, 𝐏 𝐑 𝐄 𝐅 𝐄 𝐑 𝐈 𝐑 𝐍 𝐎 𝐒\n\e[0m"
 
 # Inicio
-echo -e "\033[01;32mIniciando Black Clover Bot...\033[0m"
+echo -e "\033[01;32mIniciando MakimaV2...\033[0m"
 npm start
