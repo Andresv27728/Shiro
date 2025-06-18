@@ -47,9 +47,9 @@ global.blackJadibts = true
 
 //*─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─✞─ׄ─ׅ─ׄ─*
 
-global.packsticker = `♾ ━━━━━━━━\n├ ɓσƭ:\n├ ρяοριєταяιο:\n├ ƒєϲнα ∂є ϲяєαϲιόи:\n├ нοяα:\n♾━━━━━━━━`
+global.packsticker = `♾━━━━━━━━♾\nBot: Makima 2.0\n\n|Creador: Felix Manuel♾━━━━━━━━♾\n`
 global.packname = `🩵 Makima 2.0 Bot 🩵`
-global.author = `♾━━━━━━━━\nMakima\nFélix Manuel\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n♾━━━━━━━━\n\n\n\nStickers Makima`;
+global.author = `Stickers Makima`;
 global.wm = '⏤͟͞ू⃪  ̸̷͢𝐌a͟𝐤i͟𝐦a͟ 2.0 𝐁𖹭t͟𑁯ᰍ';
 global.titulowm = '⏤͟͞ू⃪  ̸̷͢𝐌a͟𝐤i͟𝐦a͟ 2.0 𝐁𖹭t͟𑁯ᰍ';
 global.igfg = '𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪'
@@ -64,7 +64,7 @@ global.namechannel = '⏤͟͞ू⃪  ̸̷͢𝐌a͟𝐤i͟𝐦a͟ 𝐂𝐡a͟𝐧
 global.moneda = 'MakiCoins'
 
 //• ↳ ◜𝑳𝑰𝑵𝑲𝑺  𝑫𝑬𝒀𝑴𝑶𝑶𝑵 𝑪𝑳𝑼𝑩◞ • 🩵
-global.gp4 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' //Grupo Oficial De black clover 
+global.gp4 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' //Grupo Oficial De Makima 
 global.gp1 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' //Grupo 2
 global.gp2 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r'//
 global.channel = 'https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l' //Canal Oficial
