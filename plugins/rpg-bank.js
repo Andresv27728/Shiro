@@ -1,9 +1,9 @@
 
-// Respeten credito xddddd (ratas inmundas)
+// Codigo Creado por felix2-bup 
 import fetch from 'node-fetch'
 import db from '../lib/database.js'
 
-const img = 'https://qu.ax/XQguf.jpg'
+const img = 'https://qu.ax/dXOUo.jpg'
 
 function obtenerRango(level) {
   if (level >= 100) return 'SUPREMO'
@@ -33,7 +33,7 @@ let handler = async (m, { conn }) => {
   let nombreParaMostrar = who === m.sender ? name : '@' + who.split('@')[0]
 
   let txt = `
-🩵━━━━━━━━━━━━━━━━━━🩵
+╭━━━━━━━━━━━━━━━━━━╮
 ┃𝗘𝗖𝗢𝗡𝗢𝗠𝗜𝗔 𝗗𝗘𝗟 𝗨𝗦𝗨𝗔𝗥𝗜𝗢: 
 ╰━─━─━─≪≪✠≫≫─━─━─━╯
 🩵𝖭𝗈𝗆𝖻𝗋𝖾: ${nombreParaMostrar}
@@ -41,9 +41,9 @@ let handler = async (m, { conn }) => {
 🩵𝖭𝗂𝗏𝖾𝗅: ${user.level}
 🩵𝖱𝖺𝗇𝗀𝗈: ${rangoMagico}
 🩵𝖥𝖾𝖼𝗁𝖺: ${new Date().toLocaleString('es-ES')}
-🩵━━━━━━━━━━━━━━━━━━🩵
+╰━━━━━━━━━━━━━━━━━━
 > © Desarrollado por Félix 
-🩵━━━━━━━━━━━━━━━━━━🩵`.trim()
+╰━━━━━━━━━━━━━━━━━━`.trim()
 
   await conn.sendFile(
     m.chat,
