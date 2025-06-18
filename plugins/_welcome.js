@@ -21,29 +21,27 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (m.messageStubType == 27) {
     const bienvenida = `
-🟣 ASTA-BOT v2077 — Bienvenido
+💎 WELCOME - USER 💎
 
-👤 Usuario: ${user}
-📍 Grupo: ${groupMetadata.subject}
-🔗 Estado: Conectado
-👥 Miembros: ${total}
+🩵 Usuario: ${user}
+🩵 Grupo: ${groupMetadata.subject}
+🩵 Miembros: ${total}
 
 ⌬ Usa *#help* para ver los comandos disponibles
 `
-    await conn.sendMini(m.chat, '🚀 CONEXIÓN ESTABLECIDA', 'ASTA-BOT', bienvenida, img, img, null, contacto)
+    await conn.sendMini(m.chat, 'Bienvenido ${user}', '${groupMetadata.subject}', bienvenida, img, img, null, contacto)
   }
 
   if ([28, 32].includes(m.messageStubType)) {
     const despedida = `
-🔻 ASTA-BOT v2077 — Nunca vuelvas
+💎 ADIOS - USER 💎
 
-👤 Usuario: ${user}
-📍 Grupo: ${groupMetadata.subject}
-🔌 Estado: Desconectado
-👥 Miembros: ${total}
+🩵 Usuario: ${user}
+🩵 Grupo: ${groupMetadata.subject}
+🩵 Miembros: ${total}
 
-⌬ Datos eliminados correctamente
+⌬ Espero y vuelvas después.
 `
-    await conn.sendMini(m.chat, '⚠️ DESCONECTADO DEL SISTEMA', 'ASTA-BOT', despedida, img, img, null, contacto)
+    await conn.sendMini(m.chat, 'Se fue ${user}', '${groupMetadata.subject}', despedida, img, img, null, contacto)
   }
 }
