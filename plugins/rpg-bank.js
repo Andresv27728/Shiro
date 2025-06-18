@@ -6,15 +6,15 @@ import db from '../lib/database.js'
 const img = 'https://qu.ax/XQguf.jpg'
 
 function obtenerRango(level) {
-  if (level >= 100) return '🌟 Rey Mago'
-  if (level >= 70) return '👑 Mago Real'
-  if (level >= 50) return '⚔️ Capitán de Escuadrón'
-  if (level >= 40) return '🔮 Alto Mago'
-  if (level >= 30) return '🥇 Caballero Mágico de Oro'
-  if (level >= 20) return '🥈 Caballero Mágico de Plata'
-  if (level >= 10) return '🥉 Caballero Mágico de Bronce'
-  if (level >= 5) return '🌱 Mago Novato'
-  return '📘 Aprendiz de Grimorio'
+  if (level >= 100) return 'SUPREMO'
+  if (level >= 70) return '👑 REY DEL CAMINO'
+  if (level >= 50) return '⚔️ JEFE DE GUARDIA'
+  if (level >= 40) return '♥️ASTENADOR'
+  if (level >= 30) return '🥇 Caballero Dorado'
+  if (level >= 20) return '🥈 Caballero de Plata'
+  if (level >= 10) return '🥉 Caballero de Bronce'
+  if (level >= 5) return '🌱 Novato'
+  return '♥️ Aprendiz del camino'
 }
 
 let handler = async (m, { conn }) => {
@@ -23,7 +23,7 @@ let handler = async (m, { conn }) => {
   if (who === conn.user.jid) return m.react('✖️')
 
   if (!global.db.data.users[who]) {
-    return m.reply(`📕 *El grimorio de este usuario aún no ha sido registrado en el Reino Mágico.*`)
+    return m.reply(`🩵 *Este usuario no está registrado.*`)
   }
 
   let user = global.db.data.users[who]
@@ -33,13 +33,17 @@ let handler = async (m, { conn }) => {
   let nombreParaMostrar = who === m.sender ? name : '@' + who.split('@')[0]
 
   let txt = `
-𝙂𝙍𝙄𝙈𝙊𝙍𝙄𝙊 𝙁𝙄𝙉𝘼𝙉𝘾𝙄𝙀𝙍𝙊 👑
-🧙‍♂️ ᴍᴀɢᴏ: ${nombreParaMostrar}
-📚 ᴇxᴘᴇʀɪᴇɴᴄɪᴀ ᴀᴄᴜᴍᴜʟᴀᴅᴀ: ${user.exp}
-📈 ɴɪᴠᴇʟ ᴅᴇ ᴍᴀɢɪᴀ: ${user.level}
-🎖️ ʀᴀɴɢᴏ ᴍáɢɪᴄᴏ: ${rangoMagico}
-🕰️ ꜰᴇᴄʜᴀ: ${new Date().toLocaleString('es-ES')}
-📘━━━━━━━━━━━━━━━━━━📘`.trim()
+🩵━━━━━━━━━━━━━━━━━━🩵
+┃𝗘𝗖𝗢𝗡𝗢𝗠𝗜𝗔 𝗗𝗘𝗟 𝗨𝗦𝗨𝗔𝗥𝗜𝗢: 
+╰━─━─━─≪≪✠≫≫─━─━─━╯
+🩵𝖭𝗈𝗆𝖻𝗋𝖾: ${nombreParaMostrar}
+🩵𝖤𝗑𝗉: ${user.exp}
+🩵𝖭𝗂𝗏𝖾𝗅: ${user.level}
+🩵𝖱𝖺𝗇𝗀𝗈: ${rangoMagico}
+🩵𝖥𝖾𝖼𝗁𝖺: ${new Date().toLocaleString('es-ES')}
+🩵━━━━━━━━━━━━━━━━━━🩵
+> © Desarrollado por Félix 
+🩵━━━━━━━━━━━━━━━━━━🩵`.trim()
 
   await conn.sendFile(
     m.chat,
@@ -56,7 +60,7 @@ let handler = async (m, { conn }) => {
 
 handler.help = ['bank', 'banco']
 handler.tags = ['rpg']
-handler.command = ['bank', 'banco']
+handler.command = ['bank', 'bal']
 handler.register = true
 
 export default handler
