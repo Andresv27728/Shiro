@@ -29,7 +29,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
 ⌬ Usa *#help* para ver los comandos disponibles
 `
-    await conn.sendMini(m.chat, 'Bienvenido ${user}', '${groupMetadata.subject}', bienvenida, img, img, null, contacto)
+    await conn.sendMini(m.chat, 'Bienvenido a este grupo', 'Makima 2.0 Bot', bienvenida, img, img, null, contacto)
   }
 
   if ([28, 32].includes(m.messageStubType)) {
@@ -42,6 +42,6 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
 ⌬ Espero y vuelvas después.
 `
-    await conn.sendMini(m.chat, 'Se fue ${user}', '${groupMetadata.subject}', despedida, img, img, null, contacto)
+    await conn.sendMini(m.chat, 'Ojala te jodas gay', 'Makima 2.0 Bot', despedida, img, img, null, contacto)
   }
 }
