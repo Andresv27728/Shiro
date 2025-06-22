@@ -8,9 +8,9 @@ const handler = async (m) => {
       '💋 Tócame... digo... ¡actívame!'
     ],
     épico: [
-      '⚔️ ¡No tengo magia, pero tengo agallas!',
-      '☘️ *Modo Batalla* activado. ¿Estás listo?',
-      '💥 ¡Voy a romper mis límites aquí y ahora!'
+      '🩵 ¡No tengo magia, pero tengo agallas!',
+      '🩵 *Modo Batalla* activado. ¿Estás listo?',
+      '🩵 ¡Voy a romper mis límites aquí y ahora!'
     ],
     enojado: [
       '😡 ¡Te dije que no me molestaras!',
