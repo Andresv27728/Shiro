@@ -31,26 +31,26 @@ export async function before(m, { conn, isOwner, isROwner }) {
 
       if (advertencias >= 3) {
         await m.reply(`
-🟥 ⛔ *[BLOQUEO ACTIVADO]* ⛔ 🟥
+🩵 *[BLOQUEO ACTIVADO]* 🩵
 ══════════════════════
-🛡️ *Seguridad CyberCore™ activada*
-📛 Usuario: ${numero}
+🩵 *Seguridad CyberCore™ activada*
+🩵 Usuario: ${numero}
 💬 Motivo: Texto no permitido (3/3)
 
-🧨 Ejecución del protocolo [AUTOBLOCK-ΣX3]...
+🩵 Ejecución del protocolo [AUTOBLOCK-ΣX3]...
 🔒 Estado: *USUARIO BLOQUEADO*
 
 🔗 Acceso finalizado.
 ══════════════════════`);
         await conn.updateBlockStatus(m.chat, 'block');
-        console.log(`[⛔ BLOQUEADO PERMANENTE] ${numero}`);
+        console.log(`[ BLOQUEADO PERMANENTE] ${numero}`);
         delete global.advertenciasArabes[numero];
       } else {
         await m.reply(`
-⚠️ ⚠️ *[ADVERTENCIA ${advertencias}/3]* ⚠️ ⚠️
+⚠️ *[ADVERTENCIA ${advertencias}/3]* ⚠️
 ══════════════════════
-🚫 Sistema de defensa activado.
-💬 Has enviado texto no permitido.
+🩵 Sistema de defensa activado.
+🩵 Has enviado texto no permitido.
 
 📎 Solo comandos aceptados:
 Ej: */menu*, */help*, */code* !info
