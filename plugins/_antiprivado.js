@@ -1,5 +1,5 @@
-//código creado x The Carlos 
-//no olviden dejar créditos 
+//código creado por felix
+//porfavor deja los créditos 
 const TIEMPO_BLOQUEO_MS = 2 * 24 * 60 * 60 * 1000; // 2 días
 
 export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
@@ -32,7 +32,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }
         user.warnPrivado = 0;
 
         await conn.sendMessage(m.chat, {
-          text: `🔓 *¡El sello ha sido roto!*\n\n🌠 @${m.sender.split('@')[0]}, tus cadenas se han desvanecido...\n✨ Puedes volver a usar mis poderes.`,
+          text: `¡Hey! *Se acabo el tiempo.*\n\n🩵 @${m.sender.split('@')[0]}, ya usaras a makimaBotMD...\n\n✨ Puedes volver a usar mis cmds.`,
           mentions: [m.sender]
         });
       } else {
@@ -47,16 +47,14 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }
 
       if (user.warnPrivado >= 3) {
         const msgBloqueo = `
-💀 *SENTENCIA CÓSMICA ACTIVADA* 💀
+🩵 *MODO ANTI PRIVADO ACTIVO* 🩵
 ━━━━━━━━━━━━━━━━━━━━━━
-👁️ Usuario: @${m.sender.split('@')[0]}
-📛 Has accedido al grimorio sin autorización.
+🩵 Usuario: @${m.sender.split('@')[0]}
+🩵 Escribiste al bot por privado.
 
-🔒 Estado: *BLOQUEADO POR 2 DÍAS*
-🕰️ Todos los canales mágicos han sido sellados.
-
-💡 Busca redención en el gremio:
-🌐 ${gp1}
+⚡ Estado: *BLOQUEADO POR 2 DÍAS*
+⚡ Puedes usarlo en el grupo oficial:
+🩵 ${gp1}
 ━━━━━━━━━━━━━━━━━━━━`.trim();
 
         await m.reply(msgBloqueo, false, { mentions: [m.sender] });
@@ -67,15 +65,15 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }
         return false;
       } else {
         const msgAdvertencia = `
-⚠️ *¡ACCESO RESTRINGIDO!* ⚠️
+⚠️ *¡ MODO PRIVADO ACTIVÓ!* ⚠️
 ━━━━━━━━━━━━━━━━━━━
-🧛‍♂️ @${m.sender.split('@')[0]}, no puedes contactar al grimorio sagrado por privado.
+🩵 @${m.sender.split('@')[0]}, no puedes contactar al bot al privado.
 
-🔁 Advertencia ${user.warnPrivado}/3
-🕳️ Al tercer intento, serás sellado por 2 días (privado + grupos).
+⚡ Advertencia ${user.warnPrivado}/3
+⚡ Al tercer intento, serás sellado por 2 días (privado + grupos).
 
-📜 Únete al gremio oficial:
-🌐 ${gp1}
+🩵 Únete al grupo oficial:
+💢 ${gp1}
 ━━━━━━━━━━━━━━━━━━`.trim();
 
         await m.reply(msgAdvertencia, false, { mentions: [m.sender] });
