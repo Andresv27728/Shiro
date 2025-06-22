@@ -30,7 +30,7 @@ const handler = async (m) => {
 
   const frase = respuestas[modoReal][Math.floor(Math.random() * respuestas[modoReal].length)];
 
-  m.reply(`🎙️ *Asta (${modoReal.toUpperCase()})*: ${frase}`);
+  m.reply(`🎙️ *maki (${modoReal.toUpperCase()})*: ${frase}`);
 };
 
 handler.command = ['asta', 'astahabla', 'asta-habla'];
