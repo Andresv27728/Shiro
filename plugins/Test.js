@@ -1,119 +1,58 @@
-let handler = async (m, { conn, args }) => {
-  let userId = m.mentionedJid?.[0] || m.sender
-  let user = global.db.data.users[userId]
-  let name = conn.getName(userId)
-  let _uptime = process.uptime() * 1000
-  let uptime = clockString(_uptime)
-  let totalreg = Object.keys(global.db.data.users).length
+`.trim();
 
-  // Saludo decorado
-  let hour = new Intl.DateTimeFormat('es-PE', {
-  hour: 'numeric',
-  hour12: false,
-  timeZone: 'America/Lima'
-}).format(new Date())
-  
-  let saludo = hour < 6 ? "🌌 Buenas madrugadas" :
-               hour < 12 ? "🌅 Buenos días" :
-               hour < 18 ? "🌄 Buenas tardes" :
-               "🌃 Buenas noches"
+    // Mensaje de inicio de envío del menú
+    await conn.reply(m.chat, '*ꪹ͜𓂃⌛͡𝗘𝗻𝘃𝗶𝗮𝗻𝗱𝗼 𝗠𝗲𝗻𝘂 𝗱𝗲𝗹 𝗕𝗼𝘁....𓏲੭*', fkontak, { 
+        contextInfo: { 
+            forwardingScore: 2022, 
+            isForwarded: true, 
+            externalAdReply: {
+                title: packname,
+                body: '¡explora la gran variedad de comandos!',
+                sourceUrl: redes,
+                thumbnail: icons 
+            }
+        }
+    });
 
-  // Agrupar comandos por categorías
-  let categories = {}
-  for (let plugin of Object.values(global.plugins)) {
-    if (!plugin.help || !plugin.tags) continue
-    for (let tag of plugin.tags) {
-      if (!categories[tag]) categories[tag] = []
-      categories[tag].push(...plugin.help.map(cmd => `#${cmd}`))
-    }
-  }
+    await m.react('💖');
 
-  // Emojis random por categoría
-  let decoEmojis = ['✨', '🌸', '👻', '⭐', '🔮', '💫', '☁️', '🦋', '🪄']
-  let emojiRandom = () => decoEmojis[Math.floor(Math.random() * decoEmojis.length)]
+    // Enviar el video GIF con el texto en un solo mensaje
+    await conn.sendMessage(m.chat, { 
+        video: { url: randomGif },
+        caption: txt,
+        gifPlayback: true, // Hace que el video se vea como GIF
+        contextInfo: {
+            mentionedJid: [m.sender, userId],
+            isForwarded: true,
+            forwardingScore: 999,
+            forwardedNewsletterMessageInfo: {
+                newsletterJid: '120363335626706839@newsletter',
+                newsletterName: '⏤͟͞ू⃪፝͜⁞⟡『 𝐓͢ᴇ𝙖፝ᴍ⃨ 𝘾𝒉꯭𝐚𝑛𝑛𝒆𝑙: 𝑹ᴜ⃜ɓ𝑦-𝑯ᴏ𝒔𝑯𝙞꯭𝑛𝒐 』࿐⟡',
+                serverMessageId: -1,
+            },
+            externalAdReply: {
+                title: 'ׄ❀ׅᮢ໋۬۟   ׁ ᮫᩠𝗥ᥙ᜔᪲𝖻ֹ𝘺 𝐇֢ᩚᨵ̷̸ׁׅׅ𝗌𝗁𝗂ᮬ𝗇֟፝͡𝗈̷̸  ꫶֡ᰵ࡙🌸̵໋ׄᮬ͜✿֪',
+                body: dev,
+                thumbnail: icons,
+                sourceUrl: redes,
+                mediaType: 1,
+                renderLargerThumbnail: false,
+            }
+        }
+    }, { quoted: m });
 
-  // MENÚ HANAKO-KUN STYLE
-  let menuText = `
-╭───❖ 𝓖𝓸𝓴𝓾 𝓑𝓸𝓽 ❖───╮
+};
 
-  Hey*. 
-> *_
+handler.help = ['menu'];
+handler.register = true;
+handler.tags = ['main'];
+handler.command = ['menubotmd', 'menú', 'help'];
 
-╰─────❖ 𝓜𝓮𝓷𝓾 ❖─────╯
-
-🩵  INFO - BOT  🩵
-
-Baileys: Multi-Device.
-Usuario: 
-Tiempo activo: 
-Registros: 
-
-> Desarrollado por *Félix*
-
-≪──── ⋆🩵⚡🩵⋆ ────≫
-`.trim()
-
-for (let [tag, cmds] of Object.entries(categories)) {
-  let tagName = tag.toUpperCase().replace(/_/g, ' ')
-  let deco = emojiRandom()
-  menuText += `
-
-╭─━━━MAKIMA-MENU+━━━╮
-${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
-╰─━━━━━━━━━━━━━━━━╯`
-}
-  
-  // Mensaje previo cute
-  await conn.reply(m.chat, 'CARGANDO COMANDOS...', m, {
-    contextInfo: {
-      externalAdReply: {
-        title: botname,
-        body: "Estoy cargando sus comandos",
-        thumbnailUrl: 'https://qu.ax/KzvBL.jpg',
-        sourceUrl: redes,
-        mediaType: 1,
-        showAdAttribution: true,
-        renderLargerThumbnail: true,
-      }
-    }
-  })
-
-  // Enviar menú con video estilo gif
-  await conn.sendMessage(m.chat, {
-    video: { url: 'https://files.catbox.moe/eyt570.mp4', gifPlayback: true },
-    caption: menuText,
-    gifPlayback: true,
-    contextInfo: {
-      mentionedJid: [m.sender, userId],
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363402615935849@newsletter',
-        newsletterName: 'Makima-Bot',
-        serverMessageId: -1,
-      },
-      forwardingScore: 999,
-      externalAdReply: {
-        title: botname,
-        body: "Menu - Makima",
-        thumbnailUrl: banner,
-        sourceUrl: redes,
-        mediaType: 1,
-        showAdAttribution: true,
-        renderLargerThumbnail: true,
-      },
-    }
-  }, { quoted: m })
-}
-
-handler.help = ['menutest']
-handler.tags = ['main']
-handler.command = ['menutest', 'asistmaki', 'makimabot', 'ayuda']
-
-export default handler
+export default handler;
 
 function clockString(ms) {
-  let h = Math.floor(ms / 3600000)
-  let m = Math.floor(ms / 60000) % 60
-  let s = Math.floor(ms / 1000) % 60
-  return `${h}h ${m}m ${s}s`
-    }
+    let seconds = Math.floor((ms / 1000) % 60);
+    let minutes = Math.floor((ms / (1000 * 60)) % 60);
+    let hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+    return `${hours}h ${minutes}m ${seconds}s`;
+}
