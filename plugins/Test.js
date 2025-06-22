@@ -36,21 +36,21 @@ let handler = async (m, { conn, args }) => {
   let menuText = `
 ╭───❖ 𝓖𝓸𝓴𝓾 𝓑𝓸𝓽 ❖───╮
 
-  Hey*. ${name}.
-> *_${saludo}_*
+  Hey*. 
+> *_
 
 ╰─────❖ 𝓜𝓮𝓷𝓾 ❖─────╯
 
-👊 𝙸𝙽𝙵𝙾 𝙳𝙴 𝙶𝙾𝙺𝚄 𝙱𝙾𝚃 👊
+🩵  INFO - BOT  🩵
 
-💻 Sistema: Multi-Device (Modo Dios)
-🧬 Guerrero: @${userId.split('@')[0]}
-⏰ Tiempo de entrenamiento: ${uptime}
-⚔️ Guerreros conectados: ${totalreg}
+Baileys: Multi-Device.
+Usuario: 
+Tiempo activo: 
+Registros: 
 
-> Desarrollado con fuerza y orgullo Saiyajin por: *𝕵𝖝𝖝𝖑𝖟𝖓 (𝕯𝖗𝖆𝖐𝖎𝖙𝖔)*
+> Desarrollado por *Félix*
 
-≪──── ⋆☁️⚡☁️⋆ ────≫
+≪──── ⋆🩵⚡🩵⋆ ────≫
 `.trim()
 
 for (let [tag, cmds] of Object.entries(categories)) {
@@ -58,18 +58,18 @@ for (let [tag, cmds] of Object.entries(categories)) {
   let deco = emojiRandom()
   menuText += `
 
-╭─━━━ ${deco} ${tagName} ${deco} ━━━╮
+╭─━━━MAKIMA-MENU+━━━╮
 ${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
 ╰─━━━━━━━━━━━━━━━━╯`
 }
   
   // Mensaje previo cute
-  await conn.reply(m.chat, '⌜ ⊹ Espera tantito, espíritu curioso... ⊹ ⌟', m, {
+  await conn.reply(m.chat, 'CARGANDO COMANDOS...', m, {
     contextInfo: {
       externalAdReply: {
         title: botname,
-        body: "Ven y lucha conmigo MARICA",
-        thumbnailUrl: 'https://files.catbox.moe/wd2yh6.jpg',
+        body: "Estoy cargando sus comandos",
+        thumbnailUrl: 'https://qu.ax/KzvBL.jpg',
         sourceUrl: redes,
         mediaType: 1,
         showAdAttribution: true,
@@ -87,14 +87,14 @@ ${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
       mentionedJid: [m.sender, userId],
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363418396587968@newsletter',
-        newsletterName: '𝐉𝐱𝐱𝐥𝐳𝐧-𝐁𝐨𝐭',
+        newsletterJid: '120363402615935849@newsletter',
+        newsletterName: 'Makima-Bot',
         serverMessageId: -1,
       },
       forwardingScore: 999,
       externalAdReply: {
         title: botname,
-        body: "Acaso quieres pelea idiota?",
+        body: "Menu - Makima",
         thumbnailUrl: banner,
         sourceUrl: redes,
         mediaType: 1,
@@ -107,7 +107,7 @@ ${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
 
 handler.help = ['menutest']
 handler.tags = ['main']
-handler.command = ['menutest', 'menú', 'help', 'ayuda']
+handler.command = ['menutest', 'asistmaki', 'makimabot', 'ayuda']
 
 export default handler
 
