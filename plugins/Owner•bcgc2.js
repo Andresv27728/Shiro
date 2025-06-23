@@ -1,4 +1,4 @@
-//código hecho x The Carlos ofc 
+//código creado por Félix 
 
 const handler = async (m, { conn, text }) => {
   // 🔐 Solo para el creador y owners definidos
@@ -28,13 +28,13 @@ const handler = async (m, { conn, text }) => {
 
   // 🎨 Mensaje Cyberpunk
   const message = `
-┏━━━《👾 𝘚𝘠𝘚𝘛𝘌𝘔 𝘉𝘙𝘖𝘈𝘋𝘊𝘈𝘚𝘛 👾》━━━┓
+┏━━━《🩵 𝘚𝘠𝘚𝘛𝘌𝘔 𝘉𝘙𝘖𝘈𝘋𝘊𝘈𝘚𝘛 🩵》━━━┓
 ┃ ⚙️ *Módulo IA Activado...*
 ┃
 ┃ 🔮 *MENSAJE DEL SISTEMA:*
 ┃ ➥ ${text}
 ┃
-┃ 🛰️ Transmitiendo en redes paralelas...
+┃ 🛰️ Transmitiendo...
 ┗━━━━━━━━━━━━━━━━━━━━━━┛`.trim();
 
   const conns = [conn, ...(global.conns || [])];
@@ -55,7 +55,7 @@ const handler = async (m, { conn, text }) => {
     }
   }
 
-  return m.reply(`✅ *Difusión completada:*\n📡 *Grupos alcanzados:* ${totalGrupos}\n🧠 *Sistema:* Black Clover IA`);
+  return m.reply(`✅ *Difusión completada:*\n📡 *Grupos alcanzados:* ${totalGrupos}\n🧠 *Sistema:* IA MAKIMA BOT`);
 };
 
 handler.help = ['bcgc2', 'bcg'];
