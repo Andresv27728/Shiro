@@ -17,7 +17,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     let name = conn.getName(who); // Nombre de la persona mencionada o del emisor
     let name2 = conn.getName(m.sender); // Nombre del usuario que envía el comando
-    m.react('👋');
+    m.react('🩵');
 
     // Construimos el mensaje dependiendo de si hay una mención o no
     let str;
