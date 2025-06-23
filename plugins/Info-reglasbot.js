@@ -14,13 +14,13 @@ let handler = async (m, { conn }) => {
 
 📔 *INFO:* Si se rompen las reglas, puedes ser baneado y bloqueado del bot.
 
-📝 *NOTA:* Este bot oficial es *BlackClover (OFC)*. No nos responsabilizamos por otros bots falsos. Usa *.owner* para verificar el staff oficial.
+📝 *NOTA:* Este bot es makima*. No nos responsabilizamos por otros bots.
 
 🌟 Si te gusta el bot, puedes visitar el repositorio y dejar una estrella.
-${global.md || 'https://github.com/thecarlos19/Black-Clover-MD'}  
+${global.md || 'https://github.com/mantis-has/Makima'}  
 `.trim()
 
-  const imagen = imagen2 || 'https://i.imgur.com/U4BTrvK.jpeg' // Imagen predeterminada si no hay imagen2 definida
+  const imagen = imagen2 || 'https://qu.ax/pUYpy.jpg' // Imagen predeterminada si no hay imagen2 definida
   await conn.sendFile(m.chat, imagen, 'reglas.jpg', Reglas, m)
 }
 
