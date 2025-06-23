@@ -5,11 +5,11 @@ handler.command ='comprarbot',/^(ComprarBot|Comprar|comprar|ComprarBot)$/i;
 export default handler;
 
 global.ComprarBot = `
-〔 *BLACK CLOVER- BOT* 〕
+〔 *MAKIMA - BOT* 〕
 
 *BOT PARA GRUPO* :
-> wa.me/527971006556
+> wa.me/18293142989
 
 *BOT PERZONALIZADO* :
-> wa.me/525544876071
+> wa.me/18293142989
 `;
