@@ -33,7 +33,7 @@ const handler = async (m) => {
   m.reply(`🎙️ *maki (${modoReal.toUpperCase()})*: ${frase}`);
 };
 
-handler.command = ['asta', 'astahabla', 'asta-habla'];
+handler.command = ['maki', 'makihabla', 'asta-habla'];
 handler.tags = ['fun'];
 handler.help = ['asta', 'asta-habla'];
 handler.register = true;
