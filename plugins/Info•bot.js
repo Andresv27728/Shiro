@@ -10,8 +10,8 @@ conn.reply(m.chat, `🩵 ¡Hola! Soy makima, en que puedo ayudarte hoy?\n\n✰ U
 /*if (/^corin|corín|corinplus|corínplus|corinplushost|corínplushost|plus$/i.test(m.text)) {
 conn.reply(m.chat, `🚀 CorinPlus Hosting ¡El plus que necesitas!\n2 *Dash:* https://dash.skyultraplus.com\n🌱 *Panel:* https://ctrl.skyultraplus.com`, m, rcanal, )
 }*/
-if (/^sexo$/i.test(m.text)) {
-conn.reply(m.chat, `*pervertido* 🫣`, m, rcanal, )
+if (/^makima$/i.test(m.text)) {
+conn.reply(m.chat, `¿Que quieres hijo de puta?`, m, rcanal, )
 }
 if (/^tetas|teta$/i.test(m.text)) {
 conn.reply(m.chat, `*que caliente eres* 🥵`, m, rcanal, )
