@@ -51,7 +51,7 @@ let handler = async (m, { conn }) => {
 
   // Enviar primero el canal como respuesta al mensaje, sin reenviar
   await conn.sendMessage(m.chat, {
-    text: `🔗 *Canal oficial:*\n*${canalName}*\n${canalDesc}\n${canalUrl}`,
+    text: `Comprobando información de economía.`,
     // Respondemos al mensaje original
     quoted: m
     // No agregamos isForwarded ni forwardedNewsletterMessageInfo
