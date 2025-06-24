@@ -5,8 +5,8 @@ import db from '../lib/database.js'
 const img = 'https://qu.ax/dXOUo.jpg'
 
 // Canal info (personaliza aquí)
-const canalName = 'MAKIMA - Frases'
-const canalDesc = 'Canal oficial de MakimaBot'
+const canalName = 'ECONOMIA DEL USUARIO'
+const canalDesc = 'MAKIMA 2.0 CHANNEL'
 const canalUrl = 'https://whatsapp.com/channel/120363400360651198'
 const dev = 'Félix Manuel'
 
