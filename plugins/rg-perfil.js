@@ -38,7 +38,7 @@ var handler = async (m, { conn }) => {
 〘 CARGANDO PERFIL 〙
 
 • La carga demora un poco.
-• Porfavor espra...
+• Porfavor espera...
 
 💎 Perfil reconocido con exito.
 
