@@ -1,58 +1,89 @@
-import ws from 'ws';
+import fs from 'fs'
+import fetch from 'node-fetch'
+import { xpRange } from '../lib/levelling.js'
+import { promises } from 'fs'
+import { join } from 'path'
 
-let handler = async (m, { conn, usedPrefix, args, participants }) => {
+let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, command }) => {
+  try {        
+    // 1. Mensaje de "CARGANDO COMANDOS..."
+    await conn.sendMessage(m.chat, { text: '⏳ CARGANDO COMANDOS...' }, { quoted: m })
 
-  // Si no pone el número o tag, le responde con ejemplo
-  if (!args[0] && (!m.mentionedJid || m.mentionedJid.length === 0)) {
-    return m.reply(`⚠️ Etiqueta el número de algún bot o escribe el número directamente.\nEjemplo:\n${usedPrefix}setprimary @tag\n${usedPrefix}setprimary 51999999999`);
+    // 2. Resto del código (como tu ejemplo)
+    let { exp, chocolates, level, role } = global.db.data.users[m.sender]
+    let { min, xp, max } = xpRange(level, global.multiplier)
+    let nombre = await conn.getName(m.sender)
+    let _uptime = process.uptime() * 1000
+    let _muptime
+    if (process.send) {
+      process.send('uptime')
+      _muptime = await new Promise(resolve => {
+        process.once('message', resolve)
+        setTimeout(resolve, 1000)
+      }) * 1000
+    }
+    let user = global.db.data.users[m.sender]
+    let muptime = clockString(_muptime)
+    let uptime = clockString(_uptime)
+    let totalreg = Object.keys(global.db.data.users).length
+    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+    let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+    let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg')
+    let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
+    const vid = ['https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4']
+    const dev = 'Tu dev info aquí'
+    const redes = 'https://github.com/Andresv27728/2.0' // Cambia a tu link
+    const channelRD = { id: "newsletterid@newsletter", name: "MakimaBot News" } // Ajusta si tienes canal
+    const emojis = '✅'
+    const error = '❌'
+
+    let menu = `¡Hola! ${taguser} soy Makima 2.0 ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
+    ...[AQUÍ TU LISTA DE COMANDOS]...
+    > ${dev}`.trim()
+
+    await conn.sendMessage(m.chat, {
+      video: { url: vid.getRandom() },
+      caption: menu,
+      contextInfo: {
+        mentionedJid: [m.sender],
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: channelRD.id,
+          newsletterName: channelRD.name,
+          serverMessageId: -1,
+        },
+        forwardingScore: 999,
+        externalAdReply: {
+          title: '𝐌A͜͡𝑲𝑖𝐌ꪖ  𝐁o͟T͎ 𝙼𝙳',
+          body: dev,
+          thumbnailUrl: perfil,
+          sourceUrl: redes,
+          mediaType: 1,
+          renderLargerThumbnail: false,
+        },
+      },
+      gifPlayback: true,
+      gifAttribution: 0
+    }, { quoted: null })
+
+    await m.react(emojis)
+
+  } catch (e) {
+    await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`)
+    await m.react(error)
   }
+}
 
-  // Lista de bots conectados
-  const users = [...new Set(
-    global.conns?.filter(c => c.user && c.ws && c.ws.socket && c.ws.socket.readyState !== ws.CLOSED)
-  )];
+// Puedes añadir los comandos que quieras que activen este handler
+handler.help = ['menu']
+handler.tags = ['main']
+handler.command = ['comandos', 'help', 'menú', 'asistenciabot', 'comandos', 'listadecomandos', 'menucompleto']
+handler.register = true
+export default handler
 
-  let botJid;
-  let selectedBot;
-
-  // Si lo etiquetó directamente
-  if (m.mentionedJid && m.mentionedJid.length > 0) {
-    botJid = m.mentionedJid[0];
-  } else {
-    // Si puso número manual, lo formatea
-    botJid = args[0].replace(/[^0-9]/g, '') + '@s.whatsapp.net';
-  }
-
-  // Si el que quiere setear es el bot principal actual
-  if (botJid === conn.user.jid) {
-    selectedBot = conn;
-  } else {
-    // Busca entre los otros bots conectados
-    selectedBot = users.find(c => c.user?.jid === botJid);
-  }
-
-  if (!selectedBot) {
-    return m.reply(`⚠️ No se encontró un bot conectado con esa mención o número. Usa ${usedPrefix}listjadibot para ver los bots disponibles.`);
-  }
-
-  // Guarda en la base de datos de ese chat
-  let chat = global.db.data.chats[m.chat];
-  if (!chat) chat = global.db.data.chats[m.chat] = {};
-  
-  chat.primaryBot = botJid;
-
-  conn.sendMessage(m.chat, {
-    text: `✅ El bot @${botJid.split('@')[0]} ha sido establecido como *PRIMARIO* en este grupo.\nLos demás bots no responderán aquí.`,
-    mentions: [botJid]
-  }, { quoted: m });
-
-};
-
-handler.help = ['setprimary <@tag o numero>'];
-handler.tags = ['jadibot'];
-handler.command = ['setprimary'];
-handler.group = true;
-handler.admin = true; // Solo admin puede usarlo
-handler.botAdmin = true; // El bot debe ser admin para evitar confusiones
-
-export default handler;
+function clockString(ms) {
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
