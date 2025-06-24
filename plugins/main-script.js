@@ -1,13 +1,13 @@
 const handler = async (m, { conn }) => {
   const texto = `
- _*𝕭𝖑𝖆𝖈𝖐 𝕮𝖑𝖔𝖛𝖊𝖗 *_ 🥷
+ _*REPO DE LA BOT*_ 
 
 \`\`\`Repositorio OFC:\`\`\`
-https://github.com/thecarlos19/Black-clover-MD 
+https://github.com/mantis-has/Makima
 
-> 🌟 Deja tu estrellita ayudaría mucho :D
+> 🌟 Deja tu estrella así nos motivas a seguir mejorando la bot.
 
-🔗 *Grupo oficial del bot:* https://chat.whatsapp.com/GrcUknwrJbNIXIIrbsuXc0
+🩵 *Grupo oficial de la bot:* ${gc1}
   `.trim()
 
   await conn.reply(m.chat, texto, m)
