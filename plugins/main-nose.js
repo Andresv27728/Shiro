@@ -31,10 +31,10 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
     let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg')
     let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
     const vid = ['https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4', 'https://files.catbox.moe/falp8a.mp4']
-    const dev = 'Tu dev info aquí'
+    const dev = 'Félix Manuel'
     const redes = 'https://github.com/Andresv27728/2.0' // Cambia a tu link
-    const channelRD = { id: "newsletterid@newsletter", name: "MakimaBot News" } // Ajusta si tienes canal
-    const emojis = '✅'
+    const channelRD = { id: "120363400360651198@newsletter", name: "Código creado por Copilot" } // Ajusta si tienes canal
+    const emojis = '🩵'
     const error = '❌'
 
     let menu = `¡Hola! ${taguser} soy Makima 2.0 ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
