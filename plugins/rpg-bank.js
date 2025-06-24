@@ -1,9 +1,13 @@
-
 // Codigo Creado por felix2-bup 
 import fetch from 'node-fetch'
 import db from '../lib/database.js'
 
 const img = 'https://qu.ax/dXOUo.jpg'
+
+// Canal info (personaliza aquí)
+const canalName = 'MAKIMA - Frases'
+const canalDesc = 'Canal oficial de MakimaBot'
+const canalUrl = 'https://whatsapp.com/channel/120363400360651198'
 
 function obtenerRango(level) {
   if (level >= 100) return 'SUPREMO'
@@ -45,6 +49,15 @@ let handler = async (m, { conn }) => {
 > © Desarrollado por Félix 
 ╰━━━━━━━━━━━━━━━━━━`.trim()
 
+  // Enviar primero el canal como respuesta al mensaje, sin reenviar
+  await conn.sendMessage(m.chat, {
+    text: `🔗 *Canal oficial:*\n*${canalName}*\n${canalDesc}\n${canalUrl}`,
+    // Respondemos al mensaje original
+    quoted: m
+    // No agregamos isForwarded ni forwardedNewsletterMessageInfo
+  })
+
+  // Enviar después el resumen bancario
   await conn.sendFile(
     m.chat,
     img,
