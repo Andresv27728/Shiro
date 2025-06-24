@@ -3,7 +3,7 @@ import axios from 'axios';
 const handler = async (m, { conn, text }) => {
     try {
         if (!text) {
-            await conn.sendMessage(m.chat, { text: '🚩 Por favor proporciona un término de búsqueda.' }, { quoted: m, rcanal });
+            await conn.sendMessage(m.chat, { text: '🩵 Debes ingresar un termino.\n\nEjemplo: /pin Makima.' }, { quoted: m, rcanal });
             return;
         }
 
@@ -25,11 +25,11 @@ const handler = async (m, { conn, text }) => {
             m.chat,
             { 
                 image: { url: imageUrl },
-                caption: `\t\t🚩 *${title}*\n ${global.dev}`,
+                caption: `\t\t🩵 *${title}*\n ${global.dev}`,
                 buttons: [
                     { 
                         buttonId: `.pinterest ${text}`, 
-                        buttonText: { displayText: 'Siguiente 🔍' },
+                        buttonText: { displayText: 'Siguiente Foto' },
                         type: 1  
                     }
                 ],
@@ -50,6 +50,6 @@ const handler = async (m, { conn, text }) => {
 handler.help = ['pinterest <término>'];
 handler.tags = ['img'];
 handler.register = true;
-handler.command = /^(pinterest|pinterestsearch)$/i;
+handler.command = /^(pinterest|pin)$/i;
 
 export default handler;
