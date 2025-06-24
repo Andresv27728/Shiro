@@ -4,7 +4,7 @@
 import PhoneNumber from 'awesome-phonenumber'
 import fetch from 'node-fetch'
 
-const imagen1 = 'https://telegra.ph/file/1c44fbd9883698c0d2b10.jpg' // Imagen de respaldo
+const imagen1 = 'https://qu.ax/XPcPe.jpg' // Imagen de respaldo
 
 var handler = async (m, { conn }) => {
   let who = m.mentionedJid && m.mentionedJid[0]
@@ -33,7 +33,7 @@ var handler = async (m, { conn }) => {
   let { premium, level, exp, registered, role } = user
   let username = await conn.getName(who)
 
-  // 🎬 Animación estilo grimorio
+  // 🩵 Animación de carga jjj
   let animacion = `
 〘 CARGANDO PERFIL 〙
 
@@ -47,7 +47,7 @@ var handler = async (m, { conn }) => {
 
   await m.reply(animacion)
 
-  // 🧙 Usuarios normales
+  // 🩵 Usuarios normales
   let noprem = `
 『 PERFIL DEL USUARIO 』
 
@@ -67,7 +67,7 @@ var handler = async (m, { conn }) => {
   let prem = `
 🩵〘 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 〙🩵
 
-🌌 ＧＲＩＭＯＲＩＯ ５ＬＴ（Ａ』
+ERES RECONOCIDO EN MAKIMA』
 
 🩵 *Usuario:* ${username}
 🩵 *tag:* @${who.replace(/@.+/, '')}
