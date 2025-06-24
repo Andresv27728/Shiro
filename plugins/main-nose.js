@@ -42,16 +42,16 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
 
 ╭━━I N F O-B O T━━
 ┃Creadora: ༘͜͡❃➳𓆩ޫ͢黒𓆪𑪖 𝐑o͟𝐬𝐥𝐲𝐧𔗂꯭⸙͎
-┃Tiempo activo: 00:38:03
+┃Tiempo activo: ${uptime}
 ┃Baileys: Multi device.
 ┃Base: Oficial.
-┃Registros: 420
+┃Registros: ${totalreg}
 ╰━━━━━━━━━━━━━
 
 ╭━━INFO USUARIO━╮
-┃Nombre 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
-┃Rango: 𝗡𝗼𝘃𝗮𝘁𝗼 V 🍷
-┃Nivel: 0
+┃Nombre: ${name}
+┃Rango: ${role}
+┃Nivel: ${level}
 ╰━━━━━━━━━━━━━
 
 ➪ 𝗟𝗜𝗦𝗧𝗔 
