@@ -31,7 +31,7 @@ Usuarios Registrados: ${registeredUsers}
     }
 };
 
-handler.command = ["infotest", "testinfo"];
+handler.command = ["infobott", "botinfoo"];
 handler.help = handler.command;
 handler.tags = ["info"];
 
