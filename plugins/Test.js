@@ -65,7 +65,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isOwner }) => {
 }
 handler.help = ['qr', 'code']
 handler.tags = ['serbot']
-handler.command = ['serbot', 'sercode']
+handler.command = ['qr2', 'code2']
 export default handler
 
 export async function blackJadiBot(options) {
