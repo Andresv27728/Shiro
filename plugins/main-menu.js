@@ -9,13 +9,13 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
     // Variables que usas para el contexto del canal
     const dev = 'Félix Manuel'
     const redes = 'https://github.com/Andresv27728/2.0'
-    const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - Frases" }
+    const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" }
     let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
     let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg')
 
     // 1. Mensaje de "CARGANDO COMANDOS..." con contexto de canal
     await conn.sendMessage(m.chat, {
-      text: '⏳ CARGANDO COMANDOS...',
+      text: 'ꪹ͜🕑͡ 𝗖𝗔𝗥𝗚𝗔𝗡𝗗𝗢 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦...𓏲✧੭',
       contextInfo: {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
@@ -25,7 +25,7 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
         },
         forwardingScore: 999,
         externalAdReply: {
-          title: 'MAKIMA BOT MD',
+          title: 'Animación de carga',
           body: dev,
           thumbnailUrl: perfil,
           sourceUrl: redes,
