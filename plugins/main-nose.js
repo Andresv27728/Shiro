@@ -38,8 +38,11 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
     const error = '❌'
 
     let menu = `¡Hola! ${taguser} soy Makima 2.0 ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
-    ...[AQUÍ TU LISTA DE COMANDOS]...
-    > ${dev}`.trim()
+ 
+
+Este Código está siendo editado, inténtalo más tarde.
+
+> Powered by Félix`.trim()
 
     await conn.sendMessage(m.chat, {
       video: { url: vid.getRandom() },
