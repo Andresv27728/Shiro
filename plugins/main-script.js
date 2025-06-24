@@ -7,7 +7,7 @@ https://github.com/mantis-has/Makima
 
 > 🌟 Deja tu estrella así nos motivas a seguir mejorando la bot.
 
-🩵 *Grupo oficial de la bot:* ${gc1}
+🩵 *Grupo oficial de la bot:* https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r
   `.trim()
 
   await conn.reply(m.chat, texto, m)
