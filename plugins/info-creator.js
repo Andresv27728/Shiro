@@ -1,8 +1,8 @@
 let handler = async (m, { conn }) => {
   // Cambia estos valores por los correctos de tu creadora
-  let number = '18293142989' // Número de la creadora con prefijo país, sin espacios ni +
+  let number = 'https://wa.me/18293142989' // Número de la creadora con prefijo país, sin espacios ni +
   let nombre = 'CREADOR'
-  let canal = 'XD' // Enlace a tu canal (puedes sacar el mismo que en el menú)
+  let canal = 'https://wa.me/18293142989' // Enlace a tu canal (puedes sacar el mismo que en el menú)
 
   // vCard de la creadora
   let vcard = `BEGIN:VCARD
