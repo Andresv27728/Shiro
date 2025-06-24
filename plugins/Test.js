@@ -1,29 +1,55 @@
-import fetch from "node-fetch";
-import yts from "yt-search";
-
-// Función para generar la respuesta de la IA
-const getAdonixResponse = () => {
-    return `
-¡Qué pex we! 😎 Soy Adonix, tu asistente virtual. Aquí estoy para ayudarte con tus dudas sobre programación, bots de WhatsApp y más. ¿Qué necesitas saber? ¡Dímelo y le damos! ✌️
-    `.trim();
-};
+import axios from 'axios';
 
 const handler = async (m, { conn, text }) => {
-    if (text === "#adonix") {
-        const responseMessage = getAdonixResponse();
+    try {
+        if (!text) {
+            await conn.sendMessage(m.chat, { text: '🚩 Por favor proporciona un término de búsqueda.' }, { quoted: m, rcanal });
+            return;
+        }
 
-        // Enviar el mensaje como reenviado
-        await conn.sendMessage(m.chat, {
-            text: responseMessage,
-            quoted: m // Esto hace que el mensaje parezca reenviado
-        });
-    } else {
-        // Aquí puedes manejar otros comandos si es necesario
+        const response = await axios.get(`https://api.siputzx.my.id/api/s/pinterest?query=${encodeURIComponent(text)}`);
+        const data = response.data.data;
+
+        if (data.length === 0) {
+            await conn.sendMessage(m.chat, { text: `❌ No se encontraron imágenes para "${text}".` }, { quoted: m });
+            return;
+        }
+
+        const randomImage = data[Math.floor(Math.random() * data.length)];
+        const imageUrl = randomImage.images_url;
+        const title = randomImage.grid_title || `¡Aquí tienes una imagen de ${text}!`;
+
+        await m.react('🕓');
+        
+        await conn.sendMessage(
+            m.chat,
+            { 
+                image: { url: imageUrl },
+                caption: `\t\t🚩 *${title}*\n ${global.dev}`,
+                buttons: [
+                    { 
+                        buttonId: `.pinterest ${text}`, 
+                        buttonText: { displayText: 'Siguiente 🔍' },
+                        type: 1  
+                    }
+                ],
+                viewOnce: true,
+                headerType: 4
+            },
+            { quoted: m }
+        );
+
+        await m.react('✅');
+    } catch (error) {
+        await m.react('✖️');
+        console.error('Error al obtener la imagen:', error);
+        await conn.sendMessage(m.chat, { text: '❌ Ocurrió un error al intentar obtener la imagen. Inténtalo nuevamente.' }, { quoted: m });
     }
 };
 
-handler.command = ["adonix"];
-handler.help = handler.command;
-handler.tags = ["main"];
+handler.help = ['pinterest <término>'];
+handler.tags = ['img'];
+handler.register = true;
+handler.command = /^(pinterest|pinterestsearch)$/i;
 
 export default handler;
