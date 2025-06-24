@@ -1,21 +1,27 @@
 let handler = async (m, { conn }) => {
-  // Cambia estos valores por los correctos de tu creadora
-  let number = '18293142989' // Número de la creadora con prefijo país, sin espacios ni +
+  let number = '18293142989' // Número del creador con prefijo país, sin +
   let nombre = 'CREADOR'
-  let canal = 'https://wa.me18293142989' // Enlace a tu canal (puedes sacar el mismo que en el menú)
+  let waLink = 'https://wa.me/' + number // Enlace directo al chat de WhatsApp
 
-  // vCard de la creadora
+  // vCard de contacto para WhatsApp
   let vcard = `BEGIN:VCARD
 VERSION:3.0
 N:${nombre}
 FN:${nombre}
-TEL;waid=${number}:${number}
+TEL;type=CELL;type=VOICE;waid=${number}:${number}
 END:VCARD`
 
-  // Envía el canal como texto (puedes personalizar el mensaje)
-  await conn.sendMessage(m.chat, { text: `💙 AQUI ESTA EL NUMERO DE MI CREADOR` }, { quoted: m })
+  // Envía mensaje con botón para chatear directo en WhatsApp
+  await conn.sendMessage(m.chat, {
+    text: `💙 Aquí está el número de mi creador:\n\n*${nombre}*\n${number}`,
+    footer: 'Toca el botón para ir directo al chat.',
+    buttons: [
+      { buttonId: waLink, buttonText: { displayText: 'Chatear en WhatsApp' }, type: 1 }
+    ],
+    headerType: 1
+  }, { quoted: m })
 
-  // Envía la tarjeta de contacto
+  // Envía la tarjeta de contacto (vCard)
   await conn.sendMessage(m.chat, {
     contacts: {
       displayName: nombre,
