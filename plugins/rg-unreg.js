@@ -33,7 +33,7 @@ let handler = async function (m, { conn }) {
       forwardingScore: 999,
       externalAdReply: {
         title: channelRD.name,
-        body: 'Mensaje del creador',
+        body: 'MAKIMA - FRASES',
         thumbnailUrl: 'https://qu.ax/wXgkR.jpg', // Opcional, cámbiala si quieres
         mediaType: 1,
         renderLargerThumbnail: true,
