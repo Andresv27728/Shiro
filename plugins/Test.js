@@ -10,8 +10,8 @@ const getServerInfo = async () => {
 };
 
 const handler = async (m, { conn, text }) => {
-    if (text === "#infobot") {
-        const creatorName = "Ado (Wirk)"; // Cambia esto por el nombre del creador
+    if (text === "infobot") {
+        const creatorName = "Felix"; // Cambia esto por el nombre del creador
         const botName = "Mi Bot de WhatsApp"; // Cambia esto por el nombre de tu bot
 
         // Obtener información del servidor
@@ -31,8 +31,7 @@ Usuarios Registrados: ${registeredUsers}
     }
 };
 
-handler.command = ["infobott", "botinfoo"];
-handler.help = handler.command;
+handler.command = ["infobot", "botinfoo"];
 handler.tags = ["info"];
 
 export default handler;
