@@ -77,7 +77,7 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
 // Puedes añadir los comandos que quieras que activen este handler
 handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['comandos', 'help', 'menú', 'asistenciabot', 'comandos', 'listadecomandos', 'menucompleto']
+handler.command = ['allmenu', 'help', 'menú', 'asistenciabot', 'comandos', 'listadecomandos', 'menucompleto']
 handler.register = true
 export default handler
 
