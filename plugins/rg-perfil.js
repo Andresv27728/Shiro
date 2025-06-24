@@ -4,7 +4,7 @@
 import PhoneNumber from 'awesome-phonenumber'
 import fetch from 'node-fetch'
 
-const imagen1 = 'xd' // Imagen de respaldo
+const imagen1 = 'https://qu.ax/XPcPe.jpg' // Imagen de respaldo
 
 var handler = async (m, { conn }) => {
   let who = m.mentionedJid && m.mentionedJid[0]
