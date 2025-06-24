@@ -8,6 +8,7 @@ const img = 'https://qu.ax/dXOUo.jpg'
 const canalName = 'MAKIMA - Frases'
 const canalDesc = 'Canal oficial de MakimaBot'
 const canalUrl = 'https://whatsapp.com/channel/120363400360651198'
+const dev = 'Félix Manuel'
 
 function obtenerRango(level) {
   if (level >= 100) return 'SUPREMO'
@@ -49,26 +50,29 @@ let handler = async (m, { conn }) => {
 > © Desarrollado por Félix 
 ╰━━━━━━━━━━━━━━━━━━`.trim()
 
-  // Enviar primero el canal como respuesta al mensaje, sin reenviar
+  // MENSAJE CON CONTEXTO DE CANAL/NEWSLETTER (igual que el menú)
   await conn.sendMessage(m.chat, {
-    text: `Comprobando información de economía.`,
-    // Respondemos al mensaje original
-    quoted: m
-    // No agregamos isForwarded ni forwardedNewsletterMessageInfo
-  })
-
-  // Enviar después el resumen bancario
-  await conn.sendFile(
-    m.chat,
-    img,
-    'grimorio.jpg',
-    txt,
-    m,
-    null,
-    {
-      mentions: [who]
+    image: { url: img },
+    caption: txt,
+    mentions: [who],
+    contextInfo: {
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: "120363400360651198@newsletter", // ID de tu canal
+        newsletterName: canalName,
+        serverMessageId: -1,
+      },
+      forwardingScore: 999,
+      externalAdReply: {
+        title: canalName,
+        body: canalDesc,
+        thumbnailUrl: img,
+        sourceUrl: canalUrl,
+        mediaType: 1,
+        renderLargerThumbnail: true,
+      },
     }
-  )
+  }, { quoted: m })
 }
 
 handler.help = ['bank', 'banco']
