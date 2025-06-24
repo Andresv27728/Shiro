@@ -43,7 +43,7 @@ let handler = async (m, { conn }) => {
 🩵𝖥𝖾𝖼𝗁𝖺: ${new Date().toLocaleString('es-ES')}
 ╰━━━━━━━━━━━━━━━━━━
 > © Desarrollado por Félix 
-╰━━━━━━━━━━━━━━━━━━` m , rcanal.trim()
+╰━━━━━━━━━━━━━━━━━━`.trim()
 
   await conn.sendFile(
     m.chat,
