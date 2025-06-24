@@ -1,32 +1,29 @@
 import fetch from "node-fetch";
 import yts from "yt-search";
 
-const getServerInfo = async () => {
-  const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024;
-  const registeredUsers = 100; // Cambiar por tu lógica real
-  return { memoryUsage, registeredUsers };
+// Función para generar la respuesta de la IA
+const getAdonixResponse = () => {
+    return `
+¡Qué pex we! 😎 Soy Adonix, tu asistente virtual. Aquí estoy para ayudarte con tus dudas sobre programación, bots de WhatsApp y más. ¿Qué necesitas saber? ¡Dímelo y le damos! ✌️
+    `.trim();
 };
 
 const handler = async (m, { conn, text }) => {
-  if (text?.toLowerCase() === "infobot") {
-    const creatorName = "Felix";
-    const botName = "Mi Bot de WhatsApp";
+    if (text === "#adonix") {
+        const responseMessage = getAdonixResponse();
 
-    const { memoryUsage, registeredUsers } = await getServerInfo();
-
-    const infoMessage = `
-🤖 Información del Bot:
-Nombre del Bot: ${botName}
-Creador: ${creatorName}
-Memoria del Servidor: ${memoryUsage.toFixed(2)} MB
-Usuarios Registrados: ${registeredUsers}
-    `.trim();
-
-    await conn.reply(m.chat, infoMessage, m);
-  }
+        // Enviar el mensaje como reenviado
+        await conn.sendMessage(m.chat, {
+            text: responseMessage,
+            quoted: m // Esto hace que el mensaje parezca reenviado
+        });
+    } else {
+        // Aquí puedes manejar otros comandos si es necesario
+    }
 };
 
-handler.command = ["infobot", "botinfoo"];
-handler.tags = ["info"];
+handler.command = ["adonix"];
+handler.help = handler.command;
+handler.tags = ["main"];
 
 export default handler;
