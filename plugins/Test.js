@@ -1,34 +1,29 @@
 import fetch from "node-fetch";
 import yts from "yt-search";
 
-// Aquí puedes agregar la lógica para obtener la memoria del servidor y los usuarios registrados
 const getServerInfo = async () => {
-    // Simulación de datos, reemplaza esto con tu lógica real
-    const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024; // Memoria en MB
-    const registeredUsers = 100; // Cambia esto por la lógica que uses para contar usuarios
-    return { memoryUsage, registeredUsers };
+  const memoryUsage = process.memoryUsage().heapUsed / 1024 / 1024;
+  const registeredUsers = 100; // Cambiar por tu lógica real
+  return { memoryUsage, registeredUsers };
 };
 
 const handler = async (m, { conn, text }) => {
-    if (text === "infobot") {
-        const creatorName = "Felix"; // Cambia esto por el nombre del creador
-        const botName = "Mi Bot de WhatsApp"; // Cambia esto por el nombre de tu bot
+  if (text?.toLowerCase() === "infobot") {
+    const creatorName = "Felix";
+    const botName = "Mi Bot de WhatsApp";
 
-        // Obtener información del servidor
-        const { memoryUsage, registeredUsers } = await getServerInfo();
+    const { memoryUsage, registeredUsers } = await getServerInfo();
 
-        const infoMessage = `
+    const infoMessage = `
 🤖 Información del Bot:
 Nombre del Bot: ${botName}
 Creador: ${creatorName}
 Memoria del Servidor: ${memoryUsage.toFixed(2)} MB
 Usuarios Registrados: ${registeredUsers}
-        `.trim();
+    `.trim();
 
-        await m.reply(infoMessage);
-    } else {
-        // Aquí puedes manejar otros comandos si es necesario
-    }
+    await conn.reply(m.chat, infoMessage, m);
+  }
 };
 
 handler.command = ["infobot", "botinfoo"];
