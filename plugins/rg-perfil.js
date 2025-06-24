@@ -4,7 +4,7 @@
 import PhoneNumber from 'awesome-phonenumber'
 import fetch from 'node-fetch'
 
-const imagen1 = 'https://qu.ax/XPcPe.jpg' // Imagen de respaldo
+const imagen1 = 'xd' // Imagen de respaldo
 
 var handler = async (m, { conn }) => {
   let who = m.mentionedJid && m.mentionedJid[0]
@@ -81,7 +81,7 @@ ERES RECONOCIDO EN MAKIMA』
 > © powered by Félix Manuel 
 `.trim()
 
-  await conn.sendFile(m.chat, pp, 'grimorio_demon.jpg', premium ? prem : noprem, m, undefined, { mentions: [who] })
+  await conn.sendFile(m.chat, pp, 'ponte_una_foto_gay', premium ? prem : noprem, m, undefined, { mentions: [who] })
 }
 
 handler.help = ['profile']
