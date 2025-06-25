@@ -17,7 +17,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
   const jid = m.messageStubParameters[0]
   const user = `@${jid.split('@')[0]}`
   // Usa una imagen cuadrada y pequeña para la miniatura
-  const thumbnailUrl = 'https://i.imgur.com/5Q1OtS2.jpg' // Puedes cambiarla por otra de 96x96 px si prefieres
+  const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Puedes cambiarla por otra de 96x96 px si prefieres
   const pp = await conn.profilePictureUrl(jid, 'image').catch(() => thumbnailUrl)
   const img = await fetch(pp).then(r => r.buffer())
   const total = [28, 32].includes(m.messageStubType)
@@ -35,7 +35,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     },
     externalAdReply: {
       title: channelRD.name,
-      body: 'Canal oficial de MAKIMA 2.0',
+      body: 'MAKIMA 2.0 BOT',
       thumbnailUrl: thumbnailUrl, // Imagen cuadrada y pequeña
       mediaType: 1,
       renderLargerThumbnail: false,
