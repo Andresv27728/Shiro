@@ -68,7 +68,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     await conn.sendMessage(m.chat, { 
       text: 'SE NOS UNIÓ UN USUARIO', 
       contextInfo: contextNewsletter
-    }, { quoted: quotedMsg('《✧》 LLEGO OTRO') });
+    }, { quoted: quotedMsg('《✧》 LLEGO OTRO GAY JAJAJA') });
   }
 
   if ([28, 32].includes(m.messageStubType)) {
@@ -91,6 +91,6 @@ export async function before(m, { conn, participants, groupMetadata }) {
     await conn.sendMessage(m.chat, { 
       text: 'SE NOS FUE EL USUARIO', 
       contextInfo: contextNewsletter
-    }, { quoted: quotedMsg('《✧》 SE FUE') });
+    }, { quoted: quotedMsg('《✧》 SE FUE GAY XD') });
   }
 }
