@@ -1,4 +1,4 @@
-// Plugin: Conexión PremBot Premium con tokens únicos (Makima MD Adaptado por mantis-has)
+// Plugin: Conexión PremBot Premium (estilo subbot, pairing code SI FUNCIONA)
 
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
@@ -17,10 +17,7 @@ const premiumTokens = [
   "MAK1", "MAK2", "MAK3", "MAK4", "MAK5",
   "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
 ]
-
-// Archivo para registrar los tokens usados y su dueño
 const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -50,42 +47,33 @@ let handler = async (m, { conn, args }) => {
     return
   }
 
-  // Leer o inicializar el estado de los tokens
   let tokensState = loadTokensState()
-  let senderId = m.sender.replace(/\D/g, '') // Solo números
+  let senderId = m.sender.split('@')[0] // SOLO NÚMEROS, formato internacional
 
-  // Si el token ya está asignado a otro usuario
   if (tokensState[token] && tokensState[token] !== senderId) {
     await sendNewsletter(m, conn, '「🩵」Este token ya fue utilizado. Usa otro token o solicita uno nuevo al creador.')
     return
   }
 
-  // Si el token ya está asignado a este usuario
   if (tokensState[token] === senderId) {
-    // Checar si la sesión sigue activa
     let pathPremBot = path.join(__dirname, '../prembot_sessions/', senderId)
     let isSessionClosed = false
     try {
-      // Checar si existen los archivos de sesión y si la sesión está cerrada
       const credsPath = path.join(pathPremBot, 'creds.json')
       if (!fs.existsSync(credsPath)) isSessionClosed = true
     } catch { isSessionClosed = true }
-
     if (isSessionClosed) {
       await sendNewsletter(m, conn, '🕑 Iniciando sesión, espere un momento...')
-      // CONTINÚA la lógica para reconectar al usuario
     } else {
       await sendNewsletter(m, conn, '「🩵」Ya estás conectado con este token.')
       return
     }
   } else {
-    // Asignar el token a este usuario
     tokensState[token] = senderId
     saveTokensState(tokensState)
     await sendNewsletter(m, conn, '「🩵」Token correcto, enviando método de vinculación...')
   }
 
-  // MÉTODO DE VINCULACIÓN POR CÓDIGO
   let pathPremBot = path.join(__dirname, '../prembot_sessions/', senderId)
   if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
 
@@ -98,36 +86,32 @@ let handler = async (m, { conn, args }) => {
       printQRInTerminal: false,
       auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
       msgRetryCache,
-      browser: ['Makima-PremBot', 'Chrome', '2.0.0'],
+      // Usa el browser string que SI funciona como subbot:
+      browser: ['Ubuntu', 'Chrome', '110.0.5585.95'],
       version,
       generateHighQualityLinkPreview: true
     }
-
     let sock = makeWASocket(connectionOptions)
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    let code = await sock.requestPairingCode(senderId)
-    if (!code) throw new Error("No se pudo generar código de vinculación.")
-    code = code.match(/.{1,4}/g)?.join("-")
-    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
-
-    // 1. Enviar mensaje con instrucciones
-    await conn.sendMessage(m.chat, {
-      text: pasos,
-      contextInfo: newsletterContext()
-    }, { quoted: m })
-
-    // Esperar un segundo para separar los mensajes
-    await delay(1000)
-
-    // 2. Enviar código real en otro mensaje
-    await conn.sendMessage(m.chat, {
-      text: `*Código de vinculación:*\n${code}`,
-      contextInfo: newsletterContext()
-    }, { quoted: m })
-
+    sock.ev.once('connection.update', async (update) => {
+      if (update.connection === 'connecting' || update.connection === 'open') {
+        let code = await sock.requestPairingCode(senderId)
+        code = code.match(/.{1,4}/g)?.join("-")
+        let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
+        await conn.sendMessage(m.chat, {
+          text: pasos,
+          contextInfo: newsletterContext()
+        }, { quoted: m })
+        await delay(1000)
+        await conn.sendMessage(m.chat, {
+          text: `*Código de vinculación:*\n${code}`,
+          contextInfo: newsletterContext()
+        }, { quoted: m })
+      }
+    })
+    // Forzar la conexión
+    sock.ws.on("open", () => {});
   } catch (e) {
-    console.error("Error generando code premium:", e)
+    console.error(e)
     await sendNewsletter(m, conn, '「🩵」No se pudo generar el código de vinculación (ver consola para más detalles).')
   }
 }
@@ -150,4 +134,15 @@ function newsletterContext() {
       title: channelRD.name,
       body: 'MAKIMA 2.0 BOT',
       thumbnailUrl: thumbnailUrl,
-      mediaType:
+      mediaType: 1,
+      renderLargerThumbnail: false,
+      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+    }
+  }
+}
+async function sendNewsletter(m, conn, text) {
+  await conn.sendMessage(m.chat, { text, contextInfo: newsletterContext() }, { quoted: m })
+}
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
