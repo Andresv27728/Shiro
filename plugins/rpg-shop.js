@@ -12,7 +12,7 @@ const handler = async (m, {conn, command, args}) => {
     // ------- CANAL/NEWSLETTER CONTEXT ---------
     const channelRD = { 
       id: "120363400360651198@newsletter", // <-- Cambia por tu canal/newsletter ID
-      name: "MAKIMA CHENNEL"              // <-- Cambia por el nombre de tu canal/newsletter
+      name: "MAKIMA CHANNEL"              // <-- Cambia por el nombre de tu canal/newsletter
     }
     let recibo = `
 ╔═══════⩽✰⩾═══════╗
