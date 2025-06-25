@@ -1,4 +1,4 @@
-// Plugin: Conexión PremBot Premium con tokens unicos (Makima MD Adaptado por mantis-has)
+// Plugin: Conexión PremBot Premium con tokens únicos (Makima MD Adaptado por mantis-has)
 
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
@@ -18,13 +18,12 @@ const premiumTokens = [
   "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
 ]
 
-// Archivo donde se guarda el estado de los tokens y sus dueños
+// Archivo para registrar los tokens usados y su dueño
 const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Carga el estado de los tokens desde el archivo, o inicia uno nuevo
 function loadTokensState() {
   if (fs.existsSync(TOKENS_FILE)) {
     try {
@@ -70,12 +69,11 @@ let handler = async (m, { conn, args }) => {
       // Checar si existen los archivos de sesión y si la sesión está cerrada
       const credsPath = path.join(pathPremBot, 'creds.json')
       if (!fs.existsSync(credsPath)) isSessionClosed = true
-      // Si quieres checar algo más detallado de Baileys puedes hacerlo aquí
     } catch { isSessionClosed = true }
 
     if (isSessionClosed) {
       await sendNewsletter(m, conn, '🕑 Iniciando sesión, espere un momento...')
-      // (Aquí continúa la lógica para reconectar)
+      // CONTINÚA la lógica para reconectar al usuario
     } else {
       await sendNewsletter(m, conn, '「🩵」Ya estás conectado con este token.')
       return
@@ -152,16 +150,4 @@ function newsletterContext() {
       title: channelRD.name,
       body: 'MAKIMA 2.0 BOT',
       thumbnailUrl: thumbnailUrl,
-      mediaType: 1,
-      renderLargerThumbnail: false,
-      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
-    }
-  }
-}
-async function sendNewsletter(m, conn, text) {
-  await conn.sendMessage(m.chat, { text, contextInfo: newsletterContext() }, { quoted: m })
-}
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
+      mediaType:
