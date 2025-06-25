@@ -1,7 +1,7 @@
 let handler = async (m, { conn }) => {
   // Datos de los contactos
   let numberCreator = '18293142989' // Número de la creadora
-  let nombreCreator = 'CREADOR'
+  let nombreCreator = '💎 C R E A D O R 💎'
   let canal = 'https://wa.me18293142989'
 
   let numberBot = '527222518356' // Aquí pon el número del bot, solo números con prefijo país (ej: 573001234567)
