@@ -26,7 +26,7 @@ async function handler(m, { conn: stars }) {
   let groupParticipants = (await stars.groupMetadata(m.chat).catch(() => ({}))).participants || []
   let botsEnGrupo = users.filter(v => groupParticipants.some(p => p.id === v.user?.jid))
   let listaBotsGrupo = botsEnGrupo.map(v => {
-    let nombre = v.user?.name || "SubBot"
+    let nombre = v.user?.name || "Sin Nombre"
     let tipo = v.user?.isMain
       ? "Bot Oficial"
       : v.user?.isPremium
@@ -38,7 +38,7 @@ async function handler(m, { conn: stars }) {
   let responseMessage = 
 `LISTA DE BOTS ACTIVOS
 
-principales: 1
+principales: ${principales.length}
 Prem-Bots: ${prembots.length}
 Subbots: ${subbots.length}
 
@@ -69,7 +69,7 @@ ${listaBotsGrupo}
     image: { url: thumbnailUrl },
     caption: responseMessage,
     contextInfo: contextNewsletter
-  })
+  }, { quoted: m }) // <-- RESPONDE al mensaje de la persona
 }
 
 handler.command = ['listjadibot', 'bots']
