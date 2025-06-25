@@ -46,7 +46,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       },
       externalAdReply: {
         title: channelRD.name,
-        body: 'Canal oficial de MAKIMA 2.0',
+        body: 'MAKIMA 2.0 BOT',
         thumbnailUrl: 'https://qu.ax/xxaLb.jpg', // Cambia la imagen si lo deseas
         mediaType: 1,
         renderLargerThumbnail: true,
