@@ -59,7 +59,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     })
     // Mensaje adicional
     await conn.sendMessage(m.chat, { 
-      text: 'SE NOS UNIÓ ${user}', 
+      text: 'SE NOS UNIÓ UN USUARIO}', 
       contextInfo: contextNewsletter
     })
   }
@@ -82,7 +82,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     })
     // Segundo mensaje como newsletter
     await conn.sendMessage(m.chat, { 
-      text: 'SE NOS FUE EL GAY DE ${user}', 
+      text: 'SE NOS FUE UN GAY', 
       contextInfo: contextNewsletter
     })
   }
