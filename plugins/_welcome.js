@@ -16,13 +16,15 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   const jid = m.messageStubParameters[0]
   const user = `@${jid.split('@')[0]}`
-  const pp = await conn.profilePictureUrl(jid, 'image').catch(() => 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1745522645448.jpeg')
+  // Usa una imagen cuadrada y pequeña para la miniatura
+  const thumbnailUrl = 'https://i.imgur.com/5Q1OtS2.jpg' // Puedes cambiarla por otra de 96x96 px si prefieres
+  const pp = await conn.profilePictureUrl(jid, 'image').catch(() => thumbnailUrl)
   const img = await fetch(pp).then(r => r.buffer())
   const total = [28, 32].includes(m.messageStubType)
     ? participants.length - 1
     : participants.length + 1
 
-  // Newsletter context
+  // Contexto newsletter/canal
   const contextNewsletter = {
     isForwarded: true,
     forwardingScore: 999,
@@ -33,10 +35,10 @@ export async function before(m, { conn, participants, groupMetadata }) {
     },
     externalAdReply: {
       title: channelRD.name,
-      body: 'MAKIMA 2.0 BOT',
-      thumbnailUrl: 'https://qu.ax/dXOUo.jpg',
+      body: 'Canal oficial de MAKIMA 2.0',
+      thumbnailUrl: thumbnailUrl, // Imagen cuadrada y pequeña
       mediaType: 1,
-      renderLargerThumbnail: true,
+      renderLargerThumbnail: false,
       sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
   };
@@ -82,7 +84,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     })
     // Segundo mensaje como newsletter
     await conn.sendMessage(m.chat, { 
-      text: 'SE NOS FUE UN GAY', 
+      text: 'SE NOS FUE EL USUARIO', 
       contextInfo: contextNewsletter
     })
   }
