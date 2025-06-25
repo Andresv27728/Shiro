@@ -1,36 +1,39 @@
-
 import fs from 'fs';
 
 const archivoRegistro = './chats_ya_notificados.json';
 let yaNotificados = new Set(
   fs.existsSync(archivoRegistro)
-? JSON.parse(fs.readFileSync(archivoRegistro))
-: []
+    ? JSON.parse(fs.readFileSync(archivoRegistro))
+    : []
 );
 
 const enviarAvisoCanal = async (conn, notifyChat = null) => {
-  const mensaje = `🦈 *¡Te invitamos a nuestro canal!* 🦈\n\nEste es el canal oficial 📢 de *Gawr Gura*:\n\n👉 https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k\n\nSíguelo para estar al tanto de *comandos, novedades y actualizaciones*. ¡Gracias por tu apoyo! 🙌`;
+  const mensaje = `🦈 *¡Te invitamos a nuestro canal!* 🦈\n\nEste es el canal oficial 📢 de *Gawr Gura*:\n\n👉 https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k\n\nSíguelo para estar al tanto de todas las novedades.`;
 
-  const chats = Object.entries(conn.chats).filter(([jid, chat]) => jid && chat.isChats);
+  // Ajusta para frameworks que usan conn.chats o conn.store.chats
+  const chats = Object.entries(conn.chats || conn.store?.chats || {}).filter(
+    ([jid, chat]) => jid && (chat?.isChats || chat?.id)
+  );
+
   let usuarios = [];
   let grupos = [];
 
-  if (notifyChat) await conn.sendMessage(notifyChat, { text: '📢 *Enviando mensaje del canal...* Esto puede tardar unos segundos.'});
+  if (notifyChat) await conn.sendMessage(notifyChat, { text: '📢 *Enviando mensaje del canal...* Esto puede tardar unos segundos.' });
 
   for (let [jid] of chats) {
     if (yaNotificados.has(jid)) continue;
 
     const isGroup = jid.endsWith('@g.us');
     try {
-      await conn.sendMessage(jid, { text: mensaje});
+      await conn.sendMessage(jid, { text: mensaje });
       if (isGroup) grupos.push(jid);
       else usuarios.push(jid);
       yaNotificados.add(jid);
-} catch (e) {
-      console.log(`❌ Error al enviar a ${jid}`);
-}
+    } catch (e) {
+      console.log(`❌ Error al enviar a ${jid}:`, e?.message || e);
+    }
     await new Promise(resolve => setTimeout(resolve, 400));
-}
+  }
 
   fs.writeFileSync(archivoRegistro, JSON.stringify([...yaNotificados], null, 2));
 
@@ -38,7 +41,7 @@ const enviarAvisoCanal = async (conn, notifyChat = null) => {
 
   if (usuarios.length) {
     resumen += `📋 *Usuarios:*\n` + usuarios.map(u => `• wa.me/${u.replace(/[^0-9]/g, '')}`).join('\n') + '\n\n';
-}
+  }
 
   if (grupos.length) {
     resumen += `📋 *Grupos:*\n`;
@@ -46,18 +49,19 @@ const enviarAvisoCanal = async (conn, notifyChat = null) => {
       try {
         let metadata = await conn.groupMetadata(g);
         resumen += `• ${metadata.subject}\n`;
-} catch {
+      } catch {
         resumen += `• ${g}\n`;
-}
-}
-}
+      }
+    }
+  }
 
-  if (notifyChat) await conn.sendMessage(notifyChat, { text: resumen});
+  if (notifyChat) await conn.sendMessage(notifyChat, { text: resumen });
 
-  return { usuarios, grupos};
+  return { usuarios, grupos };
 };
 
-const handler = async (m, { conn, isOwner}) => {
+// Handler compatible con bots tipo Baileys
+const handler = async (m, { conn, isOwner }) => {
   if (!isOwner) throw '❌ Este comando es solo para el *owner*.';
   await enviarAvisoCanal(conn, m.chat);
 };
@@ -67,7 +71,7 @@ handler.tags = ['owner'];
 handler.command = ['canal'];
 handler.owner = true;
 
-// También se puede activar al arrancar el bot
+// Para ejecución automática al arrancar el bot:
 handler.run = async (conn) => {
   await enviarAvisoCanal(conn, null);
 };
