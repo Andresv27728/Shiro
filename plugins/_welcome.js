@@ -1,23 +1,45 @@
 import { WAMessageStubType } from '@whiskeysockets/baileys'
 import fetch from 'node-fetch'
 
+const channelRD = {
+  id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
+  name: "MAKIMA - CHANNEL"
+};
+
 export async function before(m, { conn, participants, groupMetadata }) {
-  if (!m.messageStubType || !m.isGroup || !m.messageStubParameters?.[0]) return !0
+  if (
+    !m.messageStubType ||
+    !m.isGroup ||
+    !m.messageStubParameters?.[0] ||
+    !global.db.data.chats[m.chat]?.welcome
+  ) return !0
 
   const jid = m.messageStubParameters[0]
   const user = `@${jid.split('@')[0]}`
   const pp = await conn.profilePictureUrl(jid, 'image').catch(() => 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1745522645448.jpeg')
   const img = await fetch(pp).then(r => r.buffer())
-  const chat = global.db.data.chats[m.chat] || {}
-  const total = m.messageStubType == 27 ? participants.length + 1 : participants.length - 1
+  const total = [28, 32].includes(m.messageStubType)
+    ? participants.length - 1
+    : participants.length + 1
 
-  const contacto = {
-    key: { participants: "0@s.whatsapp.net", remoteJid: "status@broadcast", fromMe: false, id: "Halo" },
-    message: { contactMessage: { vcard: `BEGIN:VCARD\nVERSION:3.0\nN:;Bot;;;\nFN:Bot\nTEL;waid=${jid.split('@')[0]}:${jid.split('@')[0]}\nEND:VCARD` } },
-    participant: "0@s.whatsapp.net"
-  }
-
-  if (!chat.welcome) return
+  // Newsletter context
+  const contextNewsletter = {
+    isForwarded: true,
+    forwardingScore: 999,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: channelRD.id,
+      newsletterName: channelRD.name,
+      serverMessageId: -1
+    },
+    externalAdReply: {
+      title: channelRD.name,
+      body: 'MAKIMA 2.0 BOT',
+      thumbnailUrl: 'https://qu.ax/dXOUo.jpg',
+      mediaType: 1,
+      renderLargerThumbnail: true,
+      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+    }
+  };
 
   if (m.messageStubType == 27) {
     const bienvenida = `
@@ -29,7 +51,17 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
 ⌬ Usa *#help* para ver los comandos disponibles
 `
-    await conn.sendMini(m.chat, 'Bienvenido a este grupo', 'Makima 2.0 Bot', bienvenida, img, img, null, contacto)
+    // Mensaje de bienvenida como newsletter
+    await conn.sendMessage(m.chat, { 
+      image: img, 
+      caption: bienvenida, 
+      contextInfo: contextNewsletter 
+    })
+    // Mensaje adicional
+    await conn.sendMessage(m.chat, { 
+      text: 'SE NOS UNIÓ ${user}', 
+      contextInfo: contextNewsletter
+    })
   }
 
   if ([28, 32].includes(m.messageStubType)) {
@@ -42,6 +74,16 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
 ⌬ Espero y vuelvas después.
 `
-    await conn.sendMini(m.chat, 'Ojala te jodas gay', 'Makima 2.0 Bot', despedida, img, img, null, contacto)
+    // Mensaje de despedida como newsletter
+    await conn.sendMessage(m.chat, { 
+      image: img, 
+      caption: despedida, 
+      contextInfo: contextNewsletter 
+    })
+    // Segundo mensaje como newsletter
+    await conn.sendMessage(m.chat, { 
+      text: 'SE NOS FUE EL GAY DE ${user}', 
+      contextInfo: contextNewsletter
+    })
   }
 }
