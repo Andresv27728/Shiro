@@ -10,15 +10,26 @@ conn.ev.on('group-participants.update', async (update) => {
   const by = update.actor || '';
 
   for (let target of afectados) {
-    // Obtener nombre del afectado
-    let username = await conn.getName(target).catch(_ => null);
-    if (!username || username.startsWith('@')) username = (target.replace(/@.+/, ''));
+    // Intenta obtener el nombre, si no, usa el número limpio
+    let username = '';
+    try {
+      username = await conn.getName(target);
+    } catch (e) {}
+    if (!username || username.startsWith('+') || username === target) {
+      username = target.replace(/[@:\.a-z]/gi, '');
+    }
 
-    // Obtener nombre del actor (quien promueve/degrada)
-    let username2 = by
-      ? (await conn.getName(by).catch(_ => null))
-      : null;
-    if (!username2 || username2.startsWith('@')) username2 = by ? (by.replace(/@.+/, '')) : "Desconocido";
+    let username2 = '';
+    if (by && typeof by === 'string') {
+      try {
+        username2 = await conn.getName(by);
+      } catch (e) {}
+      if (!username2 || username2.startsWith('+') || username2 === by) {
+        username2 = by.replace(/[@:\.a-z]/gi, '');
+      }
+    } else {
+      username2 = 'Desconocido';
+    }
 
     let texto = '';
     if (update.action === 'promote') {
