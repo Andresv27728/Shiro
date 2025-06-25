@@ -16,6 +16,7 @@ const premiumTokens = [
   "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
 ]
 const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
+const SESSIONS_FOLDER = path.join(process.cwd(), 'premium_sessions') // <--- Carpeta raíz para sesiones premium
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -53,11 +54,14 @@ let handler = async (m, { conn, args }) => {
     return
   }
 
+  // Define el path de sesión única por usuario (premium_sessions/<numero>)
+  let userSessionPath = path.join(SESSIONS_FOLDER, senderId)
+  if (!fs.existsSync(userSessionPath)) fs.mkdirSync(userSessionPath, { recursive: true })
+
   if (tokensState[token] === senderId) {
-    let pathPremBot = path.join(__dirname, '../prembot_sessions/', senderId)
     let isSessionClosed = false
     try {
-      const credsPath = path.join(pathPremBot, 'creds.json')
+      const credsPath = path.join(userSessionPath, 'creds.json')
       if (!fs.existsSync(credsPath)) isSessionClosed = true
     } catch { isSessionClosed = true }
     if (isSessionClosed) {
@@ -66,17 +70,11 @@ let handler = async (m, { conn, args }) => {
       await sendNewsletter(m, conn, '「🩵」Ya estás conectado con este token.')
       return
     }
-  } else {
-    tokensState[token] = senderId
-    saveTokensState(tokensState)
-    await sendNewsletter(m, conn, '「🩵」Token correcto, enviando método de vinculación...')
+  conn, '「🩵」Token correcto, enviando método de vinculación...')
   }
 
-  let pathPremBot = path.join(__dirname, '../prembot_sessions/', senderId)
-  if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
-
   try {
-    const { state } = await useMultiFileAuthState(pathPremBot)
+    const { state } = await useMultiFileAuthState(userSessionPath)
     let { version } = await fetchLatestBaileysVersion()
     const msgRetryCache = new NodeCache()
     const connectionOptions = {
@@ -101,11 +99,7 @@ let handler = async (m, { conn, args }) => {
     }, { quoted: m })
     await delay(1000)
     await conn.sendMessage(m.chat, {
-      text: `*Código de vinculación:*\n${code}`,
-      contextInfo: newsletterContext()
-    }, { quoted: m })
-  } catch (e) {
-    console.error("ERROR PAIRING CODE:", e)
+      text: `*Código de vinculación:*\n${ CODE:", e)
     await sendNewsletter(m, conn, '「🩵」No se pudo generar el código de vinculación. Error: ' + (e?.message || e));
   }
 }
