@@ -18,12 +18,15 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   global.db.data.users[recipient].monedas += amount
 
   let msg = `
- *MAKIMA 2.0 - TRANSFERIR* 
+╭ׅׄ̇─ׅ̻ׄ╮۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹۪̇߭︹ׅ̟ׄ̇︹ׅ۪ׄ̇߭︹ׅ̟ׄ̇⊹
+├ׁ̟̇    「TRANSFERENCIA」 
+╰━─━─━─≪≪✠≫≫──━━╯
 ┃
-┃ 🩵 *Remitente:* @${m.sender.split('@')[0]}
-┃ 🩵 *Destinatario:* @${recipient.split('@')[0]}
-┃ 💎 *Cantidad Transferida:* ${amount} Diamantes 
+┃REMITENTE: @${m.sender.split('@')[0]}
 ┃
+┃DESTINATARIO: @${recipient.split('@')[0]}
+┃
+┃CANTIDAD: ${amount} MakiCoins
 ┗━━━━━━━━━━━━━━━━━┛`.trim()
 
   // ENVÍA SÓLO EL MENSAJE DE TRANSFERENCIA, PERO CON CONTEXTO DE NEWSLETTER
