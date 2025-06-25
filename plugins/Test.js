@@ -10,15 +10,15 @@ conn.ev.on('group-participants.update', async (update) => {
   const by = update.actor || '';
 
   for (let target of afectados) {
-    // Obtener nombres reales
-    let nombreTarget = await conn.getName(target);
-    let nombreBy = await conn.getName(by);
+    // Obtener los nombres visibles de WhatsApp
+    let username = await conn.getName(target).catch(_ => target.split('@')[0]);
+    let username2 = await conn.getName(by).catch(_ => by.split('@')[0]);
 
     let texto = '';
     if (update.action === 'promote') {
-      texto = `${nombreTarget} fue puesto de admin por ${nombreBy}`;
+      texto = `${username} fue puesto de admin por ${username2}`;
     } else if (update.action === 'demote') {
-      texto = `${nombreTarget} fue quitado de admin por ${nombreBy}`;
+      texto = `${username} fue quitado de admin por ${username2}`;
     }
 
     await conn.sendMessage(grupo, {
@@ -33,7 +33,7 @@ conn.ev.on('group-participants.update', async (update) => {
         },
         externalAdReply: {
           title: channelRD.name,
-          body: 'MAKIMA 2.0 CHANNEL',
+          body: 'Canal oficial de MAKIMA 2.0',
           thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg',
           mediaType: 1,
           renderLargerThumbnail: true,
