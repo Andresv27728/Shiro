@@ -10,7 +10,7 @@ const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Imagen cuadrada y pequeña
 
 let handler = async function (m, { args, command, usedPrefix, conn }) {
   if (!args[0]) {
-    // Si no hay texto, respuesta tipo newsletter/canal
+    // Si no hay texto, responde como newsletter y citando el mensaje original del usuario
     const contextNewsletter = {
       isForwarded: true,
       forwardingScore: 999,
@@ -28,7 +28,10 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
         sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
       }
     };
-    await conn.sendMessage(m.chat, { text: '「🩵」Debes ingresar un texto para usar este comando', contextInfo: contextNewsletter });
+    await conn.sendMessage(m.chat, { 
+      text: '「🩵」Debes ingresar un texto para usar este comando', 
+      contextInfo: contextNewsletter 
+    }, { quoted: m }); // RESPONDE citando el mensaje original del usuario
     return;
   }
   // Construye el texto a repetir
