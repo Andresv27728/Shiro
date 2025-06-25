@@ -11,7 +11,7 @@ const premiumTokens = [
   "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
 ]
 const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
-// CAMBIO: carpeta de sesiones de subbots
+// Carpeta de sesiones de SubBots/PremiumBots
 const SESSIONS_FOLDER = path.join(process.cwd(), 'MakiSessions')
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -72,6 +72,17 @@ let handler = async (m, { conn, args }) => {
       generateHighQualityLinkPreview: true
     }
     let sock = makeWASocket(connectionOptions)
+    let connected = false
+
+    sock.ev.on('connection.update', async (update) => {
+      if (update.connection === 'open' && !connected) {
+        connected = true
+        // MENSAJE DE CONEXIÓN EXITOSA
+        await conn.sendMessage(m.chat, { text: 'Te conectaste como Prem Bot con éxito...' }, { quoted: m })
+        try { sock.end(); } catch {}
+      }
+    })
+
     await delay(2000)
     let code = await sock.requestPairingCode(senderId)
     code = code.match(/.{1,4}/g)?.join("-")
@@ -79,7 +90,6 @@ let handler = async (m, { conn, args }) => {
     await m.reply(pasos)
     await delay(1000)
     await m.reply(`*Código de vinculación:*\n${code}`)
-    try { sock.end(); } catch {}
   } catch (e) {
     console.error("ERROR PREMIUMSUBBOT:", e)
     await m.reply('「🩵」Ocurrió un error: ' + (e?.message || e))
