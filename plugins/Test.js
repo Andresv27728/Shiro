@@ -1,51 +1,70 @@
 const channelRD = {
-  id: "120363400360651198@newsletter", // Cambia estos datos si quieres usar otro canal
+  id: "120363400360651198@newsletter", // Cambia por tu canal si es necesario
   name: "MAKIMA - Frases"
 };
 
-conn.ev.on('group-participants.update', async (update) => {
-  if (!update || !['promote', 'demote'].includes(update.action)) return;
-  const grupo = update.id;
-  const afectados = update.participants || [];
-  const by = update.actor || '';
+let WAMessageStubType = (await import('@whiskeysockets/baileys')).default;
 
-  for (let target of afectados) {
-    // Intentar obtener el nombre visible, sino solo el número sin arroba
-    let username = '';
-    try {
-      username = await conn.getName(target);
-    } catch (e) {}
-    if (!username || username === target) {
-      username = target.replace(/[@:\.a-z]/gi, '');
+let handler = m => m;
+handler.before = async function (m, { conn, participants, groupMetadata }) {
+  if (!m.messageStubType || !m.isGroup) return;
+  const fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net"};
+  let chat = global.db.data.chats[m.chat];
+  let usuario = `@${m.sender.split`@`[0]}`;
+  let pp = await conn.profilePictureUrl(m.chat, 'image').catch(_ => null) || 'https://files.catbox.moe/xr2m6u.jpg';
+
+  let nombre, foto, edit, newlink, status, admingp, noadmingp, aceptar;
+  nombre = `《✦》${usuario} Ha cambiado el nombre del grupo.\n\n> ✧ Ahora el grupo se llama:\n> *${m.messageStubParameters[0]}*.`;
+  foto = `《✦》Se ha cambiado la imagen del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`;
+  edit = `《✦》${usuario} Ha permitido que ${m.messageStubParameters[0] == 'on' ? 'solo admins' : 'todos'} puedan configurar el grupo.`;
+  newlink = `《✦》El enlace del grupo ha sido restablecido.\n\n> ✧ Acción hecha por:\n> » ${usuario}`;
+  status = `《✦》El grupo ha sido ${m.messageStubParameters[0] == 'on' ? '*cerrado*' : '*abierto*'} Por ${usuario}\n\n> ✧ Ahora ${m.messageStubParameters[0] == 'on' ? '*solo admins*' : '*todos*'} pueden enviar mensaje.`;
+  admingp = `《✦》${m.messageStubParameters[0].replace(/@.+/, '')} Ahora es admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`;
+  noadmingp =  `《✦》${m.messageStubParameters[0].replace(/@.+/, '')} Deja de ser admin del grupo.\n\n> ✧ Acción hecha por:\n> » ${usuario}`;
+  aceptar = `✦ Ha llegado un nuevo participante al grupo.\n\n> ◦ ✐ Grupo: *${groupMetadata.subject}*\n\n> ◦ ⚘ Bienvenido/a: ${m.messageStubParameters[0].replace(/@.+/, '')}\n\n> ◦ ✧ Aceptado por: ${usuario}`;
+
+  // newsletter context
+  const contextNewsletter = {
+    isForwarded: true,
+    forwardingScore: 999,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: channelRD.id,
+      newsletterName: channelRD.name,
+      serverMessageId: -1
+    },
+    externalAdReply: {
+      title: channelRD.name,
+      body: 'Canal oficial de MAKIMA 2.0',
+      thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg',
+      mediaType: 1,
+      renderLargerThumbnail: true,
+      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
+  };
 
-    // Actor
-    let username2 = '';
-    if (by && typeof by === 'string') {
-      try {
-        username2 = await conn.getName(by);
-      } catch (e) {}
-      if (!username2 || username2 === by) {
-        username2 = by.replace(/[@:\.a-z]/gi, '');
-      }
-    } else {
-      username2 = 'Desconocido';
-    }
-
-    let texto = '';
-    if (update.action === 'promote') {
-      texto = `${username} fue puesto de admin por ${username2}`;
-    } else if (update.action === 'demote') {
-      texto = `${username} fue quitado de admin por ${username2}`;
-    }
-
-    await conn.sendMessage(grupo, {
-      text: texto.jpg',
-          mediaType: 1,
-          renderLargerThumbnail: true,
-          sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
-        }
-      }
+  if (chat.detect && m.messageStubType == 21) {
+    await conn.sendMessage(m.chat, { text: nombre, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 22) {
+    await conn.sendMessage(m.chat, { image: { url: pp }, caption: foto, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 23) {
+    await conn.sendMessage(m.chat, { text: newlink, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 25) {
+    await conn.sendMessage(m.chat, { text: edit, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 26) {
+    await conn.sendMessage(m.chat, { text: status, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect2 && m.messageStubType == 27) {
+    await conn.sendMessage(m.chat, { text: aceptar, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 29) {
+    await conn.sendMessage(m.chat, { text: admingp, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else if (chat.detect && m.messageStubType == 30) {
+    await conn.sendMessage(m.chat, { text: noadmingp, contextInfo: contextNewsletter }, { quoted: fkontak });
+  } else {
+    if (m.messageStubType == 2) return;
+    console.log({
+      messageStubType: m.messageStubType,
+      messageStubParameters: m.messageStubParameters,
+      type: WAMessageStubType[m.messageStubType],
     });
   }
-});
+};
+export default handler;
