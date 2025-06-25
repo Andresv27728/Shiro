@@ -24,12 +24,12 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 ┃ 🩵 *Destinatario:* @${recipient.split('@')[0]}
 ┃ 💎 *Cantidad Transferida:* ${amount} Diamantes 
 ┃
-┗━━━━━━━━━━━━━━━━━━┛`.trim()
+┗━━━━━━━━━━━━━━━━━┛`.trim()
 
   // ENVÍA SÓLO EL MENSAJE DE TRANSFERENCIA, PERO CON CONTEXTO DE NEWSLETTER
   const channelRD = { 
     id: "120363400360651198@newsletter", // <-- ID de tu canal/newsletter
-    name: "MAKIMA - Frases"              // <-- Nombre de tu canal/newsletter
+    name: "TRANSFIRIENDO MAKICOINS"              // <-- Nombre de tu canal/newsletter
   }
 
   await conn.sendMessage(m.chat, {
@@ -46,7 +46,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       externalAdReply: {
         title: channelRD.name,
         body: 'Canal oficial de MAKIMA 2.0',
-        thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg', // Cambia la imagen si lo deseas
+        thumbnailUrl: 'https://qu.ax/xxaLb.jpg', // Cambia la imagen si lo deseas
         mediaType: 1,
         renderLargerThumbnail: true,
         sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
