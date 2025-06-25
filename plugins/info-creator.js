@@ -1,25 +1,49 @@
 let handler = async (m, { conn }) => {
-  // Cambia estos valores por los correctos de tu creadora
-  let number = '18293142989' // Número de la creadora con prefijo país, sin espacios ni +
-  let nombre = 'CREADOR'
-  let canal = 'https://wa.me18293142989' // Enlace a tu canal (puedes sacar el mismo que en el menú)
+  // Datos de los contactos
+  let numberCreator = '18293142989' // Número de la creadora
+  let nombreCreator = 'CREADOR'
+  let canal = 'https://wa.me18293142989'
 
-  // vCard de la creadora
-  let vcard = `BEGIN:VCARD
+  let numberBot = '527222518356' // Aquí pon el número del bot, solo números con prefijo país (ej: 573001234567)
+  let nombreBot = 'BOT OFICIAL'
+
+  let numberYoSoyYo = '573133374132'
+  let nombreYoSoyYo = 'YO SOY YO'
+
+  // vCards individuales
+  let vcardCreator = `BEGIN:VCARD
 VERSION:3.0
-N:${nombre}
-FN:${nombre}
-TEL;waid=${number}:${number}
+N:${nombreCreator}
+FN:${nombreCreator}
+TEL;waid=${numberCreator}:${numberCreator}
 END:VCARD`
 
-  // Envía el canal como texto (puedes personalizar el mensaje)
-  await conn.sendMessage(m.chat, { text: `💙 AQUI ESTA EL NUMERO DE MI CREADOR` }, { quoted: m })
+  let vcardBot = `BEGIN:VCARD
+VERSION:3.0
+N:${nombreBot}
+FN:${nombreBot}
+TEL;waid=${numberBot}:${numberBot}
+END:VCARD`
 
-  // Envía la tarjeta de contacto
+  let vcardYoSoyYo = `BEGIN:VCARD
+VERSION:3.0
+N:${nombreYoSoyYo}
+FN:${nombreYoSoyYo}
+TEL;waid=${numberYoSoyYo}:${numberYoSoyYo}
+END:VCARD`
+
+  // Envía el canal como texto
+  await conn.sendMessage(m.chat, { text: `💙 AQUI ESTA EL NUMERO DE MI CREADOR Y MÁS CONTACTOS` }, { quoted: m })
+
+  // Envía la tarjeta de contacto con los tres contactos
   await conn.sendMessage(m.chat, {
     contacts: {
-      displayName: nombre,
-      contacts: [{ vcard }]
+      displayName: 'Contactos Importantes',
+      contacts: [
+        { vcard: vcardCreator },
+        { vcard: vcardBot },
+        { vcard: vcardYoSoyYo }
+      ]
     }
   }, { quoted: m })
 }
