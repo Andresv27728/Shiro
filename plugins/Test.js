@@ -1,4 +1,4 @@
-// Plugin: Conexión PremBot (Makima MD Adaptado por mantis-has)
+// Plugin: Conexión PremBot Premium (Makima MD Adaptado por mantis-has)
 
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
@@ -39,7 +39,6 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
   await sendNewsletter(m, conn, '「🩵」Token correcto, enviando método de vinculación...')
 
   // MÉTODO DE VINCULACIÓN POR CÓDIGO (pairing code)
-  // Carpeta única para cada usuario
   let id = m.sender.split('@')[0]
   let pathPremBot = path.join(__dirname, '../prembot_sessions/', id)
   if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
@@ -91,9 +90,9 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
   }
 }
 
-handler.help = ['qr <token>', 'code <token>']
+handler.help = ['qrpremium <token>', 'codepremium <token>']
 handler.tags = ['serbot']
-handler.command = ['qr', 'code']
+handler.command = ['qrpremium', 'codepremium']
 export default handler
 
 // FUNCION AUXILIAR
