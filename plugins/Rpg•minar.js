@@ -10,16 +10,16 @@ let handler = async (m, { conn }) => {
   let stone = `${pickRandom([200, 500, 700, 800, 900, 4000, 300])}` * 1
 
   let time = global.db.data.users[m.sender].lastmiming + 600000
-  if (new Date - global.db.data.users[m.sender].lastmiming < 600000) return conn.reply(m.chat, `*⏰ Debes esperar ${msToTime(time - new Date())} para volver a minar*`, m)
+  if (new Date - global.db.data.users[m.sender].lastmiming < 600000) return conn.reply(m.chat, `*🕑 Debes esperar ${msToTime(time - new Date())} para volver a minar*`, m)
 
   let hasil = Math.floor(Math.random() * 1000)
-  let info = `⛏️ *Te has adentrado en lo profundo de las cuevas*
+  let info = `⛏️ ESTABAS MINANDO...
 
-> 🌱 Obtuviste estos recursos
+> 💎 OBTUVISTE ESTOS RECURSOS:
 
 ✨ *Exp*: ${hasil}
-🍪 *Cookies*: ${cookies}
-💚 *Esmeralda*: ${emerald}
+💰 *Makicoins*: ${cookies}
+💎 *Diamantes*: ${emerald}
 🔩 *Hierro*: ${iron}
 🏅 *Oro*: ${gold}
 🕋 *Carbón*: ${coal}
@@ -28,7 +28,7 @@ let handler = async (m, { conn }) => {
   // ENVÍO DEL MENSAJE COMO REENVIADO DESDE CANAL/NEWSLETTER
   const channelRD = { 
     id: "120363400360651198@newsletter", // <-- Pon aquí el ID de tu canal/newsletter
-    name: "MAKIMA - Frases"              // <-- Pon aquí el nombre del canal/newsletter
+    name: "MAKIMA - CHANNEL"              // <-- Pon aquí el nombre del canal/newsletter
   }
 
   await conn.sendMessage(m.chat, {
@@ -43,8 +43,8 @@ let handler = async (m, { conn }) => {
       },
       externalAdReply: {
         title: channelRD.name,
-        body: 'Canal oficial de MAKIMA 2.0',
-        thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg', // Cambia la imagen si deseas
+        body: 'MAKIMA 2.0 BOT',
+        thumbnailUrl: 'https://qu.ax/tqWBN.jpg', // Cambia la imagen si deseas
         mediaType: 1,
         renderLargerThumbnail: true,
         sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
