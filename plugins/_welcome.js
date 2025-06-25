@@ -59,7 +59,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     })
     // Mensaje adicional
     await conn.sendMessage(m.chat, { 
-      text: 'SE NOS UNIÓ UN USUARIO}', 
+      text: 'SE NOS UNIÓ UN USUARIO', 
       contextInfo: contextNewsletter
     })
   }
