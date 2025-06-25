@@ -45,7 +45,7 @@ let handler = async (m, { conn, args }) => {
   if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
 
   try {
-    const { state, saveCreds } = await useMultiFileAuthState(pathPremBot)
+    const { state } = await useMultiFileAuthState(pathPremBot)
     let { version } = await fetchLatestBaileysVersion()
     const msgRetryCache = new NodeCache()
     const connectionOptions = {
@@ -64,13 +64,16 @@ let handler = async (m, { conn, args }) => {
     let code = await sock.requestPairingCode(id)
     if (!code) throw new Error("No se pudo generar código de vinculación.")
     code = code.match(/.{1,4}/g)?.join("-")
-    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
+    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
 
     // 1. Enviar mensaje con instrucciones
     await conn.sendMessage(m.chat, {
       text: pasos,
       contextInfo: newsletterContext()
     }, { quoted: m })
+
+    // Esperar un segundo para separar los mensajes
+    await delay(1000)
 
     // 2. Enviar código real en otro mensaje
     await conn.sendMessage(m.chat, {
@@ -89,7 +92,6 @@ handler.tags = ['serbot']
 handler.command = ['qrpremium', 'codepremium']
 export default handler
 
-// FUNCIONES AUXILIARES
 function newsletterContext() {
   return {
     isForwarded: true,
@@ -110,4 +112,10 @@ function newsletterContext() {
   }
 }
 async function sendNewsletter(m, conn, text) {
-  await conn.sendMessage(m.chat, { text, contextInfo: newsletterContext
+  await conn.sendMessage(m.chat, { text, contextInfo: newsletterContext() }, { quoted: m })
+}
+
+// Utilidad para delay
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
