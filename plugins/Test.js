@@ -4,15 +4,21 @@ const channelRD = {
 };
 
 conn.ev.on('group-participants.update', async (update) => {
-  if (!update || !update.action || !['promote', 'demote'].includes(update.action)) return;
+  if (!update || !['promote', 'demote'].includes(update.action)) return;
   const grupo = update.id;
   const afectados = update.participants || [];
   const by = update.actor || '';
+
   for (let target of afectados) {
-    let username = await conn.getName(target).catch(_ => '') || (target.split('@')[0] || "Desconocido");
+    // Obtener nombre del afectado
+    let username = await conn.getName(target).catch(_ => null);
+    if (!username || username.startsWith('@')) username = (target.replace(/@.+/, ''));
+
+    // Obtener nombre del actor (quien promueve/degrada)
     let username2 = by
-      ? (await conn.getName(by).catch(_ => '') || (by.split('@')[0] || "Desconocido"))
-      : "Desconocido";
+      ? (await conn.getName(by).catch(_ => null))
+      : null;
+    if (!username2 || username2.startsWith('@')) username2 = by ? (by.replace(/@.+/, '')) : "Desconocido";
 
     let texto = '';
     if (update.action === 'promote') {
