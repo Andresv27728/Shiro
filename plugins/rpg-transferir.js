@@ -3,7 +3,7 @@
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   let user = global.db.data.users[m.sender]
-  let recipient = m.mentionedJid[0]
+  let recipient = m.mentionedJid && m.mentionedJid[0]
 
   if (!recipient) return conn.reply(m.chat, `💎Comando mal utilizado, usa:\n\n${usedPrefix + command} @usuario cantidad`, m)
 
@@ -27,6 +27,34 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 ┗━━━━━━━━━━━━━━━━━━┛`.trim()
 
   await conn.reply(m.chat, msg, m, { mentions: [m.sender, recipient] })
+
+  // --- ENVÍO DEL CANAL COMO REENVIADO DESDE NEWSLETTER ---
+  const channelRD = { 
+    id: "120363400360651198@newsletter", // <-- Pon aquí el ID de tu canal/newsletter
+    name: "MAKIMA - Frases"              // <-- Pon aquí el nombre del canal
+  }
+  let mensajeCanal = "🩵 Síguenos en nuestro canal oficial para más novedades y comandos exclusivos."
+
+  await conn.sendMessage(m.chat, {
+    text: mensajeCanal,
+    contextInfo: {
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: channelRD.id,
+        newsletterName: channelRD.name,
+        serverMessageId: -1,
+      },
+      forwardingScore: 999,
+      externalAdReply: {
+        title: channelRD.name,
+        body: 'Canal oficial de MAKIMA 2.0',
+        thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg', // Cambia la imagen si lo deseas
+        mediaType: 1,
+        renderLargerThumbnail: true,
+        sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+      }
+    }
+  }, { quoted: m })
 }
 
 handler.help = ['transferir @usuario cantidad']
