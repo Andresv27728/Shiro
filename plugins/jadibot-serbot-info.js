@@ -38,7 +38,7 @@ async function handler(m, { conn: stars }) {
   let responseMessage = 
 `LISTA DE BOTS ACTIVOS
 
-principales: ${principales.length}
+principales: 1
 Prem-Bots: ${prembots.length}
 Subbots: ${subbots.length}
 
