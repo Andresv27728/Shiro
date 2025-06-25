@@ -22,49 +22,53 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 let handler = async (m, { conn, args, command, usedPrefix }) => {
-  // Si solo ponen el comando sin argumento
   if (!args[0]) {
     await sendNewsletter(m, conn, '「🩵」Ingresa un token para conectarte con la bot.')
     return
   }
 
-  // Validar token
   const token = (args[0] || '').trim().toUpperCase()
   if (!premiumTokens.includes(token)) {
     await sendNewsletter(m, conn, '「🩵」El token ingresado es incorrecto, conectate con mi creador para que te regale un token premium.')
     return
   }
 
-  // Token correcto
   await sendNewsletter(m, conn, '「🩵」Token correcto, enviando método de vinculación...')
 
-  // MÉTODO DE VINCULACIÓN POR CÓDIGO (pairing code)
-  let id = m.sender.split('@')[0]
+  // MÉTODO DE VINCULACIÓN POR CÓDIGO
+  // Carpeta única para cada usuario
+  let id = m.sender.replace(/\D/g, '') // Solo números
+  if (!id || id.length < 7) {
+    await sendNewsletter(m, conn, '「🩵」No se pudo obtener tu número correctamente. Asegúrate de escribir desde tu número real de WhatsApp.')
+    return
+  }
   let pathPremBot = path.join(__dirname, '../prembot_sessions/', id)
   if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
 
-  // Setup Baileys
-  const { state, saveCreds } = await useMultiFileAuthState(pathPremBot)
-  let { version } = await fetchLatestBaileysVersion()
-  const msgRetryCache = new NodeCache()
-  const connectionOptions = {
-    logger: pino({ level: "fatal" }),
-    printQRInTerminal: false,
-    auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
-    msgRetryCache,
-    browser: ['Makima-PremBot', 'Chrome', '2.0.0'],
-    version,
-    generateHighQualityLinkPreview: true
-  }
-
-  let sock = makeWASocket(connectionOptions)
-
-  // Pairing code
   try {
-    let secret = await sock.requestPairingCode(id)
-    secret = secret.match(/.{1,4}/g)?.join("-")
-    // Mensaje de pasos y código
-    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el siguiente código:\n\n*${secret}*\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
+    // Setup Baileys
+    const { state, saveCreds } = await useMultiFileAuthState(pathPremBot)
+    let { version } = await fetchLatestBaileysVersion()
+    const msgRetryCache = new NodeCache()
+    const connectionOptions = {
+      logger: pino({ level: "fatal" }),
+      printQRInTerminal: false,
+      auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
+      msgRetryCache,
+      browser: ['Makima-PremBot', 'Chrome', '2.0.0'],
+      version,
+      generateHighQualityLinkPreview: true
+    }
+
+    let sock = makeWASocket(connectionOptions)
+    // Espera a que el socket esté listo
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    let code = await sock.requestPairingCode(id)
+    if (!code) throw new Error("No se pudo generar código de vinculación.")
+    code = code.match(/.{1,4}/g)?.join("-")
+    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el siguiente código:\n\n*${code}*\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
+
     await conn.sendMessage(m.chat, {
       text: pasos,
       contextInfo: {
@@ -85,8 +89,10 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
         }
       }
     }, { quoted: m })
+
   } catch (e) {
-    await sendNewsletter(m, conn, '「🩵」Hubo un error generando el código de vinculación. Intenta de nuevo.')
+    console.error("Error generando code premium:", e)
+    await sendNewsletter(m, conn, '「🩵」No se pudo generar el código de vinculación (ver consola para más detalles).')
   }
 }
 
