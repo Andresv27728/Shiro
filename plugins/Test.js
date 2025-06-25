@@ -15,8 +15,7 @@ const SESSIONS_FOLDER = path.join(process.cwd(), 'MakiSessions')
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-function loadTokensState() {
-  if (fs.existsSync(TOKENS_FILE)) {
+function(TOKENS_FILE)) {
     try {
       return JSON.parse(fs.readFileSync(TOKENS_FILE))
     } catch {
@@ -42,6 +41,10 @@ let handler = async (m, { conn, args }) => {
     }
     let tokensState = loadTokensState()
     let senderId = m.sender.split('@')[0].replace(/\D/g, '')
+    if (!/^\d{8,}$/.test(senderId)) {
+      await m.reply('「🩵」El número de WhatsApp es inválido. Debe ser solo números y formato internacional (ej: 51999999999).')
+      return
+    }
     let userSessionPath = path.join(SESSIONS_FOLDER, senderId)
     if (!fs.existsSync(userSessionPath)) fs.mkdirSync(userSessionPath, { recursive: true })
 
@@ -74,7 +77,7 @@ let handler = async (m, { conn, args }) => {
       let sock = makeWASocket(connectionOptions)
 
       let timeout = setTimeout(async () => {
-        await m.reply('「🩵」Error: El socket tardó demasiado en conectar. Verifica tu número y vuelve a intentar.')
+        await m.reply('「🩵」Error: El socket tardó demasiado en conectar. Verifica tu número (debe ser internacional, ejemplo: 51999999999), tu conexión a internet y la carpeta MakiSessions.')
         try { sock.end(); } catch {}
       }, 20000) // 20 segundos máximo
 
@@ -91,7 +94,7 @@ let handler = async (m, { conn, args }) => {
             await m.reply(`*Código de vinculación:*\n${code}`)
             await delay(1000)
             await m.reply('Te conectaste como Prem Bot con éxito...')
-            try { sock.end(); } catch {}
+.end(); } catch {}
           } catch (err) {
             await m.reply('「🩵」Error generando pairing code: ' + (err?.message || err))
             try { sock.end(); } catch {}
@@ -102,7 +105,7 @@ let handler = async (m, { conn, args }) => {
       })
 
       sock.ev.on('creds.update', (creds) => {
-        // Opcional: puedes guardar info extra aquí si quieres
+        // Puedes guardar info extra aquí si quieres
       })
 
     } catch (err) {
