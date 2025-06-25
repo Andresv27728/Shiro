@@ -26,29 +26,27 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 ┃
 ┗━━━━━━━━━━━━━━━━━━┛`.trim()
 
-  await conn.reply(m.chat, msg, m, { mentions: [m.sender, recipient] })
-
-  // --- ENVÍO DEL CANAL COMO REENVIADO DESDE NEWSLETTER ---
+  // ENVÍA SÓLO EL MENSAJE DE TRANSFERENCIA, PERO CON CONTEXTO DE NEWSLETTER
   const channelRD = { 
-    id: "120363400360651198@newsletter", // <-- Pon aquí el ID de tu canal/newsletter
-    name: "TRANSFIRIENDO MAKICOINS"              // <-- Pon aquí el nombre del canal
+    id: "120363400360651198@newsletter", // <-- ID de tu canal/newsletter
+    name: "MAKIMA - Frases"              // <-- Nombre de tu canal/newsletter
   }
-  let mensajeCanal = "🩵 Debido a esta transferencia, debes recordar que se te descuenta la cantidad de Makicoins que tranferiste."
 
   await conn.sendMessage(m.chat, {
-    text: mensajeCanal,
+    text: msg,
+    mentions: [m.sender, recipient],
     contextInfo: {
       isForwarded: true,
+      forwardingScore: 999,
       forwardedNewsletterMessageInfo: {
         newsletterJid: channelRD.id,
         newsletterName: channelRD.name,
         serverMessageId: -1,
       },
-      forwardingScore: 999,
       externalAdReply: {
         title: channelRD.name,
         body: 'Canal oficial de MAKIMA 2.0',
-        thumbnailUrl: 'https://qu.ax/vXOTr.jpg', // Cambia la imagen si lo deseas
+        thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg', // Cambia la imagen si lo deseas
         mediaType: 1,
         renderLargerThumbnail: true,
         sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
