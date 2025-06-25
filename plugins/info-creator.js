@@ -1,10 +1,15 @@
 let handler = async (m, { conn }) => {
+  // Reacciona con 💎
+  if (conn.sendMessage) {
+    await conn.sendMessage(m.chat, { react: { text: '💎', key: m.key }});
+  }
+
   // Datos de los contactos
   let numberCreator = '18293142989' // Número de la creadora
   let nombreCreator = '💎 C R E A D O R 💎'
   let canal = 'https://wa.me18293142989'
 
-  let numberBot = '527222518356' // Aquí pon el número del bot, solo números con prefijo país (ej: 573001234567)
+  let numberBot = '527222518356' // Número del bot
   let nombreBot = 'BOT OFICIAL'
 
   let numberYoSoyYo = '573133374132'
