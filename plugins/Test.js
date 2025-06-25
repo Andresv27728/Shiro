@@ -1,8 +1,3 @@
-const channelRD = {
-  id: "120363400360651198@newsletter",
-  name: "MAKIMA - Frases"
-};
-
 let handler = m => m;
 handler.before = async function (m, { conn }) {
   if (!m.messageStubType || !m.isGroup) return;
@@ -36,25 +31,7 @@ handler.before = async function (m, { conn }) {
       texto = `${username} fue quitado de admin por ${username2}`;
     }
 
-    const contextNewsletter = {
-      isForwarded: true,
-      forwardingScore: 999,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: channelRD.id,
-        newsletterName: channelRD.name,
-        serverMessageId: -1
-      },
-      externalAdReply: {
-        title: channelRD.name,
-        body: 'Canal oficial de MAKIMA 2.0',
-        thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg',
-        mediaType: 1,
-        renderLargerThumbnail: true,
-        sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
-      }
-    };
-
-    await conn.sendMessage(m.chat, { text: texto, contextInfo: contextNewsletter });
+    await conn.sendMessage(m.chat, { text: texto });
   }
 };
 export default handler;
