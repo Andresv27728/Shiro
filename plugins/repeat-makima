@@ -52,8 +52,8 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
   await conn.sendMessage(m.chat, { text }, { quoted: quotedMsg });
 };
 
-handler.help = ['repite', 'repeat', 'copiame'].map(v => v + ' <texto>');
-handler.tags = ['tools'];
+handler.help = ['main', 'main', 'copiame'].map(v => v + ' <texto>');
+handler.tags = ['main'];
 handler.command = /^(repite|repeat|copiame)$/i;
 handler.register = false;
 handler.limit = false;
