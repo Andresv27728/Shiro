@@ -8,11 +8,11 @@ conn.ev.on('group-participants.update', async (update) => {
   const grupo = update.id;
   const afectados = update.participants || [];
   const by = update.actor || '';
-
   for (let target of afectados) {
-    // Obtener los nombres visibles de WhatsApp
-    let username = await conn.getName(target).catch(_ => target.split('@')[0]);
-    let username2 = await conn.getName(by).catch(_ => by.split('@')[0]);
+    let username = await conn.getName(target).catch(_ => '') || (target.split('@')[0] || "Desconocido");
+    let username2 = by
+      ? (await conn.getName(by).catch(_ => '') || (by.split('@')[0] || "Desconocido"))
+      : "Desconocido";
 
     let texto = '';
     if (update.action === 'promote') {
