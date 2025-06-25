@@ -1,4 +1,11 @@
+// Plugin: Lista de Bots Activos (Makima MD Adaptado)
 // Adaptado por mantis-has (github.com/mantis-has) para sistema Makima MD
+
+const channelRD = {
+  id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
+  name: "MAKIMA - CHANNEL"
+}
+const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Imagen cuadrada y pequeña
 
 async function handler(m, { conn: stars }) {
   let uniqueUsers = new Map()
@@ -9,13 +16,13 @@ async function handler(m, { conn: stars }) {
     }
   })
 
-  // Clasificación de bots (adapta a tu sistema si tienes otra forma de distinguirlos)
+  // Clasificación de bots (ajusta las condiciones si tienes flags)
   let users = [...uniqueUsers.values()]
-  let principales = users.filter(v => v.user?.isMain) // Ajusta esta condición si tienes flag para "principal"
-  let prembots = users.filter(v => v.user?.isPremium) // Ajusta esta condición si tienes flag para "premium"
+  let principales = users.filter(v => v.user?.isMain) // Cambia si tienes otro flag para principal
+  let prembots = users.filter(v => v.user?.isPremium) // Cambia si tienes otro flag para premium
   let subbots = users.filter(v => !v.user?.isMain && !v.user?.isPremium)
 
-  // En este grupo: saca todos los bots que estén en el grupo actual
+  // Bots presentes en el grupo actual
   let groupParticipants = (await stars.groupMetadata(m.chat).catch(() => ({}))).participants || []
   let botsEnGrupo = users.filter(v => groupParticipants.some(p => p.id === v.user?.jid))
   let listaBotsGrupo = botsEnGrupo.map(v => {
@@ -28,37 +35,41 @@ async function handler(m, { conn: stars }) {
     return `• ${nombre} (${tipo})`
   }).join('\n') || 'En este grupo no hay Bots activos'
 
-  let responseMessage = `╭━━━〔 LISTA DE BOTS ACTIVOS 〕━━━╮
+  let responseMessage = 
+`LISTA DE BOTS ACTIVOS
 
-principales: ${principales.length}
+principales: 1
 Prem-Bots: ${prembots.length}
 Subbots: ${subbots.length}
 
 En este grupo:
 ${listaBotsGrupo}
-╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯`
+`
 
-  const imageUrl = 'https://qu.ax/dXOUo.jpg' // Cambia si quieres otra miniatura
-
-  const fkontak = {
-    key: {
-      participants: "0@s.whatsapp.net",
-      remoteJid: "status@broadcast",
-      fromMe: false,
-      id: "Halo"
+  // Newsletter context info
+  const contextNewsletter = {
+    isForwarded: true,
+    forwardingScore: 999,
+    forwardedNewsletterMessageInfo: {
+      newsletterJid: channelRD.id,
+      newsletterName: channelRD.name,
+      serverMessageId: -1
     },
-    message: {
-      contactMessage: {
-        displayName: "Subbot",
-        vcard: "BEGIN:VCARD\nVERSION:3.0\nN:;Subbot;;;\nFN:Subbot\nEND:VCARD"
-      }
+    externalAdReply: {
+      title: channelRD.name,
+      body: 'MAKIMA 2.0 BOT',
+      thumbnailUrl: thumbnailUrl,
+      mediaType: 1,
+      renderLargerThumbnail: false,
+      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
-  }
+  };
 
   await stars.sendMessage(m.chat, {
-    image: { url: imageUrl },
-    caption: responseMessage
-  }, { quoted: fkontak })
+    image: { url: thumbnailUrl },
+    caption: responseMessage,
+    contextInfo: contextNewsletter
+  })
 }
 
 handler.command = ['listjadibot', 'bots']
