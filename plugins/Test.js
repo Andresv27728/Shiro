@@ -1,4 +1,5 @@
-// 𝙋𝙍𝙊𝙃𝙄𝘽𝙄𝘿𝙊 𝙀𝘿𝙄𝙏𝘼𝙍 - Subbot Premium adaptado, respeta la lógica de sesión original
+// PROHIBIDO EDITAR - SUBBOT PREMIUM (solo agrega control de token premium)
+
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
 import fs from "fs"
@@ -12,14 +13,10 @@ const channelRD = {
   name: "MAKIMA - CHANNEL"
 }
 const thumbnailUrl = 'https://qu.ax/dXOUo.jpg'
-
-// Tokens premium válidos
+// Lista de tokens válidos
 const premiumTokens = [
   "MAK1", "MAK2", "MAK3", "MAK4", "MAK5",
-  "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
-]
-const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
-const SESSIONS_FOLDER = path.join(process.cwd(), 'premium_sessions')
+  "MAK6", "MAK7", "MAK8", "MAK9", = path.join(process.cwd(), 'premium_sessions')
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -34,7 +31,11 @@ function loadTokensState() {
   return {}
 }
 function saveTokensState(state) {
-  fs.writeFileSync(TOKENS_FILE, JSON.stringify(state0]) {
+  fs.writeFileSync(TOKENS_FILE, JSON.stringify(state, null, 2))
+}
+
+let handler = async (m, { conn, args }) => {
+  if (!args[0]) {
     await sendNewsletter(m, conn, '「🩵」Ingresa un token para conectarte con la bot.')
     return
   }
@@ -46,8 +47,6 @@ function saveTokensState(state) {
 
   let tokensState = loadTokensState()
   let senderId = m.sender.split('@')[0] // SOLO NÚMEROS
-
-  // Define el path de sesión única por usuario (premium_sessions/<numero>)
   let userSessionPath = path.join(SESSIONS_FOLDER, senderId)
   if (!fs.existsSync(userSessionPath)) fs.mkdirSync(userSessionPath, { recursive: true })
 
@@ -75,7 +74,7 @@ function saveTokensState(state) {
   }
 
   try {
-    // La sesión se guarda exacto como en subbot, por usuario
+    // Exactamente igual que el subbot: usa la sesión del usuario en premium_sessions/<numero>
     const { state } = await useMultiFileAuthState(userSessionPath)
     let { version } = await fetchLatestBaileysVersion()
     const msgRetryCache = new NodeCache()
@@ -89,20 +88,26 @@ function saveTokensState(state) {
       generateHighQualityLinkPreview: true
     }
     let sock = makeWASocket(connectionOptions)
-    await delay(2000)
-    let code = await sock.requestPairingCode(senderId)
-    if (!code) throw new Error("No se pudo generar código de vinculación.")
-    code = code.match(/.{1,4}/g)?.join("-")
-    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
-    await conn.send()
-    }, { quoted: m })
-    await delay(1000)
-    await conn.sendMessage(m.chat, {
-      text: `*Código de vinculación:*\n${code}`,
-      contextInfo: newsletterContext()
-    }, { quoted: m })
+    sock.ev.once('connection.update', async (update) => {
+      if (update.connection === 'connecting' || update.connection === 'open') {
+        let code = await sock.requestPairingCode(senderId)
+        code = code.match(/.{1,4}/g)?.join("-")
+        let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMIUMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ Pasos de vinculación:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ Nota: Este código solo funciona en el número que lo solicitó.`
+        await conn.sendMessage(m.chat, {
+          text: pasos,
+          contextInfo: newsletterContext()
+        }, { quoted: m })
+        await delay(1000)
+        await conn.sendMessage(m.chat, {
+          text: `*Código de vinculación:*\n${code}`,
+          contextInfo: newsletterContext()
+        }, { quoted: m })
+      }
+    })
+    sock.ws.on("open", () => { }); // Forzar el arranque del socket
   } catch (e) {
-    console.error("ERROR PA Error: ' + (e?.message || e));
+    console.error("ERROR PAIRING CODE:", e)
+    await sendNewsletter(m, conn, '「🩵」No se pudo generar el código de vinculación. Error: ' + (e?.message || e));
   }
 }
 
