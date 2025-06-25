@@ -40,7 +40,7 @@ let handler = async (m, { conn, args }) => {
   try {
     // Control de token
     if (!args[0]) {
-      await m.reply('「🩵」Ingresa un token para conectarte con la bot. Ejemplo: .qrpremium MAK1')
+      await m.reply('「🩵」Ingresa un token para conectarte con la bot. Ejemplo: .codepremium M4K1MA')
       return
     }
     const token = (args[0] || '').trim().toUpperCase()
@@ -84,17 +84,14 @@ let handler = async (m, { conn, args }) => {
       generateHighQualityLinkPreview: true
     }
     let sock = makeWASocket(connectionOptions)
-    sock.ev.once('connection.update', async (update) => {
-      if (update.connection === 'connecting' || update.connection === 'open') {
-        let code = await sock.requestPairingCode(senderId)
-        code = code.match(/.{1,4}/g)?.join("-")
-        let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMIUMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ Pasos de vinculación:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ Nota: Este código solo funciona en el número que lo solicitó.`
-        await m.reply(pasos)
-        await delay(1000)
-        await m.reply(`*Código de vinculación:*\n${code}`)
-      }
-    })
-    sock.ws.on("open", () => { }); // Forzar arranque
+    await delay(2000) // Espera breve para asegurar conexión
+    let code = await sock.requestPairingCode(senderId)
+    code = code.match(/.{1,4}/g)?.join("-")
+    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMIUMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ Pasos de vinculación:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ Nota: Este código solo funciona en el número que lo solicitó.`
+    await m.reply(pasos)
+    await delay(1000)
+    await m.reply(`*Código de vinculación:*\n${code}`)
+    try { sock.end(); } catch {}
   } catch (e) {
     console.error("ERROR PREMIUMSUBBOT:", e)
     await m.reply('「🩵」Ocurrió un error: ' + (e?.message || e))
