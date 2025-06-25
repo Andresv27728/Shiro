@@ -1,5 +1,5 @@
-// Plugin: Lista de Bots Activos (Makima MD Adaptado)
-// Adaptado por mantis-has (github.com/mantis-has) para sistema Makima MD
+// Plugin: Lista de Bots Activos (Makima MD)
+// Codigo creado por Félix Manuel (github.com/mantis-has) para sistema Makima MD
 
 const channelRD = {
   id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
