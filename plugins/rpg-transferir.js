@@ -22,7 +22,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 ├ׁ̟̇    「TRANSFERENCIA」 
 ╰━─━─━─≪≪✠≫≫──━━╯
 ┃
-┃REMITENTE: $nombre}
+┃REMITENTE: ${nombre}
 ┃
 ┃CANTIDAD: ${amount} MakiCoins
 ┗━━━━━━━━━━━━━━━━━┛`.trim()
