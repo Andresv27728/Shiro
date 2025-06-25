@@ -16,8 +16,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   const jid = m.messageStubParameters[0]
   const user = `@${jid.split('@')[0]}`
-  // Usa una imagen cuadrada y pequeña para la miniatura
-  const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Puedes cambiarla por otra de 96x96 px si prefieres
+  const thumbnailUrl = 'https://qu.ax/dXOUo.jpg'
   const pp = await conn.profilePictureUrl(jid, 'image').catch(() => thumbnailUrl)
   const img = await fetch(pp).then(r => r.buffer())
   const total = [28, 32].includes(m.messageStubType)
@@ -36,12 +35,18 @@ export async function before(m, { conn, participants, groupMetadata }) {
     externalAdReply: {
       title: channelRD.name,
       body: 'MAKIMA 2.0 BOT',
-      thumbnailUrl: thumbnailUrl, // Imagen cuadrada y pequeña
+      thumbnailUrl: thumbnailUrl,
       mediaType: 1,
       renderLargerThumbnail: false,
       sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
   };
+
+  // Mensaje citado para bienvenida/despedida
+  const quotedMsg = (txt) => ({
+    key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: m.chat, id: Math.random().toString(36).slice(2) },
+    message: { conversation: txt }
+  });
 
   if (m.messageStubType == 27) {
     const bienvenida = `
@@ -58,12 +63,12 @@ export async function before(m, { conn, participants, groupMetadata }) {
       image: img, 
       caption: bienvenida, 
       contextInfo: contextNewsletter 
-    })
-    // Mensaje adicional
+    });
+    // Mensaje adicional, respondiendo a 《✧》 LLEGO OTRO
     await conn.sendMessage(m.chat, { 
       text: 'SE NOS UNIÓ UN USUARIO', 
       contextInfo: contextNewsletter
-    })
+    }, { quoted: quotedMsg('《✧》 LLEGO OTRO') });
   }
 
   if ([28, 32].includes(m.messageStubType)) {
@@ -81,11 +86,11 @@ export async function before(m, { conn, participants, groupMetadata }) {
       image: img, 
       caption: despedida, 
       contextInfo: contextNewsletter 
-    })
-    // Segundo mensaje como newsletter
+    });
+    // Segundo mensaje, respondiendo a 《✧》 SE FUE
     await conn.sendMessage(m.chat, { 
       text: 'SE NOS FUE EL USUARIO', 
       contextInfo: contextNewsletter
-    })
+    }, { quoted: quotedMsg('《✧》 SE FUE') });
   }
 }
