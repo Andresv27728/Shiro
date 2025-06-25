@@ -37,7 +37,7 @@ let handler = async (m, { conn, args }) => {
     }
     const token = (args[0] || '').trim().toUpperCase()
     if (!premiumTokens.includes(token)) {
-      await m.reply('「🩵」El token ingresado al creador.')
+      await m.reply('「🩵」El token ingresado es incorrecto, solicita uno nuevo al creador.')
       return
     }
     let tokensState = loadTokensState()
