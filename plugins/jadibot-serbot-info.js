@@ -1,4 +1,6 @@
-async function handler(m, { conn: stars, usedPrefix }) {
+// Adaptado por mantis-has (github.com/mantis-has) para sistema Makima MD
+
+async function handler(m, { conn: stars }) {
   let uniqueUsers = new Map()
 
   global.conns.forEach((conn) => {
@@ -7,31 +9,36 @@ async function handler(m, { conn: stars, usedPrefix }) {
     }
   })
 
+  // Clasificación de bots (adapta a tu sistema si tienes otra forma de distinguirlos)
   let users = [...uniqueUsers.values()]
-  let totalUsers = users.length
-  global.totalUsers = totalUsers
+  let principales = users.filter(v => v.user?.isMain) // Ajusta esta condición si tienes flag para "principal"
+  let prembots = users.filter(v => v.user?.isPremium) // Ajusta esta condición si tienes flag para "premium"
+  let subbots = users.filter(v => !v.user?.isMain && !v.user?.isPremium)
 
-  let packname = global.packname || '🩵 𝙱𝙾𝚃'
-  let title = `⭑『 𝐓𝐎𝐓𝐀𝐋 𝐒𝐔𝐁𝐁𝐎𝐓𝐒』⭑`
-  let barra = '━━━━━━━━━━━━━━━━'
+  // En este grupo: saca todos los bots que estén en el grupo actual
+  let groupParticipants = (await stars.groupMetadata(m.chat).catch(() => ({}))).participants || []
+  let botsEnGrupo = users.filter(v => groupParticipants.some(p => p.id === v.user?.jid))
+  let listaBotsGrupo = botsEnGrupo.map(v => {
+    let nombre = v.user?.name || "SubBot"
+    let tipo = v.user?.isMain
+      ? "Bot Oficial"
+      : v.user?.isPremium
+      ? "Prem-Bot"
+      : "SubBot"
+    return `• ${nombre} (${tipo})`
+  }).join('\n') || 'En este grupo no hay Bots activos'
 
-  let listado = users.map((v, i) => {
-    let jid = v.user.jid.replace(/[^0-9]/g, '')
-    let nombre = v.user.name || 'SubBot'
-    return `╭╼⟪ MAKIMA 2.0 ⟫╾╮
-┃ #${i + 1} 💎 @${jid}
-┃ 💎 Link: wa.me/${jid}
-┃ 💎 Nombre: ${nombre}
-╰╼✰`
-  }).join('\n\n')
+  let responseMessage = `╭━━━〔 LISTA DE BOTS ACTIVOS 〕━━━╮
 
-  let responseMessage = `╭═✰ ${title}
-┃ 🔢 Total: *${totalUsers}*
-╰═${barra}✰
+principales: ${principales.length}
+Prem-Bots: ${prembots.length}
+Subbots: ${subbots.length}
 
-${listado || '💎 En este momento no hay subbots activos.'}`.trim()
+En este grupo:
+${listaBotsGrupo}
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯`
 
-  const imageUrl = 'https://qu.ax/dXOUo.jpg' // ⚠️ Cambia esta URL si quieres usar otra imagen
+  const imageUrl = 'https://qu.ax/dXOUo.jpg' // Cambia si quieres otra miniatura
 
   const fkontak = {
     key: {
@@ -50,12 +57,12 @@ ${listado || '💎 En este momento no hay subbots activos.'}`.trim()
 
   await stars.sendMessage(m.chat, {
     image: { url: imageUrl },
-    caption: responseMessage,
-    mentions: stars.parseMention(responseMessage)
+    caption: responseMessage
   }, { quoted: fkontak })
 }
 
 handler.command = ['listjadibot', 'bots']
 handler.help = ['bots']
 handler.tags = ['jadibot']
+
 export default handler
