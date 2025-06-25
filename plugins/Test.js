@@ -1,4 +1,4 @@
-// Plugin: Conexión PremBot Premium (estilo subbot, pairing code SI FUNCIONA)
+// Plugin: Conexión PremBot Premium (estilo subbot, pairing code SI FUNCI9NA)
 
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
