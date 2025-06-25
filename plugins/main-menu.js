@@ -91,6 +91,9 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
  ╭ֹ┈ ⵿❀⵿ ┈╮NUEVOS
 ┃┈➤ #artista [nombre]
 ┃┈➤ #dalle2
+┃┈➤ #repeat
+┃┈➤ #repite
+┃┈➤ #copiame
 ╰━━━━━━━━━━━━━━━━━━
 
 .       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
