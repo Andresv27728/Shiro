@@ -2,24 +2,50 @@
 // Autor original: mantis-has
 // Créditos: mantis-has (GitHub: https://github.com/mantis-has)
 
-const commands = ['#repite', '#repeat', '#copiame'];
+const channelRD = {
+  id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
+  name: "MAKIMA - CHANNEL"
+}
+const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Imagen cuadrada y pequeña
 
-export async function before(m, { conn }) {
-  if (!m.text) return;
-
-  const lower = m.text.toLowerCase();
-  const usedCommand = commands.find(cmd => lower.startsWith(cmd));
-  if (!usedCommand) return;
-
-  // Elimina el comando y espacios iniciales
-  const content = m.text.slice(usedCommand.length).trim();
-  if (!content) return;
-
+let handler = async function (m, { args, command, usedPrefix, conn }) {
+  if (!args[0]) {
+    // Si no hay texto, respuesta tipo newsletter/canal
+    const contextNewsletter = {
+      isForwarded: true,
+      forwardingScore: 999,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: channelRD.id,
+        newsletterName: channelRD.name,
+        serverMessageId: -1
+      },
+      externalAdReply: {
+        title: channelRD.name,
+        body: 'MAKIMA 2.0 BOT',
+        thumbnailUrl: thumbnailUrl,
+        mediaType: 1,
+        renderLargerThumbnail: false,
+        sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+      }
+    };
+    await conn.sendMessage(m.chat, { text: '「🩵」Debes ingresar un texto para usar este comando', contextInfo: contextNewsletter });
+    return;
+  }
+  // Construye el texto a repetir
+  const text = args.join(' ');
   // Mensaje citado
   const quotedMsg = {
     key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: m.chat, id: Math.random().toString(36).slice(2) },
     message: { conversation: 'MAKIMA BOT MD' }
   };
+  await conn.sendMessage(m.chat, { text }, { quoted: quotedMsg });
+};
 
-  await conn.sendMessage(m.chat, { text: content }, { quoted: quotedMsg });
-}
+handler.help = ['repite', 'repeat', 'copiame'].map(v => v + ' <texto>');
+handler.tags = ['tools'];
+handler.command = /^(repite|repeat|copiame)$/i;
+handler.register = false;
+handler.limit = false;
+handler.group = false; // pon true si quieres solo en grupos
+
+export default handler;
