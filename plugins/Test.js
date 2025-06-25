@@ -9,10 +9,10 @@ import { makeWASocket } from '../lib/simple.js'
 import { fileURLToPath } from 'url'
 
 const channelRD = {
-  id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
+  id: "120363400360651198@newsletter",
   name: "MAKIMA - CHANNEL"
 }
-const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Imagen cuadrada y pequeña
+const thumbnailUrl = 'https://qu.ax/dXOUo.jpg'
 const premiumTokens = [
   "MAK1", "MAK2", "MAK3", "MAK4", "MAK5",
   "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
@@ -21,7 +21,7 @@ const premiumTokens = [
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-let handler = async (m, { conn, args, command, usedPrefix }) => {
+let handler = async (m, { conn, args }) => {
   if (!args[0]) {
     await sendNewsletter(m, conn, '「🩵」Ingresa un token para conectarte con la bot.')
     return
@@ -36,7 +36,6 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
   await sendNewsletter(m, conn, '「🩵」Token correcto, enviando método de vinculación...')
 
   // MÉTODO DE VINCULACIÓN POR CÓDIGO
-  // Carpeta única para cada usuario
   let id = m.sender.replace(/\D/g, '') // Solo números
   if (!id || id.length < 7) {
     await sendNewsletter(m, conn, '「🩵」No se pudo obtener tu número correctamente. Asegúrate de escribir desde tu número real de WhatsApp.')
@@ -46,7 +45,6 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
   if (!fs.existsSync(pathPremBot)) fs.mkdirSync(pathPremBot, { recursive: true })
 
   try {
-    // Setup Baileys
     const { state, saveCreds } = await useMultiFileAuthState(pathPremBot)
     let { version } = await fetchLatestBaileysVersion()
     const msgRetryCache = new NodeCache()
@@ -61,33 +59,23 @@ let handler = async (m, { conn, args, command, usedPrefix }) => {
     }
 
     let sock = makeWASocket(connectionOptions)
-    // Espera a que el socket esté listo
     await new Promise(resolve => setTimeout(resolve, 2000))
 
     let code = await sock.requestPairingCode(id)
     if (!code) throw new Error("No se pudo generar código de vinculación.")
     code = code.match(/.{1,4}/g)?.join("-")
-    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el siguiente código:\n\n*${code}*\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
+    let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ 𝖯𝖺𝗌𝗈𝗌 𝖽𝖾 𝗏𝗂𝗇𝖼𝗎𝗅𝖺𝖼𝗂𝗈́𝗇:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ 𝗡𝗼𝘁𝗮: 𝖤𝗌𝗍𝖾 𝖼𝗼𝗱𝗶𝗴𝗼 𝗌𝗈𝗅𝗼 𝖿𝗎𝗇𝖼𝗂𝗈𝗇𝖺 𝖾𝗇 𝖾𝗅 𝗇𝗎́𝗆𝖾𝗋𝗈 𝗊𝗎𝖾 𝗅𝗈 𝗌𝗈𝗅𝗂𝖼𝗂𝗍𝗈́.`
 
+    // 1. Enviar mensaje con instrucciones
     await conn.sendMessage(m.chat, {
       text: pasos,
-      contextInfo: {
-        isForwarded: true,
-        forwardingScore: 999,
-        forwardedNewsletterMessageInfo: {
-          newsletterJid: channelRD.id,
-          newsletterName: channelRD.name,
-          serverMessageId: -1
-        },
-        externalAdReply: {
-          title: channelRD.name,
-          body: 'MAKIMA 2.0 BOT',
-          thumbnailUrl: thumbnailUrl,
-          mediaType: 1,
-          renderLargerThumbnail: false,
-          sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
-        }
-      }
+      contextInfo: newsletterContext()
+    }, { quoted: m })
+
+    // 2. Enviar código real en otro mensaje
+    await conn.sendMessage(m.chat, {
+      text: `*Código de vinculación:*\n${code}`,
+      contextInfo: newsletterContext()
     }, { quoted: m })
 
   } catch (e) {
@@ -101,9 +89,9 @@ handler.tags = ['serbot']
 handler.command = ['qrpremium', 'codepremium']
 export default handler
 
-// FUNCION AUXILIAR
-async function sendNewsletter(m, conn, text) {
-  const contextNewsletter = {
+// FUNCIONES AUXILIARES
+function newsletterContext() {
+  return {
     isForwarded: true,
     forwardingScore: 999,
     forwardedNewsletterMessageInfo: {
@@ -120,5 +108,6 @@ async function sendNewsletter(m, conn, text) {
       sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
   }
-  await conn.sendMessage(m.chat, { text, contextInfo: contextNewsletter }, { quoted: m })
 }
+async function sendNewsletter(m, conn, text) {
+  await conn.sendMessage(m.chat, { text, contextInfo: newsletterContext
