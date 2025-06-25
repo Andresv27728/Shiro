@@ -1,5 +1,4 @@
-// PROHIBIDO EDITAR - SUBBOT PREMIUM (solo agrega control de token premium)
-
+// PROHIBIDO EDITAR - SUBBOT PREMIUM (agrega solo control de token premium)
 import { fetchLatestBaileysVersion, useMultiFileAuthState, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys"
 import NodeCache from "node-cache"
 import fs from "fs"
@@ -16,13 +15,11 @@ const thumbnailUrl = 'https://qu.ax/dXOUo.jpg'
 // Lista de tokens válidos
 const premiumTokens = [
   "MAK1", "MAK2", "MAK3", "MAK4", "MAK5",
-  "MAK6", "MAK7", "MAK8", "MAK9", = path.join(process.cwd(), 'premium_sessions')
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-function loadTokensState() {
-  if (fs.existsSync(TOKENS_FILE)) {
-    try {
+  "MAK6", "MAK7", "MAK8", "MAK9", "MAK10"
+]
+const TOKENS_FILE = path.join(process.cwd(), 'premium_tokens.json')
+const SESSIONS_FOLDER = path.join(process.cwd(), 'premium_sessions')
+const __ try {
       return JSON.parse(fs.readFileSync(TOKENS_FILE))
     } catch {
       return {}
@@ -92,7 +89,7 @@ let handler = async (m, { conn, args }) => {
       if (update.connection === 'connecting' || update.connection === 'open') {
         let code = await sock.requestPairingCode(senderId)
         code = code.match(/.{1,4}/g)?.join("-")
-        let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMIUMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ Pasos de vinculación:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *Vincular con el número de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ Nota: Este código solo funciona en el número que lo solicitó.`
+        let pasos = `*︰꯭𞋭🩵 ̸̷᮫໊᷐͢᷍ᰍ⧽͓̽ CONEXIÓN PREMIUMBOT*\n\n━⧽ MODO CÓDIGO\n\n✰ Pasos de vinculación:\n\n➪ Ve a la esquina superior derecha en WhatsApp.\n➪ Toca en *Dispositivos vinculados*.\n➪ Selecciona *V de teléfono*.\n➪ Pega el código que te enviaré en el siguiente mensaje.\n\n★ Nota: Este código solo funciona en el número que lo solicitó.`
         await conn.sendMessage(m.chat, {
           text: pasos,
           contextInfo: newsletterContext()
@@ -131,7 +128,7 @@ function newsletterContext() {
       thumbnailUrl: thumbnailUrl,
       mediaType: 1,
       renderLargerThumbnail: false,
-      sourceUrl: `https://whatsapp.com/channel/${channelRD.id.replace('@newsletter', '')}`
+.com/channel/${channelRD.id.replace('@newsletter', '')}`
     }
   }
 }
