@@ -33,7 +33,7 @@ conn.ev.on('group-participants.update', async (update) => {
         },
         externalAdReply: {
           title: channelRD.name,
-          body: 'Canal oficial de MAKIMA 2.0',
+          body: 'MAKIMA 2.0 CHANNEL',
           thumbnailUrl: 'https://i.imgur.com/5Q1OtS2.jpg',
           mediaType: 1,
           renderLargerThumbnail: true,
