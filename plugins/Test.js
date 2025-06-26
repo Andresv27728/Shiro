@@ -11,6 +11,7 @@ const jugadores = [
 ];
 
 const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+const MAKIMA_ICON = "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg"; // TU MINIATURA DE MAKIMA CUADRADA
 const SOC_CLAIM_TIMEOUT = 9 * 60 * 1000; // 9 minutos
 
 let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {});
@@ -35,7 +36,7 @@ let handler = async (m, { conn, command }) => {
           externalAdReply: {
             title: '✅ Makima 2.0 VERIFICADO',
             body: 'MAKIMA - FRASES',
-            thumbnailUrl: "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg", // Tu logo pequeño cuadrado aquí
+            thumbnailUrl: MAKIMA_ICON, // SIEMPRE LA MINIATURA DE MAKIMA
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
             renderLargerThumbnail: false // MINIATURA PEQUEÑA
@@ -55,7 +56,8 @@ let handler = async (m, { conn, command }) => {
     };
 
     let msg = await conn.sendMessage(m.chat, {
-      text: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
+      image: { url: jugador.url },
+      caption: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
       contextInfo: {
         mentionedJid: [m.sender],
         isForwarded: true,
@@ -68,7 +70,7 @@ let handler = async (m, { conn, command }) => {
         externalAdReply: {
           title: '✅ Makima 2.0 VERIFICADO',
           body: 'MAKIMA - FRASES',
-          thumbnailUrl: jugador.url, // La miniatura del jugador pequeña y cuadrada
+          thumbnailUrl: MAKIMA_ICON, // SIEMPRE LA MINIATURA DE MAKIMA
           sourceUrl: "https://github.com/Andresv27728/2.0",
           mediaType: 1,
           renderLargerThumbnail: false // MINIATURA PEQUEÑA
@@ -104,7 +106,7 @@ let handler = async (m, { conn, command }) => {
           externalAdReply: {
             title: '✅ Makima 2.0 VERIFICADO',
             body: 'MAKIMA - FRASES',
-            thumbnailUrl: soccer.url,
+            thumbnailUrl: MAKIMA_ICON,
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
             renderLargerThumbnail: false
@@ -128,7 +130,7 @@ let handler = async (m, { conn, command }) => {
           externalAdReply: {
             title: '✅ Makima 2.0 VERIFICADO',
             body: 'MAKIMA - FRASES',
-            thumbnailUrl: soccer.url,
+            thumbnailUrl: MAKIMA_ICON,
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
             renderLargerThumbnail: false
@@ -153,7 +155,7 @@ let handler = async (m, { conn, command }) => {
         externalAdReply: {
           title: '✅ Makima 2.0 VERIFICADO',
           body: 'MAKIMA - FRASES',
-          thumbnailUrl: soccer.url,
+          thumbnailUrl: MAKIMA_ICON,
           sourceUrl: "https://github.com/Andresv27728/2.0",
           mediaType: 1,
           renderLargerThumbnail: false
