@@ -1,18 +1,29 @@
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) return conn.reply(m.chat, `🚩 *Que Nombre Deseas Ponerme?*`, m, rcanal)
+let handler = async (m, { conn, text, isOwner }) => {
+  // El número del bot (solo números)
+  let botNumber = (conn.user && conn.user.id) ? conn.user.id.split('@')[0] : ''
+  // El número del remitente (solo números)
+  let senderNumber = m.sender.split('@')[0]
+
+  // Permitir solo si es owner o el propio bot
+  if (!isOwner && senderNumber !== botNumber) {
+    return conn.reply(m.chat, '「🩵」Este comando solo puede ser utilizado por el owner o Subbots.', m)
+  }
+
+  if (!text) return conn.reply(m.chat, `🩵 *¿Qué nombre deseas ponerme?*`, m)
   try {
     await conn.updateProfileName(text)
-    return conn.reply(m.chat, '✅️ *Nombre Cambiado Con Éxito*', m, rcanal)
-   await m.react(done)
+    await conn.reply(m.chat, '✅️ *Nombre cambiado con éxito*', m)
+    await m.react('✅')
   } catch (e) {
     console.log(e)
-    await m.react(error)
-    return conn.reply(m.chat, `🚩 Ocurrió Un Error¡!`, m, fake)
+    await m.react('❌')
+    await conn.reply(m.chat, `🩵 ¡Ocurrió un error!`, m)
   }
 }
-handler.help = ['nuevonombrebot <teks>']
-handler.tags = ['owner']
-handler.command = ['nuevonombrebot', 'setbotname', 'namebot']
 
-handler.owner = true
+handler.help = ['nuevonombrebot <nombre>']
+handler.tags = ['owner']
+handler.command = ['nuevonombrebot', 'setname', 'namebot']
+handler.owner = false // Así funciona el chequeo personalizado
+
 export default handler
