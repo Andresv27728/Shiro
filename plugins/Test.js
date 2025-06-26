@@ -35,10 +35,10 @@ let handler = async (m, { conn, command }) => {
           externalAdReply: {
             title: '✅ Makima 2.0 VERIFICADO',
             body: 'MAKIMA - FRASES',
-            thumbnailUrl: "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg", // Puedes poner tu propio logo o ícono del bot
+            thumbnailUrl: "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg", // Tu logo pequeño cuadrado aquí
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
-            renderLargerThumbnail: true
+            renderLargerThumbnail: false // MINIATURA PEQUEÑA
           }
         }
       }, { quoted: m });
@@ -55,8 +55,7 @@ let handler = async (m, { conn, command }) => {
     };
 
     let msg = await conn.sendMessage(m.chat, {
-      image: { url: jugador.url },
-      caption: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
+      text: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
       contextInfo: {
         mentionedJid: [m.sender],
         isForwarded: true,
@@ -69,10 +68,10 @@ let handler = async (m, { conn, command }) => {
         externalAdReply: {
           title: '✅ Makima 2.0 VERIFICADO',
           body: 'MAKIMA - FRASES',
-          thumbnailUrl: jugador.url,
+          thumbnailUrl: jugador.url, // La miniatura del jugador pequeña y cuadrada
           sourceUrl: "https://github.com/Andresv27728/2.0",
           mediaType: 1,
-          renderLargerThumbnail: true
+          renderLargerThumbnail: false // MINIATURA PEQUEÑA
         }
       }
     }, { quoted: m });
@@ -108,7 +107,7 @@ let handler = async (m, { conn, command }) => {
             thumbnailUrl: soccer.url,
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
-            renderLargerThumbnail: true
+            renderLargerThumbnail: false
           }
         }
       }, { quoted: m });
@@ -132,7 +131,7 @@ let handler = async (m, { conn, command }) => {
             thumbnailUrl: soccer.url,
             sourceUrl: "https://github.com/Andresv27728/2.0",
             mediaType: 1,
-            renderLargerThumbnail: true
+            renderLargerThumbnail: false
           }
         }
       }, { quoted: m });
@@ -157,7 +156,7 @@ let handler = async (m, { conn, command }) => {
           thumbnailUrl: soccer.url,
           sourceUrl: "https://github.com/Andresv27728/2.0",
           mediaType: 1,
-          renderLargerThumbnail: true
+          renderLargerThumbnail: false
         }
       }
     }, { quoted: m });
