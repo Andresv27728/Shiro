@@ -1,3 +1,8 @@
+/*
+Código creado por Félix Manuel - Makima Bot MD
+Respeta los créditos
+*/
+
 const jugadores = [
   { nombre: "Cristiano Ronaldo", valor: 100, url: "https://files.catbox.moe/fl7ibk.jpg" },
   { nombre: "Luka Modric", valor: 100, url: "https://files.catbox.moe/606f25.jpg" },
@@ -11,12 +16,13 @@ const jugadores = [
 ];
 
 const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
-const MAKIMA_ICON = "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg";
+const MAKIMA_ICON = "https://qu.ax/dXOUo.jpg";
 const GITHUB_MAKIMA = "https://github.com/mantis-has/Makima";
 const NEWSLETTER_TITLE = '🩵 MAKIMA BOT MD 🩵';
 const SOC_CLAIM_TIMEOUT = 3 * 60 * 1000; // 3 minutos
 
 let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {});
+let ventasPendientes = global.db.data.ventasPendientes || (global.db.data.ventasPendientes = {});
 
 let handler = async (m, { conn, command, args }) => {
   // #soccer
@@ -113,7 +119,6 @@ ${jugadoresText}`;
     if (!user || !user.soccerPlayers || user.soccerPlayers.length === 0)
       return await sendNewsletter(conn, m.chat, `「🩵」No tienes jugadores para regalar.`, m);
 
-    // El nombre del jugador es todo lo que no es mención
     let jugadorNombre = args.filter(a => !a.startsWith("@")).join(' ').trim();
     let mention = m.mentionedJid && m.mentionedJid[0];
 
@@ -124,16 +129,13 @@ ${jugadoresText}`;
       return await sendNewsletter(conn, m.chat, `「🩵」Debes mensionar un usuario para regalar este jugador.`, m);
     }
 
-    // Busca por nombre exacto (insensible a mayúsculas/minúsculas)
     let idx = user.soccerPlayers.findIndex(j => j.toLowerCase() === jugadorNombre.toLowerCase());
     if (idx === -1)
       return await sendNewsletter(conn, m.chat, `「🩵」Este personaje no está reclamado por ti. Usa #soccer para reclamar un personaje.`, m);
 
-    // Remueve de la lista del que regala
     let jugadorRealNombre = user.soccerPlayers[idx];
     user.soccerPlayers.splice(idx, 1);
 
-    // Agrega al destinatario
     let destinatario = global.db.data.users[mention];
     if (!destinatario) destinatario = global.db.data.users[mention] = {};
     if (!destinatario.soccerPlayers) destinatario.soccerPlayers = [];
@@ -143,15 +145,126 @@ ${jugadoresText}`;
     await sendNewsletter(conn, m.chat, `「🩵」Le has regalado a ${nombreDest} el jugador ${jugadorRealNombre}.`, m);
     return;
   }
+
+  // #vtjugador (votar un jugador, lo elimina)
+  if (command === "vtjugador") {
+    let user = global.db.data.users[m.sender];
+    if (!user || !user.soccerPlayers || user.soccerPlayers.length === 0)
+      return await sendNewsletter(conn, m.chat, `「🩵」No tienes jugadores para votar.`, m);
+
+    let jugadorNombre = args.join(" ").trim();
+    if (!jugadorNombre) return await sendNewsletter(conn, m.chat, `「🩵」Debes especificar el nombre del jugador que deseas votar.`, m);
+
+    let idx = user.soccerPlayers.findIndex(j => j.toLowerCase() === jugadorNombre.toLowerCase());
+    if (idx === -1) return await sendNewsletter(conn, m.chat, `「🩵」No tienes a ese jugador en tu inventario.`, m);
+
+    let jugadorRealNombre = user.soccerPlayers[idx];
+    user.soccerPlayers.splice(idx, 1);
+    await sendNewsletter(conn, m.chat, `「🩵」Has expulsado del inventario al jugador ${jugadorRealNombre}.`, m);
+    return;
+  }
+
+  // #vrjugador (proponer venta)
+  if (command === "vrjugador") {
+    let user = global.db.data.users[m.sender];
+    if (!user || !user.soccerPlayers || user.soccerPlayers.length === 0)
+      return await sendNewsletter(conn, m.chat, `「🩵」No tienes jugadores para vender.`, m);
+
+    let mention = m.mentionedJid && m.mentionedJid[0];
+    let partes = args.filter(a => !a.startsWith("@"));
+    let jugadorNombre = partes.slice(0, -1).join(' ').trim();
+    let cantidad = parseInt(partes[partes.length - 1]);
+
+    if (!jugadorNombre) return await sendNewsletter(conn, m.chat, `「🩵」Debes especificar el nombre del jugador que deseas vender.`, m);
+    if (!mention) return await sendNewsletter(conn, m.chat, `「🩵」Debes mensionar un usuario para vender este jugador.`, m);
+    if (isNaN(cantidad)) return await sendNewsletter(conn, m.chat, `「🩵」Debes poner la cantidad de XP que deseas por el jugador (ejemplo: #vrjugador @usuario Messi 200).`, m);
+    if (cantidad < 1 || cantidad > 1000) return await sendNewsletter(conn, m.chat, `「🩵」El Jugador debe ser vendido de 1 a 1000 de XP.`, m);
+
+    let idx = user.soccerPlayers.findIndex(j => j.toLowerCase() === jugadorNombre.toLowerCase());
+    if (idx === -1) return await sendNewsletter(conn, m.chat, `「🩵」Este personaje no está reclamado por ti. Usa #soccer para reclamar un personaje.`, m);
+
+    let ventaId = `${m.chat}-${Date.now()}`;
+    ventasPendientes[ventaId] = {
+      vendedor: m.sender,
+      comprador: mention,
+      jugador: user.soccerPlayers[idx],
+      precio: cantidad,
+      msgId: null
+    };
+
+    let compradorTag = '@' + mention.split('@')[0];
+    let vendedorTag = '@' + m.sender.split('@')[0];
+
+    let texto = `「🩵」${compradorTag} el usuario ${vendedorTag} te quiere vender el jugador ${user.soccerPlayers[idx]} por ${cantidad} de XP\n\nResponde a este mensaje con:\n• Aceptar\n• Rechazar`;
+
+    let ventaMsg = await conn.sendMessage(m.chat, {
+      text: texto,
+      mentions: [mention, m.sender],
+      contextInfo: newsletterContext([mention, m.sender])
+    }, { quoted: m });
+
+    ventasPendientes[ventaId].msgId = ventaMsg.key.id;
+    return;
+  }
+
+  if (m.quoted && m.quoted.id) {
+    for (let ventaId in ventasPendientes) {
+      let venta = ventasPendientes[ventaId];
+      if (venta.msgId === m.quoted.id) {
+        if (m.sender !== venta.comprador && m.sender !== venta.vendedor)
+          return await sendNewsletter(conn, m.chat, `「🩵」La venta no es contigo, no te metas Gay.`, m);
+
+        let respuesta = (m.text || '').trim().toLowerCase();
+
+        if (respuesta === 'aceptar') {
+          if (m.sender !== venta.comprador)
+            return await sendNewsletter(conn, m.chat, `「🩵」Solo el usuario al que le venden puede aceptar.`, m);
+
+          let comprador = global.db.data.users[venta.comprador];
+          if (!comprador || typeof comprador.exp !== 'number' || comprador.exp < venta.precio)
+            return await sendNewsletter(conn, m.chat, `「🩵」No tienes suficiente XP para comprar este jugador.`, m);
+
+          let vendedor = global.db.data.users[venta.vendedor];
+          if (!vendedor) vendedor = global.db.data.users[venta.vendedor] = {};
+          if (!comprador.soccerPlayers) comprador.soccerPlayers = [];
+          if (!vendedor.soccerPlayers) vendedor.soccerPlayers = [];
+
+          let idx = vendedor.soccerPlayers.findIndex(j => j.toLowerCase() === venta.jugador.toLowerCase());
+          if (idx === -1)
+            return await sendNewsletter(conn, m.chat, `「🩵」El vendedor ya no tiene ese jugador.`, m);
+
+          comprador.exp -= venta.precio;
+          vendedor.exp = (typeof vendedor.exp === 'number' ? vendedor.exp : 0) + venta.precio;
+          comprador.soccerPlayers.push(venta.jugador);
+          vendedor.soccerPlayers.splice(idx, 1);
+
+          let compradorTag = '@' + venta.comprador.split('@')[0];
+          let vendedorTag = '@' + venta.vendedor.split('@')[0];
+
+          await sendNewsletter(conn, m.chat, `「🩵」${compradorTag} ha aceptado la compra de ${venta.jugador} por ${venta.precio} de XP.`, m);
+          delete ventasPendientes[ventaId];
+          return;
+        } else if (respuesta === 'rechazar') {
+          if (m.sender !== venta.comprador)
+            return await sendNewsletter(conn, m.chat, `「🩵」Solo el usuario al que le venden puede rechazar.`, m);
+
+          await sendNewsletter(conn, m.chat, `「🩵」Venta cancelada.`, m);
+          delete ventasPendientes[ventaId];
+          return;
+        } else {
+          return await sendNewsletter(conn, m.chat, `「🩵」El mensaje "${m.text}" no está en la propuesta del bot. Responde con Rechazar o Aceptar.`, m);
+        }
+      }
+    }
+  }
 };
 
-handler.help = ['soccer', 'rcjugador', 'jugadores', 'rgjugador'];
+handler.help = ['soccer', 'rcjugador', 'jugadores', 'rgjugador', 'vtjugador', 'vrjugador'];
 handler.tags = ['games'];
-handler.command = ['soccer', 'rcjugador', 'jugadores', 'rgjugador'];
+handler.command = ['soccer', 'rcjugador', 'jugadores', 'rgjugador', 'vtjugador', 'vrjugador'];
 handler.register = true;
 export default handler;
 
-// Utilidad para enviar mensajes tipo newsletter con miniatura Makima y canal
 async function sendNewsletter(conn, chat, text, quoted = null) {
   await conn.sendMessage(chat, {
     text,
@@ -175,7 +288,6 @@ async function sendNewsletter(conn, chat, text, quoted = null) {
   }, { quoted });
 }
 
-// Utilidad para contextInfo estándar de newsletter con mención
 function newsletterContext(mentioned = []) {
   return {
     mentionedJid: mentioned,
