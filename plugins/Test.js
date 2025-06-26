@@ -8,20 +8,19 @@ const jugadores = [
   { nombre: "Bellingang", valor: 100, url: "https://qu.ax/krNHY.jpg" },
   { nombre: "Vinicios JR", valor: 100, url: "https://qu.ax/QHNhz.jpg" },
   { nombre: "Ronaldo", valor: 100, url: "https://qu.ax/jDVGs.jpg" }
-]
+];
 
-const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" }
-const SOC_CLAIM_TIMEOUT = 9 * 60 * 1000 // 9 minutos en ms
+const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+const SOC_CLAIM_TIMEOUT = 9 * 60 * 1000; // 9 minutos
 
-let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {})
+let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {});
 
-let handler = async (m, { conn, command, usedPrefix }) => {
+let handler = async (m, { conn, command }) => {
   // Comando #soccer
   if (command === "soccer") {
-    let user = global.db.data.users[m.sender]
-    if (!user) user = global.db.data.users[m.sender] = {}
+    let user = global.db.data.users[m.sender];
+    if (!user) user = global.db.data.users[m.sender] = {};
 
-    // AntiSpam: espera de 9 minutos por usuario
     if (user.lastSoccer && new Date - user.lastSoccer < SOC_CLAIM_TIMEOUT) {
       return await conn.sendMessage(m.chat, {
         text: `「🩵」Debes esperar ${clockString(SOC_CLAIM_TIMEOUT - (new Date - user.lastSoccer))} para reclamar otro jugador de fútbol.`,
@@ -33,26 +32,33 @@ let handler = async (m, { conn, command, usedPrefix }) => {
             serverMessageId: -1,
           },
           forwardingScore: 999,
+          externalAdReply: {
+            title: '✅ Makima 2.0 VERIFICADO',
+            body: 'MAKIMA - FRASES',
+            thumbnailUrl: "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg", // Puedes poner tu propio logo o ícono del bot
+            sourceUrl: "https://github.com/Andresv27728/2.0",
+            mediaType: 1,
+            renderLargerThumbnail: true
+          }
         }
-      }, { quoted: null })
+      }, { quoted: m });
     }
 
-    // Saca jugador random
-    let jugador = jugadores[Math.floor(Math.random() * jugadores.length)]
+    let jugador = jugadores[Math.floor(Math.random() * jugadores.length)];
 
-    // Guarda el jugador en juego en el chat
     soccerStorage[m.chat] = {
       nombre: jugador.nombre,
       url: jugador.url,
       valor: jugador.valor,
       owner: null,
-      msgId: null // se setea abajo
-    }
+      msgId: null
+    };
 
     let msg = await conn.sendMessage(m.chat, {
       image: { url: jugador.url },
-      caption: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0 `,
+      caption: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
       contextInfo: {
+        mentionedJid: [m.sender],
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
           newsletterJid: channelRD.id,
@@ -60,27 +66,32 @@ let handler = async (m, { conn, command, usedPrefix }) => {
           serverMessageId: -1,
         },
         forwardingScore: 999,
+        externalAdReply: {
+          title: '✅ Makima 2.0 VERIFICADO',
+          body: 'MAKIMA - FRASES',
+          thumbnailUrl: jugador.url,
+          sourceUrl: "https://github.com/Andresv27728/2.0",
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
       }
-    }, { quoted: null })
+    }, { quoted: m });
 
-    // Guarda el ID del mensaje para el reclamo
-    soccerStorage[m.chat].msgId = msg.key.id
-    user.lastSoccer = +new Date
-    return
+    soccerStorage[m.chat].msgId = (await msg).key.id;
+    user.lastSoccer = +new Date;
+    return;
   }
 
   // Comando #reclamar
   if (command === "reclamar") {
-    // Solo se puede reclamar respondiendo a una foto de soccer
-    if (!m.quoted || !m.quoted.id) return m.reply('Responde a la foto del jugador con #reclamar para reclamarlo.')
+    if (!m.quoted || !m.quoted.id) return m.reply('Responde a la foto del jugador con #reclamar para reclamarlo.');
 
-    let soccer = soccerStorage[m.chat]
+    let soccer = soccerStorage[m.chat];
     if (!soccer || soccer.msgId !== m.quoted.id)
-      return m.reply('No hay jugador disponible para reclamar o ya expiró.')
+      return m.reply('No hay jugador disponible para reclamar o ya expiró.');
 
-    // Si ya fue reclamado
     if (soccer.owner) {
-      let ownerName = await conn.getName(soccer.owner)
+      let ownerName = await conn.getName(soccer.owner);
       return await conn.sendMessage(m.chat, {
         text: `「🩵」Este jugador ya fue reclamado por ${ownerName}.`,
         contextInfo: {
@@ -91,12 +102,19 @@ let handler = async (m, { conn, command, usedPrefix }) => {
             serverMessageId: -1,
           },
           forwardingScore: 999,
+          externalAdReply: {
+            title: '✅ Makima 2.0 VERIFICADO',
+            body: 'MAKIMA - FRASES',
+            thumbnailUrl: soccer.url,
+            sourceUrl: "https://github.com/Andresv27728/2.0",
+            mediaType: 1,
+            renderLargerThumbnail: true
+          }
         }
-      }, { quoted: null })
+      }, { quoted: m });
     }
 
-    // Si no tiene suficiente XP
-    let user = global.db.data.users[m.sender]
+    let user = global.db.data.users[m.sender];
     if (!user || user.exp < soccer.valor)
       return await conn.sendMessage(m.chat, {
         text: `「🩵」No tienes suficiente XP para reclamar este jugador.`,
@@ -108,14 +126,20 @@ let handler = async (m, { conn, command, usedPrefix }) => {
             serverMessageId: -1,
           },
           forwardingScore: 999,
+          externalAdReply: {
+            title: '✅ Makima 2.0 VERIFICADO',
+            body: 'MAKIMA - FRASES',
+            thumbnailUrl: soccer.url,
+            sourceUrl: "https://github.com/Andresv27728/2.0",
+            mediaType: 1,
+            renderLargerThumbnail: true
+          }
         }
-      }, { quoted: null })
+      }, { quoted: m });
 
-    // Marca como reclamado
-    soccer.owner = m.sender
-    // Opcional: Guarda los jugadores reclamados por usuario
-    if (!user.soccerPlayers) user.soccerPlayers = []
-    user.soccerPlayers.push(soccer.nombre)
+    soccer.owner = m.sender;
+    if (!user.soccerPlayers) user.soccerPlayers = [];
+    user.soccerPlayers.push(soccer.nombre);
 
     await conn.sendMessage(m.chat, {
       text: `「🩵」¡Reclamaste a ${soccer.nombre}!`,
@@ -127,20 +151,29 @@ let handler = async (m, { conn, command, usedPrefix }) => {
           serverMessageId: -1,
         },
         forwardingScore: 999,
+        externalAdReply: {
+          title: '✅ Makima 2.0 VERIFICADO',
+          body: 'MAKIMA - FRASES',
+          thumbnailUrl: soccer.url,
+          sourceUrl: "https://github.com/Andresv27728/2.0",
+          mediaType: 1,
+          renderLargerThumbnail: true
+        }
       }
-    }, { quoted: null })
-    return
+    }, { quoted: m });
+    return;
   }
-}
-handler.help = ['soccer', 'reclamar']
-handler.tags = ['games']
-handler.command = ['soccer', 'reclamar']
-handler.register = true
-export default handler
+};
+
+handler.help = ['soccer', 'reclamar'];
+handler.tags = ['games'];
+handler.command = ['soccer', 'reclamar'];
+handler.register = true;
+export default handler;
 
 function clockString(ms) {
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000);
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':');
 }
