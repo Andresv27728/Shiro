@@ -16,7 +16,7 @@ const jugadores = [
 ];
 
 const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
-const MAKIMA_ICON = "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg";
+const MAKIMA_ICON = "https://qu.ax/dXOUo.jpg";
 const GITHUB_MAKIMA = "https://github.com/mantis-has/Makima";
 const NEWSLETTER_TITLE = '🩵 MAKIMA BOT MD 🩵';
 const SOC_CLAIM_TIMEOUT = 3 * 60 * 1000; // 3 minutos
