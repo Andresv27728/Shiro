@@ -11,12 +11,12 @@ const jugadores = [
 ];
 
 const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
-const MAKIMA_ICON = "https://telegra.ph/file/2e232d8e5b9e8c7b3e4a2.jpg"; // TU MINIATURA DE MAKIMA CUADRADA
+const MAKIMA_ICON = "https://qu.ax/vXOTr.jpg"; // TU MINIATURA DE MAKIMA CUADRADA
 const SOC_CLAIM_TIMEOUT = 9 * 60 * 1000; // 9 minutos
 
 let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {});
 
-let handler = async (m, { conn, command }) => {
+let handler = async (m, { conn, command, args }) => {
   // Comando #soccer
   if (command === "soccer") {
     let user = global.db.data.users[m.sender];
@@ -34,12 +34,12 @@ let handler = async (m, { conn, command }) => {
           },
           forwardingScore: 999,
           externalAdReply: {
-            title: '✅ Makima 2.0 VERIFICADO',
-            body: 'MAKIMA - FRASES',
-            thumbnailUrl: MAKIMA_ICON, // SIEMPRE LA MINIATURA DE MAKIMA
-            sourceUrl: "https://github.com/Andresv27728/2.0",
+            title: '🩵 MAKIMA BOT MD 🩵',
+            body: 'MAKIMA - CHANNEL',
+            thumbnailUrl: MAKIMA_ICON,
+            sourceUrl: "https://github.com/mantis-has",
             mediaType: 1,
-            renderLargerThumbnail: false // MINIATURA PEQUEÑA
+            renderLargerThumbnail: false
           }
         }
       }, { quoted: m });
@@ -68,12 +68,12 @@ let handler = async (m, { conn, command }) => {
         },
         forwardingScore: 999,
         externalAdReply: {
-          title: '✅ Makima 2.0 VERIFICADO',
-          body: 'MAKIMA - FRASES',
-          thumbnailUrl: MAKIMA_ICON, // SIEMPRE LA MINIATURA DE MAKIMA
-          sourceUrl: "https://github.com/Andresv27728/2.0",
+          title: '🩵 MAKIMA BOT MD 🩵',
+          body: 'MAKIMA BOT 🏆',
+          thumbnailUrl: MAKIMA_ICON,
+          sourceUrl: "https://github.com/mantis-has/makima",
           mediaType: 1,
-          renderLargerThumbnail: false // MINIATURA PEQUEÑA
+          renderLargerThumbnail: false
         }
       }
     }, { quoted: m });
@@ -83,9 +83,9 @@ let handler = async (m, { conn, command }) => {
     return;
   }
 
-  // Comando #reclamar
-  if (command === "reclamar") {
-    if (!m.quoted || !m.quoted.id) return m.reply('Responde a la foto del jugador con #reclamar para reclamarlo.');
+  // Comando #rcjugador (reclamar)
+  if (command === "rcjugador") {
+    if (!m.quoted || !m.quoted.id) return m.reply('Responde a la foto del jugador con #rcjugador para reclamarlo.');
 
     let soccer = soccerStorage[m.chat];
     if (!soccer || soccer.msgId !== m.quoted.id)
@@ -104,10 +104,10 @@ let handler = async (m, { conn, command }) => {
           },
           forwardingScore: 999,
           externalAdReply: {
-            title: '✅ Makima 2.0 VERIFICADO',
-            body: 'MAKIMA - FRASES',
+            title: '🩵 MAKIMA BOT MD 🩵',
+            body: 'Dev Félix',
             thumbnailUrl: MAKIMA_ICON,
-            sourceUrl: "https://github.com/Andresv27728/2.0",
+            sourceUrl: "https://github.com/mantis-has/Makima",
             mediaType: 1,
             renderLargerThumbnail: false
           }
@@ -128,10 +128,10 @@ let handler = async (m, { conn, command }) => {
           },
           forwardingScore: 999,
           externalAdReply: {
-            title: '✅ Makima 2.0 VERIFICADO',
-            body: 'MAKIMA - FRASES',
+            title: 'MAKIMA 🏆',
+            body: '🩵 MAKIMA - CHANNEL 🩵',
             thumbnailUrl: MAKIMA_ICON,
-            sourceUrl: "https://github.com/Andresv27728/2.0",
+            sourceUrl: "https://github.com/mantis-has/Makima",
             mediaType: 1,
             renderLargerThumbnail: false
           }
@@ -153,7 +153,55 @@ let handler = async (m, { conn, command }) => {
         },
         forwardingScore: 999,
         externalAdReply: {
-          title: '✅ Makima 2.0 VERIFICADO',
+          title: '🩵 MAKIMA 2.0 BOT 🩵',
+          body: 'MAKIMA - FRASES',
+          thumbnailUrl: MAKIMA_ICON,
+          sourceUrl: "https://te.quieres.robar.mi.bot.com",
+          mediaType: 1,
+          renderLargerThumbnail: false
+        }
+      }
+    }, { quoted: m });
+    return;
+  }
+
+  // Comando #jugadores
+  if (command === "jugadores") {
+    let targetJid;
+    if (m.mentionedJid && m.mentionedJid.length > 0) {
+      targetJid = m.mentionedJid[0];
+    } else {
+      targetJid = m.sender;
+    }
+    let user = global.db.data.users[targetJid];
+    let nombre = await conn.getName(targetJid);
+
+    let lista = (user && user.soccerPlayers) ? user.soccerPlayers : [];
+    let total = lista.length;
+
+    let jugadoresText = lista.length > 0 ? lista.map(j => `• ${j}`).join('\n') : "No tiene jugadores reclamados.";
+
+    let texto = `✰ 𝖩𝖴𝖦𝖠𝖣𝖮𝖱𝖤𝖲 ✰
+
+Usuario: ${nombre}
+
+Total: ${total}
+
+${jugadoresText}`;
+
+    await conn.sendMessage(m.chat, {
+      text: texto,
+      mentions: [targetJid],
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: channelRD.id,
+          newsletterName: channelRD.name,
+          serverMessageId: -1,
+        },
+        forwardingScore: 999,
+        externalAdReply: {
+          title: '🩵 MAKIMA BOT MD 🩵',
           body: 'MAKIMA - FRASES',
           thumbnailUrl: MAKIMA_ICON,
           sourceUrl: "https://github.com/Andresv27728/2.0",
@@ -166,9 +214,9 @@ let handler = async (m, { conn, command }) => {
   }
 };
 
-handler.help = ['soccer', 'reclamar'];
+handler.help = ['soccer', 'rcjugador', 'jugadores'];
 handler.tags = ['games'];
-handler.command = ['soccer', 'reclamar'];
+handler.command = ['soccer', 'rcjugador', 'jugadores'];
 handler.register = true;
 export default handler;
 
