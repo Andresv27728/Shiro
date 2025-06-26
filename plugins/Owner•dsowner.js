@@ -31,7 +31,7 @@ await conn.reply(m.chat, '🩵 *La carpeta esta vacía*',  m, rcanal, )
 } else {
 m.react(done)
 await conn.reply(m.chat, `🩵 *Se eliminaron ${filesDeleted} archivos de sesión, excepto el archivo creds.json*`,  m, rcanal, )
-conn.reply(m.chat, `🩵 *¡Hola! Soy Makima*`, m, rcanal, )
+conn.reply(m.chat, `🩵 *¡Hola! Soy ${botname}*`, m, rcanal, )
 
 }
 } catch (err) {
