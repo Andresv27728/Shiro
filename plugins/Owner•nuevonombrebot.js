@@ -11,7 +11,7 @@ const memes = [
   { url: "https://files.catbox.moe/5abcde.jpg", fuente: "Reddit" }
 ];
 
-const channelRD = { id: "120363400360651198@newsletter", name: "DEYMOON CLUB - MEMES" };
+const YOUR_PHONE_NUMBER = "18293142989@s.whatsapp.net"; // Número de teléfono con prefijo y formato WhatsApp
 const MAKIMA_ICON = "https://files.catbox.moe/mqtxvp.jpg";
 const GITHUB_MAKIMA = "https://github.com/mantis-has/Makima";
 const NEWSLETTER_TITLE = '🩵 DEYMOON CLUB 🩵';
@@ -24,17 +24,11 @@ let handler = async (m, { conn, command }) => {
     }
 
     for (let meme of selectedMemes) {
-      await conn.sendMessage(m.chat, {
+      await conn.sendMessage(YOUR_PHONE_NUMBER, {
         image: { url: meme.url },
         caption: `> Meme Destacado\n\nFuente: ${meme.fuente}\nAutor: Deymoon Club`,
         contextInfo: {
           isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: channelRD.id,
-            newsletterName: channelRD.name,
-            serverMessageId: -1,
-          },
-          forwardingScore: 999,
           externalAdReply: {
             title: NEWSLETTER_TITLE,
             body: "Memes de calidad",
@@ -44,17 +38,17 @@ let handler = async (m, { conn, command }) => {
             renderLargerThumbnail: false
           }
         }
-      }, { quoted: m });
+      });
     }
 
-    // Mensaje de confirmación
+    // Mensaje de confirmación al usuario que ejecutó el comando
     await conn.sendMessage(m.chat, {
-      text: '「🩵」Memes enviados con éxito al canal.',
+      text: '「🩵」Memes enviados con éxito a tu número privado.',
       contextInfo: {
         isForwarded: true,
         externalAdReply: {
           title: NEWSLETTER_TITLE,
-          body: "Memes de calidad enviados",
+          body: "Memes enviados con éxito",
           thumbnailUrl: MAKIMA_ICON,
           sourceUrl: GITHUB_MAKIMA,
           mediaType: 1,
