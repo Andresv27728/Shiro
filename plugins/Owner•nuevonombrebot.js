@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) return m.reply(`🩵 Usa así: *${usedPrefix + command} nombre nuevo*`)
+  if (!text) return m.reply(`🩵 Formato incorrecto, usa el comando así *${usedPrefix + command} nombre nuevo*`)
 
   const senderNumber = m.sender.replace(/[^0-9]/g, '')
   const botPath = path.join('./MakiJadiBot', senderNumber)
@@ -38,7 +38,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
 handler.help = ['setname']
 handler.tags= ['serbot']
-handler.command = /^setbotname$/i
+handler.command = /^setname$/i
 handler.owner = false // solo el dueño puede usar esto
 
 export default handler
