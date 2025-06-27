@@ -53,7 +53,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
   let blackclover = `
 ╭━━━━◇◇◇━━━━⬣
 ┃ ESTADO DE LA BOT 
-┃ ${global.botName}
+┃ ${botname}
 ╰━━━━◇◇◇━━━━⬣
 
 🩵 *Creador:* Félix Manuel 
