@@ -1,7 +1,7 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-let handler = async (m, { isOwner, isAdmin, conn, text, participants, args, command, usedPrefix }) => {
-  // Validaciones
+const handler = async (m, { isOwner, isAdmin, conn, participants, command }) => {
+  // Solo en grupos
   if (!m.isGroup) {
     await conn.sendMessage(m.chat, {
       text: '〘💎〙Este comando solo puede ser usado en grupos.',
@@ -9,6 +9,7 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants, args, comm
     }, { quoted: m });
     return;
   }
+  // Solo admins
   if (!(isAdmin || isOwner)) {
     await conn.sendMessage(m.chat, {
       text: '〘💎〙Este comando solo puede ser usado por admins.',
@@ -17,7 +18,7 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants, args, comm
     return;
   }
 
-  // Mensaje de espera, reply y newsletter
+  // Mensaje de "espere un momento..."
   let prepMsg = await conn.sendMessage(m.chat, {
     text: '〘💎〙Mencionando el grupo, espere un momento...',
     contextInfo: newsletterContext([m.sender])
@@ -32,10 +33,9 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants, args, comm
     await conn.sendMessage(m.chat, { react: { text: "💎", key: prepMsg.key }});
   } catch {}
 
-  // Esperar 2 segundos
   await delay(2000);
 
-  // Formato de mención
+  // Construir mensaje final
   let invocador = '@' + m.sender.split('@')[0];
   let lista = participants.map(mem => `┃✰ @${mem.id.split('@')[0]}`).join('\n');
   let texto = `╭───〘 ✰ 〙───╮
@@ -48,14 +48,12 @@ Tᴇ ɪɴᴠᴏᴄᴏ́: ${invocador}
 ${lista}
 ╚━━━━━━━━━━━━╝`;
 
-  // Enviar mención a todos, newsletter
   await conn.sendMessage(m.chat, {
     text: texto,
     mentions: participants.map(a => a.id),
     contextInfo: newsletterContext(participants.map(a => a.id))
   });
 };
-
 handler.help = ['tagall', 'mensionall', 'todos', 'invocar'];
 handler.tags = ['grupo'];
 handler.command = ['tagall', 'mensionall', 'todos', 'invocar'];
@@ -63,7 +61,7 @@ handler.admin = true;
 handler.group = true;
 export default handler;
 
-// Si ya tienes newsletterContext puedes omitir esto:
+// Si ya tienes newsletterContext, puedes omitirlo
 function newsletterContext(mentioned = []) {
   return {
     mentionedJid: mentioned,
