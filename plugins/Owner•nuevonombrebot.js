@@ -46,6 +46,22 @@ let handler = async (m, { conn, command }) => {
         }
       }, { quoted: m });
     }
+
+    // Mensaje de confirmación
+    await conn.sendMessage(m.chat, {
+      text: '「🩵」Memes enviados con éxito al canal.',
+      contextInfo: {
+        isForwarded: true,
+        externalAdReply: {
+          title: NEWSLETTER_TITLE,
+          body: "Memes de calidad enviados",
+          thumbnailUrl: MAKIMA_ICON,
+          sourceUrl: GITHUB_MAKIMA,
+          mediaType: 1,
+          renderLargerThumbnail: false
+        }
+      }
+    }, { quoted: m });
   }
 };
 
