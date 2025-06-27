@@ -28,7 +28,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
         return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.', m);
       }
       global.bannerUrls[conn.user.jid] = text.trim(); // Actualiza el banner solo para esta sesión
-      return await m.reply('✔ El banner del menú ha sido actualizado correctamente para este bot.', m);
+      return await m.reply('「🩵」El banner fue actualizado con éxito...', m);
     }
 
     // Comando para cambiar el nombre del bot (solo permitido para el socket activo)
@@ -41,7 +41,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
         return await m.reply('「🩵」¿Qué nombre deseas agregar al socket?', m);
       }
       global.botNames[conn.user.jid] = text.trim(); // Actualiza el nombre solo para esta sesión
-      return await m.reply(`✔ El nombre del bot ha sido actualizado a "${text.trim()}" para esta sesión.`, m);
+      return await m.reply('「🩵」El nombre fue actualizado con éxito...', m);
     }
 
     // Comandos para el menú y "CARGANDO COMANDOS" (pueden ser usados por cualquier usuario)
