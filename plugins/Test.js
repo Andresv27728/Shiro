@@ -1,4 +1,4 @@
-const YOUR_PHONE_NUMBER = "18293142989@s.whatsapp.net";
+const YOUR_PHONE_NUMBER = "18293142989";
 
 let handler = async (m, { conn, command }) => {
   if (command === 'testconnection') {
