@@ -18,22 +18,28 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       global.botNames[conn.user.jid] = 'Bot'; // Nombre inicial del bot
     }
 
+    // Verificar si el usuario tiene una sesión activa como bot
+    const isSocketActive = conn.user.jid === m.sender; // Solo el socket del bot puede usar los comandos
+    if (!isSocketActive) {
+      return await m.reply('「🩵」Este comando solo puede ser usado por el socket.');
+    }
+
     // Comando para cambiar el banner
     if (command === 'setbanner') {
       if (!text) {
-        return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.');
+        return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.', m);
       }
       global.bannerUrls[conn.user.jid] = text.trim(); // Actualiza el banner solo para esta sesión
-      return await m.reply('✔ El banner del menú ha sido actualizado correctamente para este bot.');
+      return await m.reply('✔ El banner del menú ha sido actualizado correctamente para este bot.', m);
     }
 
     // Comando para cambiar el nombre del bot
     if (command === 'setname') {
       if (!text) {
-        return await m.reply('✘ Por favor, proporciona un nuevo nombre válido para el bot.');
+        return await m.reply('「🩵」¿Qué nombre deseas agregar al socket?', m);
       }
       global.botNames[conn.user.jid] = text.trim(); // Actualiza el nombre solo para esta sesión
-      return await m.reply(`✔ El nombre del bot ha sido actualizado a "${text.trim()}" para esta sesión.`);
+      return await m.reply(`✔ El nombre del bot ha sido actualizado a "${text.trim()}" para esta sesión.`, m);
     }
 
     // Variables para el contexto del canal
@@ -43,7 +49,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
     let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
     let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
 
-    // Mensaje de "CARGANDO COMANDOS..." con contexto de canal
+    // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje
     await conn.sendMessage(m.chat, {
       text: 'ꪹ͜🕑͡ 𝗖𝗔𝗥𝗚𝗔𝗡𝗗𝗢 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦...𓏲✧੭',
       contextInfo: {
@@ -63,7 +69,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
           renderLargerThumbnail: false,
         },
       }
-    }, { quoted: null });
+    }, { quoted: m });
 
     // Datos usuario y menú
     let { exp, chocolates, level, role } = global.db.data.users[m.sender];
@@ -108,7 +114,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 
 ...`.trim(); // El resto del menú permanece igual
 
-    // Enviar el menú con el banner y nombre específico para esta sesión
+    // Enviar el menú con el banner y nombre específico para esta sesión y respondiendo al mensaje
     await conn.sendMessage(m.chat, {
       image: { url: global.bannerUrls[conn.user.jid] },
       caption: menu,
@@ -130,12 +136,12 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
           renderLargerThumbnail: false,
         },
       }
-    }, { quoted: null });
+    }, { quoted: m });
 
     await m.react(emojis);
 
   } catch (e) {
-    await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`);
+    await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`, m);
     await m.react(error);
   }
 };
