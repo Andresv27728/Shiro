@@ -1,97 +1,60 @@
-//═════════════════════════════════════════════════//
-//        Comando de mención a todos los miembros  //
-//═════════════════════════════════════════════════//
+const fs = require("fs");
+const path = require("path");
 
-const delay = ms => new Promise(res => setTimeout(res, ms))
+const handler = async (msg, { conn, args }) => {
+  const rawID = conn.user?.id || "";
+  const subbotID = rawID.split(":")[0] + "@s.whatsapp.net";
+  const botNumber = rawID.split(":")[0].replace(/[^0-9]/g, "");
 
-let tagallHandler = async (m, { conn, participants, isBotAdmin, isAdmin, isOwner, groupMetadata }) => {
-  // Validaciones
-  if (!m.isGroup) {
-    return m.reply('〘💎〙Este comando solo puede ser usado en grupos.')
+  const prefixPath = path.resolve("prefixes.json");
+  let prefixes = {};
+  if (fs.existsSync(prefixPath)) {
+    prefixes = JSON.parse(fs.readFileSync(prefixPath, "utf-8"));
   }
-  if (!isAdmin && !isOwner) {
-    return m.reply('〘💎〙Este comando solo puede ser usado por admins.')
-  }
+  const usedPrefix = prefixes[subbotID] || ".";
 
-  // Lista de usuarios a mencionar
-  let users = participants.map(u => u.id)
-  let invocadorTag = '@' + m.sender.split('@')[0]
-  let lista = users.map(u => '┃✰ @' + u.split('@')[0]).join('\n')
-  let texto = `╭───〘 ✰ 〙───╮
-┃MAKIMA 2.0 BOT┃
-╰━━━━━━━━━━━╯
+  const chatId = msg.key.remoteJid;
+  const senderJid = msg.key.participant || msg.key.remoteJid;
+  const senderNum = senderJid.replace(/[^0-9]/g, "");
 
-Tᴇ ɪɴᴠᴏᴄᴏ́: ${invocadorTag}
-
-╔━❍━❍━❍━❍━❍╗
-${lista}
-╚━━━━━━━━━━━━╝`
-
-  // Mensaje de "Mencionando el grupo..." (reply y newsletter)
-  let prepMsg = await conn.sendMessage(m.chat, {
-    text: '〘💎〙Mencionando el grupo, espere un momento...',
-    contextInfo: newsletterContext([m.sender])
-  }, { quoted: m })
-
-  // Reaccionar 💎 → 🩵 → 💎 al mensaje de espera
-  if (conn.sendMessage && prepMsg.key) {
-    try {
-      await conn.sendMessage(m.chat, { react: { text: "💎", key: prepMsg.key }})
-      await delay(500)
-      await conn.sendMessage(m.chat, { react: { text: "🩵", key: prepMsg.key }})
-      await delay(500)
-      await conn.sendMessage(m.chat, { react: { text: "💎", key: prepMsg.key }})
-    } catch {}
+  if (!chatId.endsWith("@g.us")) {
+    return await conn.sendMessage(chatId, {
+      text: "「🩵」 *Este comando solo puede ser usado en grupos.*"
+    }, { quoted: msg });
   }
 
-  // Esperar 2 segundos
-  await delay(2000)
+  const metadata = await conn.groupMetadata(chatId);
+  const participants = metadata.participants;
 
-  // Enviar mensaje principal con mención masiva (newsletter, sin reply)
-  await conn.sendMessage(m.chat, {
-    text: texto,
-    mentions: users,
-    contextInfo: newsletterContext(users)
-  })
-}
+  // Verificación de permisos
+  const participant = participants.find(p => p.id.includes(senderNum));
+  const isAdmin = participant?.admin === "admin" || participant?.admin === "superadmin";
+  const isBot = botNumber === senderNum;
 
-// Integrar al handler principal de tu archivo Test.js
-handler.command = handler.command ? handler.command.concat(['tagall','mensionall','todos','invocar']) : ['tagall','mensionall','todos','invocar']
-handler.register = true
-
-handler.before = async function (m, info) {
-  const cmds = ['tagall','mensionall','todos','invocar']
-  if (!m.isGroup && cmds.some(c => m.text?.toLowerCase()?.includes('#'+c))) {
-    return m.reply('〘💎〙Este comando solo puede ser usado en grupos.')
+  if (!isAdmin && !isBot) {
+    return await conn.sendMessage(chatId, {
+      text: "「🩵」Este comando solo puede ser usado por admins o el bot.."
+    }, { quoted: msg });
   }
-  if (m.isGroup && cmds.some(c => m.text?.toLowerCase()?.includes('#'+c))) {
-    if (!info.isAdmin && !info.isOwner) {
-      return m.reply('〘💎〙Este comando solo puede ser usado por admins.')
-    }
-    return await tagallHandler(m, info)
-  }
-}
 
-// Si ya tienes una función newsletterContext, reutilízala
-function newsletterContext(mentioned = []) {
-  return {
-    mentionedJid: mentioned,
-    isForwarded: true,
-    forwardedNewsletterMessageInfo: {
-      newsletterJid: channelRD.id,
-      newsletterName: channelRD.name,
-      serverMessageId: -1,
-    },
-    forwardingScore: 999,
-    externalAdReply: {
-      title: NEWSLETTER_TITLE,
-      body: channelRD.name,
-      thumbnailUrl: MAKIMA_ICON,
-      sourceUrl: GITHUB_MAKIMA,
-      mediaType: 1,
-      renderLargerThumbnail: false
-    }
+  const mentionList = participants.map(p => `➥ @${p.id.split("@")[0]}`).join("\n");
+  const extraMsg = args.join(" ");
+  let finalMsg = "━〔 *MENSION GRUPAL* 〕➪\n";
+  finalMsg += "MAKIMA 2.0 BOT\n";
+  if (extraMsg.trim().length > 0) {
+    finalMsg += `\n💎 Mensaje: ${extraMsg}\n\n`;
+  } else {
+    finalMsg += "\n";
   }
-}
+  finalMsg += mentionList;
 
-//═════════════════════════════════════════════════//
+  const mentionIds = participants.map(p => p.id);
+
+  await conn.sendMessage(chatId, {
+    text: finalMsg,
+    mentions: mentionIds
+  }, { quoted: msg });
+};
+
+handler.command = ["tagall", "invocar", "todos"];
+module.exports = handler;
