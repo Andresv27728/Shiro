@@ -1,6 +1,10 @@
-const delay = ms => new Promise(res => setTimeout(res, ms));
+import util from 'util';
 
-const handler = async (m, { isOwner, isAdmin, conn, participants }) => {
+let delay = util.promisify(setTimeout);
+// O si prefieres, usa esto después de los imports:
+// let delay = ms => new Promise(res => setTimeout(res, ms));
+
+let handler = async (m, { isOwner, isAdmin, conn, participants }) => {
   if (!m.isGroup) {
     await conn.sendMessage(m.chat, {
       text: '〘💎〙Este comando solo puede ser usado en grupos.',
@@ -56,7 +60,7 @@ handler.admin = true;
 handler.group = true;
 export default handler;
 
-// Si ya tienes newsletterContext no pegues esto:
+// Si ya tienes newsletterContext, omítelo.
 function newsletterContext(mentioned = []) {
   return {
     mentionedJid: mentioned,
