@@ -94,6 +94,10 @@ let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, com
 ┃┈➤ #repeat
 ┃┈➤ #repite
 ┃┈➤ #copiame
+┃┈➤ #soccer
+┃┈➤ #rcjugador
+┃┈➤ #rgjugador
+┃┈➤ #vtjugador
 ╰━━━━━━━━━━━━━━━━━━
 
 .       ╭ֹ┈ ⵿❀⵿ ┈╮ ㅤ
