@@ -1,70 +1,60 @@
-let handler = async (m, { isOwner, isAdmin, conn, participants }) => {
-  if (!m.isGroup) {
-    return await conn.sendMessage(m.chat, {
-      text: '〘💎〙Este comando solo puede ser usado en grupos.',
-      contextInfo: newsletterContext([m.sender])
-    }, { quoted: m });
-  }
-  if (!(isAdmin || isOwner)) {
-    return await conn.sendMessage(m.chat, {
-      text: '〘💎〙Este comando solo puede ser usado por admins.',
-      contextInfo: newsletterContext([m.sender])
-    }, { quoted: m });
-  }
-  // Mensaje de espera con reply y newsletter
-  let prepMsg = await conn.sendMessage(m.chat, {
-    text: '〘💎〙Mencionando el grupo, espere un momento...',
-    contextInfo: newsletterContext([m.sender])
-  }, { quoted: m });
-  // Reacciones secuenciales
-  if (conn.sendMessage && prepMsg.key) {
-    await conn.sendMessage(m.chat, { react: { text: "💎", key: prepMsg.key }});
-    await conn.sendMessage(m.chat, { react: { text: "🩵", key: prepMsg.key }});
-    await conn.sendMessage(m.chat, { react: { text: "💎", key: prepMsg.key }});
-  }
-  // Mensión masiva con formato
-  let invocador = '@' + m.sender.split('@')[0];
-  let lista = participants.map(mem => `┃✰ @${mem.id.split('@')[0]}`).join('\n');
-  let texto = `╭───〘 ✰ 〙───╮
-┃MAKIMA 2.0 BOT┃
-╰━━━━━━━━━━━╯
+const fs = require("fs");
+const path = require("path");
 
-Tᴇ ɪɴᴠᴏᴄᴏ́: ${invocador}
+const handler = async (msg, { conn, args }) => {
+  const rawID = conn.user?.id || "";
+  const subbotID = rawID.split(":")[0] + "@s.whatsapp.net";
+  const botNumber = rawID.split(":")[0].replace(/[^0-9]/g, "");
 
-╔━❍━❍━❍━❍━❍╗
-${lista}
-╚━━━━━━━━━━━━╝`;
-  await conn.sendMessage(m.chat, {
-    text: texto,
-    mentions: participants.map(a => a.id),
-    contextInfo: newsletterContext(participants.map(a => a.id))
-  });
+  const prefixPath = path.resolve("prefixes.json");
+  let prefixes = {};
+  if (fs.existsSync(prefixPath)) {
+    prefixes = JSON.parse(fs.readFileSync(prefixPath, "utf-8"));
+  }
+  const usedPrefix = prefixes[subbotID] || ".";
+
+  const chatId = msg.key.remoteJid;
+  const senderJid = msg.key.participant || msg.key.remoteJid;
+  const senderNum = senderJid.replace(/[^0-9]/g, "");
+
+  if (!chatId.endsWith("@g.us")) {
+    return await conn.sendMessage(chatId, {
+      text: "「🩵」 *Este comando solo puede ser usado en grupos.*"
+    }, { quoted: msg });
+  }
+
+  const metadata = await conn.groupMetadata(chatId);
+  const participants = metadata.participants;
+
+  // Verificación de permisos
+  const participant = participants.find(p => p.id.includes(senderNum));
+  const isAdmin = participant?.admin === "admin" || participant?.admin === "superadmin";
+  const isBot = botNumber === senderNum;
+
+  if (!isAdmin && !isBot) {
+    return await conn.sendMessage(chatId, {
+      text: "「🩵」Este comando solo puede ser usado por admins o el bot.."
+    }, { quoted: msg });
+  }
+
+  const mentionList = participants.map(p => `➥ @${p.id.split("@")[0]}`).join("\n");
+  const extraMsg = args.join(" ");
+  let finalMsg = "━〔 *MENSION GRUPAL* 〕➪\n";
+  finalMsg += "MAKIMA 2.0 BOT\n";
+  if (extraMsg.trim().length > 0) {
+    finalMsg += `\n💎 Mensaje: ${extraMsg}\n\n`;
+  } else {
+    finalMsg += "\n";
+  }
+  finalMsg += mentionList;
+
+  const mentionIds = participants.map(p => p.id);
+
+  await conn.sendMessage(chatId, {
+    text: finalMsg,
+    mentions: mentionIds
+  }, { quoted: msg });
 };
-handler.help = ['tagall', 'mensionall', 'todos', 'invocar'];
-handler.tags = ['grupo'];
-handler.command = ['tagall', 'mensionall', 'todos', 'invocar'];
-handler.admin = true;
-handler.group = true;
-export default handler;
 
-// Si ya tienes esto, NO lo pegues dos veces:
-function newsletterContext(mentioned = []) {
-  return {
-    mentionedJid: mentioned,
-    isForwarded: true,
-    forwardedNewsletterMessageInfo: {
-      newsletterJid: channelRD.id,
-      newsletterName: channelRD.name,
-      serverMessageId: -1,
-    },
-    forwardingScore: 999,
-    externalAdReply: {
-      title: NEWSLETTER_TITLE,
-      body: channelRD.name,
-      thumbnailUrl: MAKIMA_ICON,
-      sourceUrl: GITHUB_MAKIMA,
-      mediaType: 1,
-      renderLargerThumbnail: false
-    }
-  }
-}
+handler.command = ["tagall", "invocar", "todos"];
+module.exports = handler;
