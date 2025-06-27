@@ -1,30 +1,44 @@
-let handler = async (m, { conn, text, isOwner }) => {
-  // Obtiene el número del bot
-  let botNumber = (conn.user && conn.user.id) ? conn.user.id.split('@')[0] : ''
-  // Obtiene el número de quien envía el comando
-  let senderNumber = m.sender.split('@')[0]
+// Yuru Code Ofc
+import fs from 'fs'
+import path from 'path'
 
-  // Permite solo si es owner o el propio bot (útil para subbots)
-  if (!isOwner && senderNumber !== botNumber) {
-    return conn.reply(m.chat, '⛔️ Este comando solo puede ser usado por el owner o por el propio bot.', m)
+const handler = async (m, { conn, text, usedPrefix, command }) => {
+  if (!text) return m.reply(`👀 Usa así: *${usedPrefix + command} nombre nuevo*`)
+
+  const senderNumber = m.sender.replace(/[^0-9]/g, '')
+  const botPath = path.join('./blackJadiBot', senderNumber)
+  const configPath = path.join(botPath, 'config.json')
+
+  if (!fs.existsSync(botPath)) {
+    return m.reply('❌ No encontré tu sub bot activo.')
   }
 
-  if (!text) return conn.reply(m.chat, '✏️ ¿Qué nombre quieres ponerme?', m)
+  let config = {}
+
+  // Si existe config.json, leerlo
+  if (fs.existsSync(configPath)) {
+    try {
+      config = JSON.parse(fs.readFileSync(configPath))
+    } catch (e) {
+      return m.reply('⚠️ Error al leer el config.json.')
+    }
+  }
+
+  
+  config.name = text.trim()
 
   try {
-    await conn.updateProfileName(text)
-    await conn.reply(m.chat, `✅ Nombre cambiado con éxito a: *${text}*`, m)
-    await m.react('✅')
-  } catch (e) {
-    console.error(e)
-    await m.react('❌')
-    await conn.reply(m.chat, `❌ Ocurrió un error al cambiar el nombre.\n${e}`, m)
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
+    m.reply(`☁︎ Nombre del sub bot cambiado a: *${text.trim()}*`)
+  } catch (err) {
+    console.error(err)
+    m.reply('❌ Ocurrió un error al guardar el nombre.')
   }
 }
 
-handler.help = ['nuevonombrebot <nuevo_nombre>']
-handler.tags = ['owner']
-handler.command = ['nuevonombrebot', 'setbotname', 'setname', 'namebot']
-handler.owner = false // Lo controlamos manualmente en el código
+handler.help = ['setname']
+handler.tags= ['serbot']
+handler.command = /^setname$/i
+handler.owner = false // solo el dueño puede usar esto
 
 export default handler
