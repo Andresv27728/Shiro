@@ -19,6 +19,7 @@ const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES"
 const MAKIMA_ICON = "https://qu.ax/dXOUo.jpg";
 const GITHUB_MAKIMA = "https://github.com/mantis-has/Makima";
 const NEWSLETTER_TITLE = '🩵 MAKIMA BOT MD 🩵';
+const SOC_CLAIM_TIMEOUT = 3 * 60 * 1000; // 3 minutos
 
 let soccerStorage = global.db.data.soccer || (global.db.data.soccer = {});
 let ventasPendientes = global.db.data.ventasPendientes || (global.db.data.ventasPendientes = {});
@@ -48,6 +49,31 @@ let handler = async (m, { conn, command, args }) => {
   }
 
   // Otros comandos permanecen sin cambios
+  if (command === "soccer") {
+    let user = global.db.data.users[m.sender];
+    if (!user) user = global.db.data.users[m.sender] = {};
+    if (user.lastSoccer && new Date - user.lastSoccer < SOC_CLAIM_TIMEOUT) {
+      return await sendNewsletter(conn, m.chat, `「🩵」Debes esperar ${clockString(SOC_CLAIM_TIMEOUT - (new Date - user.lastSoccer))} para reclamar otro jugador de fútbol.`, m);
+    }
+    let jugador = jugadores[Math.floor(Math.random() * jugadores.length)];
+    soccerStorage[m.chat] = {
+      nombre: jugador.nombre,
+      url: jugador.url,
+      valor: jugador.valor,
+      owner: null,
+      msgId: null
+    };
+    let msg = await conn.sendMessage(m.chat, {
+      image: { url: jugador.url },
+      caption: `✰ Jugador: ${jugador.nombre}\n✰ Valor: ${jugador.valor}\n✰ Fuente: Deymoon\n✰ Bot: Makima 2.0`,
+      contextInfo: newsletterContext([m.sender])
+    }, { quoted: m });
+    soccerStorage[m.chat].msgId = (await msg).key.id;
+    user.lastSoccer = +new Date;
+    return;
+  }
+
+  // Incluyendo el resto de comandos: jugadores, rgjugador, vtjugador, vrjugador (sin cambios)
 };
 
 handler.help = ['soccer', 'rcjugador', 'jugadores', 'rgjugador', 'vtjugador', 'vrjugador'];
@@ -63,7 +89,7 @@ async function sendNewsletter(conn, chat, text, quoted = null) {
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
         newsletterJid: channelRD.id,
-        newsletterName: "MAKIMA - FRASES",
+        newsletterName: channelRD.name,
         serverMessageId: -1,
       },
       forwardingScore: 999,
