@@ -1,19 +1,24 @@
-import fs from 'fs'
-import fetch from 'node-fetch'
-import { xpRange } from '../lib/levelling.js'
-import { promises } from 'fs'
-import { join } from 'path'
+import fs from 'fs';
+import fetch from 'node-fetch';
+import { xpRange } from '../lib/levelling.js';
+import { promises } from 'fs';
+import { join } from 'path';
 
-// Creamos un objeto global para almacenar el banner por sesión
+// Creamos un objeto global para almacenar el banner y el nombre por sesión
 global.bannerUrls = {}; // Almacenará las URLs de los banners por sesión
+global.botNames = {};   // Almacenará los nombres personalizados por sesión
 
 let handler = async (m, { conn, usedPrefix, text, command }) => {
   try {
-    // Inicializamos la URL del banner para esta sesión si no existe
+    // Inicializamos el banner y el nombre por sesión si no existen
     if (!global.bannerUrls[conn.user.jid]) {
       global.bannerUrls[conn.user.jid] = 'https://files.catbox.moe/5k9zhl.jpg'; // URL inicial de la imagen del menú
     }
+    if (!global.botNames[conn.user.jid]) {
+      global.botNames[conn.user.jid] = 'Bot'; // Nombre inicial del bot
+    }
 
+    // Comando para cambiar el banner
     if (command === 'setbanner') {
       if (!text) {
         return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.');
@@ -22,14 +27,23 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       return await m.reply('✔ El banner del menú ha sido actualizado correctamente para este bot.');
     }
 
-    // Variables que usas para el contexto del canal
+    // Comando para cambiar el nombre del bot
+    if (command === 'setname') {
+      if (!text) {
+        return await m.reply('✘ Por favor, proporciona un nuevo nombre válido para el bot.');
+      }
+      global.botNames[conn.user.jid] = text.trim(); // Actualiza el nombre solo para esta sesión
+      return await m.reply(`✔ El nombre del bot ha sido actualizado a "${text.trim()}" para esta sesión.`);
+    }
+
+    // Variables para el contexto del canal
     const dev = 'Félix Manuel';
     const redes = 'https://github.com/Andresv27728/2.0';
     const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
     let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
     let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
 
-    // 1. Mensaje de "CARGANDO COMANDOS..." con contexto de canal
+    // Mensaje de "CARGANDO COMANDOS..." con contexto de canal
     await conn.sendMessage(m.chat, {
       text: 'ꪹ͜🕑͡ 𝗖𝗔𝗥𝗚𝗔𝗡𝗗𝗢 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦...𓏲✧੭',
       contextInfo: {
@@ -51,7 +65,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       }
     }, { quoted: null });
 
-    // 2. Datos usuario y menú
+    // Datos usuario y menú
     let { exp, chocolates, level, role } = global.db.data.users[m.sender];
     let { min, xp, max } = xpRange(level, global.multiplier);
     let nombre = await conn.getName(m.sender);
@@ -71,6 +85,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
     const emojis = '🩵';
     const error = '❌';
 
+    let botname = global.botNames[conn.user.jid]; // Nombre del bot específico para esta sesión
     let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
 
 ╭━━I N F O-B O-T━━
@@ -93,7 +108,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 
 ...`.trim(); // El resto del menú permanece igual
 
-    // Enviar el menú con el banner específico para esta sesión
+    // Enviar el menú con el banner y nombre específico para esta sesión
     await conn.sendMessage(m.chat, {
       image: { url: global.bannerUrls[conn.user.jid] },
       caption: menu,
@@ -123,11 +138,11 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
     await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`);
     await m.react(error);
   }
-}
+};
 
-handler.help = ['menu', 'setbanner'];
+handler.help = ['menu', 'setbanner', 'setname'];
 handler.tags = ['main'];
-handler.command = ['menu', 'help', 'menú', 'asistenciabot', 'comandosbot', 'listadecomandos', 'menucompleto', 'setbanner'];
+handler.command = ['menu', 'help', 'menú', 'asistenciabot', 'comandosbot', 'listadecomandos', 'menucompleto', 'setbanner', 'setname'];
 handler.register = true;
 
 function clockString(ms) {
