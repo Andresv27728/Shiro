@@ -100,7 +100,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
 
 ╭━━I N F O-B O-T━━
-┃Creadora: ༘͜͡❃➳𓆩ޫ͢黒𓆪𑪖 𝐑o͟𝐬𝐥𝐲𝐧𔗂꯭⸙͎
+┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
 ┃Tiempo activo: ${uptime}
 ┃Baileys: Multi device.
 ┃Base: Oficial.
