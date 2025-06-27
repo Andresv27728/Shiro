@@ -67,7 +67,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 
     let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Prem-Bot)')} 
 
-╭━━I N F O-B O T━━
+╭━━I N F O-B O-T━━
 ┃Creadora: ༘͜͡❃➳𓆩ޫ͢黒𓆪𑪖 𝐑o͟𝐬𝐥𝐲𝐧𔗂꯭⸙͎
 ┃Tiempo activo: ${uptime}
 ┃Baileys: Multi device.
@@ -129,3 +129,5 @@ function clockString(ms) {
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
+
+export default handler;
