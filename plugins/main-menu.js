@@ -44,15 +44,16 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       return await m.reply(`✔ El nombre del bot ha sido actualizado a "${text.trim()}" para esta sesión.`, m);
     }
 
-    // Variables para el contexto del canal
-    const dev = 'Félix Manuel';
-    const redes = 'https://github.com/Andresv27728/2.0';
-    const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
-    let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
-    let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
-
-    // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje (puede ser usado por cualquier usuario)
+    // Comandos para el menú y "CARGANDO COMANDOS" (pueden ser usados por cualquier usuario)
     if (command === 'menu' || command === 'help' || command === 'menú') {
+      // Variables para el contexto del canal
+      const dev = 'Félix Manuel';
+      const redes = 'https://github.com/Andresv27728/2.0';
+      const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+      let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
+
+      // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje
       await conn.sendMessage(m.chat, {
         text: 'ꪹ͜🕑͡ 𝗖𝗔𝗥𝗚𝗔𝗡𝗗𝗢 𝗖𝗢𝗠𝗔𝗡𝗗𝗢𝗦...𓏲✧੭',
         contextInfo: {
@@ -140,3 +141,26 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
           },
         }
       }, { quoted: m });
+
+      await m.react(emojis);
+    }
+
+  } catch (e) {
+    await m.reply(`✘ Ocurrió un error cuando la lista de comandos se iba a enviar.\n\n${e}`, m);
+    await m.react(error);
+  }
+};
+
+handler.help = ['menu', 'setbanner', 'setname'];
+handler.tags = ['main'];
+handler.command = ['menu', 'help', 'menú', 'asistenciabot', 'comandosbot', 'listadecomandos', 'menucompleto', 'setbanner', 'setname'];
+handler.register = true;
+
+function clockString(ms) {
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000);
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':');
+}
+
+export default handler;
