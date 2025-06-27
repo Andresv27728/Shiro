@@ -1,14 +1,14 @@
 const YOUR_PHONE_NUMBER = "18293142989@s.whatsapp.net";
 
-// Lista de memes
+// Lista de memes actualizada con imágenes reales
 const memes = [
-  { url: "https://i.imgur.com/1.jpg", caption: "Meme 1" },
-  { url: "https://i.imgur.com/2.jpg", caption: "Meme 2" },
-  { url: "https://i.imgur.com/3.jpg", caption: "Meme 3" }
+  { url: "https://i.imgur.com/fYdPp3E.jpg", caption: "Meme divertido 1" },
+  { url: "https://i.imgur.com/CXhhcLq.jpg", caption: "Meme gracioso 2" },
+  { url: "https://i.imgur.com/ZvUQU5U.jpg", caption: "Meme de TikTok 3" }
 ];
 
 let handler = async (m, { conn, command }) => {
-  console.log("Comando testconnection ejecutado"); // Mensaje de depuración
+  console.log("Comando memechannel ejecutado"); // Mensaje de depuración
 
   if (command === 'memechannel') {
     console.log("Enviando memes al número privado..."); // Mensaje de depuración
