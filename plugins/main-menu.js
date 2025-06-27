@@ -18,9 +18,11 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       global.botNames[conn.user.jid] = 'Bot'; // Nombre inicial del bot
     }
 
+    // Verificar si el usuario es el socket activo
+    const isSocketActive = conn.user.jid === m.sender;
+
     // Comando para cambiar el banner (solo permitido para el socket activo)
     if (command === 'setbanner') {
-      const isSocketActive = conn.user.jid === m.sender; // Verificar si el comando lo ejecuta el socket activo
       if (!isSocketActive) {
         return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
       }
@@ -33,7 +35,6 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 
     // Comando para cambiar el nombre del bot (solo permitido para el socket activo)
     if (command === 'setname') {
-      const isSocketActive = conn.user.jid === m.sender; // Verificar si el comando lo ejecuta el socket activo
       if (!isSocketActive) {
         return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
       }
