@@ -1,11 +1,14 @@
-import ws from 'ws'
+import ws from 'ws';
 
-let handler = async (m, { conn, usedPrefix }) => {
+// Inicializamos variables globales para el nombre y la foto del bot
+global.botName = 'MAKIMA 2.0 BOT'; // Nombre inicial del bot
+global.botBanner = 'https://files.catbox.moe/ed9tq4.jpg'; // URL inicial de la foto del bot
+
+let handler = async (m, { conn, usedPrefix, text, command }) => {
   let _muptime;
   let totalreg = Object.keys(global.db.data.users).length;
   let totalchats = Object.keys(global.db.data.chats).length;
   let vs = global.vs || '1.0.0';
-  let pp = "https://files.catbox.moe/ed9tq4.jpg";
 
   // Tiempo de actividad
   if (process.send) {
@@ -29,11 +32,28 @@ let handler = async (m, { conn, usedPrefix }) => {
   let neww = performance.now();
   let speed = neww - old;
 
+  // Actualizaciones con #setname y #setbanner
+  if (command === 'setname') {
+    if (!text) {
+      return await m.reply('「🩵」Por favor, proporciona el nuevo nombre para el bot.', m);
+    }
+    global.botName = text.trim(); // Actualiza el nombre global del bot
+    return await m.reply(`「🩵」El nombre del bot se actualizó con éxito a: ${global.botName}`, m);
+  }
+
+  if (command === 'setbanner') {
+    if (!text) {
+      return await m.reply('「🩵」Por favor, proporciona el enlace de la nueva foto del bot.', m);
+    }
+    global.botBanner = text.trim(); // Actualiza la URL global de la foto del bot
+    return await m.reply('「🩵」La foto del bot se actualizó con éxito.', m);
+  }
+
   // Mensaje principal
-  let blackclover= `
+  let blackclover = `
 ╭━━━━◇◇◇━━━━⬣
 ┃ ESTADO DE LA BOT 
-┃ MAKIMA 2.0 BOT
+┃ ${global.botName}
 ╰━━━━◇◇◇━━━━⬣
 
 🩵 *Creador:* Félix Manuel 
@@ -50,12 +70,12 @@ let handler = async (m, { conn, usedPrefix }) => {
 🩵 *Velocidad:* ${(speed * 1000).toFixed(0) / 1000}s
 `.trim();
 
-  await conn.sendFile(m.chat, pp, 'estado.jpg', blackclover, fkontak, null, rcanal);
+  await conn.sendFile(m.chat, global.botBanner, 'estado.jpg', blackclover, null, null, null);
 };
 
-handler.help = ['status'];
+handler.help = ['status', 'setname', 'setbanner'];
 handler.tags = ['info'];
-handler.command = ['estado', 'status', 'estate', 'state', 'stado', 'stats'];
+handler.command = ['estado', 'status', 'estate', 'state', 'stado', 'stats', 'setname', 'setbanner'];
 handler.register = true;
 
 export default handler;
