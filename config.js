@@ -56,32 +56,32 @@ global.igfg = 'HAROLD'
 global.botname = '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ HAROLD Y 💖💝 Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟ 💝 💖'
 global.textbot = '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ : Félix HAROLD'
-global.gt = '͟͞MAkima';
-global.namechannel = '⏤͟͞ू⃪  ̸̷𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ 𝐂𝐡a͟𝐧n͟e͟𝐥𑁯'
+global.gt = '𝙃𝙄𝙉𝘼𝙏𝘼';
+global.namechannel = '  ̸̷𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ 𝐂𝐡a͟𝐧n͟e͟𝐥𑁯'
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
 global.moneda = 'Coins'
 
-//• ↳ ◜𝑳𝑰𝑵𝑲𝑺  𝑫𝑬𝒀𝑴𝑶𝑶𝑵 𝑪𝑳𝑼𝑩◞ • 🩵
-global.gp4 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' //Grupo Oficial De Makima 
-global.gp1 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r' //Grupo 2
-global.gp2 = 'https://chat.whatsapp.com/KoJjHo6o3Ew7P5qkjaIh0r'//
-global.channel = 'https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l' //Canal Oficial
-global.channel2 = 'https://whatsapp.com/channel/0029VbAa5sNCsU9Hlzsn651S' //Canal test 
-global.yt = 'https://www.youtube.com/frasesbebord' //Canal De Youtube
-global.md = 'https://github.com/mantis-has/Makima' //Github Oficial
-global.correo = 'mantisbotmd@gmail.com'
-global.cn ='https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l';
+//• ↳ ◜𝑳𝑰𝑵𝑲𝑺  𝑫𝑬𝒀𝑴𝑶𝑶𝑵 𝑪𝑳𝑼𝑩◞ • 🖤
+global.gp4 = 'https://chat.whatsapp.com/JkpwB3J7qMQF1uxomv5U1e' //Grupo Oficial De 𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ
+global.gp1 = 'https://chat.whatsapp.com/JkpwB3J7qMQF1uxomv5U1e' //Grupo 
+global.gp2 = 'https://chat.whatsapp.com/JkpwB3J7qMQF1uxomv5U1e'//
+global.channel = 'https://whatsapp.com/channel/0029Vb6MFShKGGGBWePRFc0U' //Canal Oficial
+global.channel2 = 'https://whatsapp.com/channel/0029Van1jvU3bbV3euXxAB0N' //Canal 
+global.yt = 'https://www.youtube.com/' //Canal De Youtube
+global.md = 'https://github.com/' //Github Oficial
+global.correo = '@gmail.com'
+global.cn ='https://whatsapp.com/channel/0029Vb6MFShKGGGBWePRFc0U';
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
 global.catalogo = fs.readFileSync('./src/catalogo.jpg');
 global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: packname, orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
 global.ch = {
-ch1: '120363400360651198@newsletter',
+ch1: '120363402552103115@newsletter',
 }
-global.multiplier = 70
+global.multiplier = 50
 
 //*─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─✰─ׄ─ׅ─ׄ─*
 
