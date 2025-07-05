@@ -28,18 +28,18 @@ console.log(`Error : ${e}`)
 }}
   
 //creador y otros
-global.creador = 'Wa.me/18293142989'
+global.creador = 'Wa.me/573133374132'
 global.ofcbot = `${conn.user.jid.split('@')[0]}`
-global.asistencia = 'Wa.me/18293142989'
-global.namechannel = '⏤͟͞ू⃪  ̸̷͢𝐌𝐚𝐤𝐢𝐦𝐚 ☦︎ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥𑁯ᰍ'
-global.namegrupo = '⏤͟͞ू⃪  ̸̷͢𝐌𝐚𝐤𝐢𝐦𝐚 ☦︎ 𝐆𝐫𝐮𝐩𝐨𑁯ᰍ'
-global.namecomu = 'Deymoon Club'
-global.listo = '🩵 *Aquí tienes ᕕ( ᐛ )ᕗ*'
+global.asistencia = 'Wa.me/573133374132'
+global.namechannel = '⏤͟͞ू⃪  ̸̷͢𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 𝐂𝐡𝐚𝐧𝐧𝐞𝐥𑁯ᰍ'
+global.namegrupo = '⏤͟͞ू⃪  𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ ☦︎ 𝐆𝐫𝐮𝐩𝐨𑁯ᰍ'
+global.namecomu = 'sya team'
+global.listo = ' *Aquí tienes ᕕ( ᐛ )ᕗ*'
 
 //Ids channel
-global.idchannel = '120363400360651198@newsletter'
-global.canalIdM = ["120363400360651198@newsletter", "120363418804796632@newsletter"]
-global.canalNombreM = ["⏤͟͞ू⃪  ̸̷͢𝐌𝐚𝐤𝐢𝐦𝐚 ☦︎ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥𑁯ᰍ", "🩵̶۫̄͟Ⓜ︎𓏲𝐌500𓍲̈͜𝗨̴ᥣ̥𝗍̈rᥲ̄𓊓̵̬𝐂h҉a҉n҉n̸e҉l҉⋆͙̈么͟͞──"]
+global.idchannel = '120363402552103115@newsletter'
+global.canalIdM = ["120363402552103115@newsletter", "120363419172960653@newsletter"]
+global.canalNombreM = ["𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ"Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟"]
 global.channelRD = await getRandomChannel()
 
 global.d = new Date(new Date + 3600000)
@@ -56,20 +56,20 @@ global.done = '✅'
 global.error = '❌'
 
 //Emojis determinado de MakimaBot 
-global.emoji = '🩵'
-global.emoji2 = '💎'
-global.emoji3 = '🩵'
-global.emoji4 = '💎'
+global.emoji = '⭕'
+global.emoji2 = '❤️'
+global.emoji3 = '🖤'
+global.emoji4 = '💝'
 global.emojis = [emoji, emoji2, emoji3, emoji4].getRandom()
 
 
 //Enlaces
-var canal = 'https://whatsapp.com/channel/0029VbAZcyIIXnlwp79iwu2l'  
-let canal2 = 'https://whatsapp.com/channel/0029VbAa5sNCsU9Hlzsn651S'
-var git = 'https://github.com/mantis-has' 
+var canal = 'https://chat.whatsapp.com/JkpwB3J7qMQF1uxomv5U1e'  
+let canal2 = 'https://chat.whatsapp.com/DPDcHF49QoJ7KzwHvFBjiW'
+var git = 'https://github.com' 
 var youtube = '' 
-var github = 'https://github.com/mantis-has/Makima' 
-let correo = 'quieresrobarladrondebotsxd@gmail.com'
+var github = 'https://github.com/' 
+let correo = '@gmail.com'
 global.redes = [canal, git, github, correo].getRandom()
 
 let category = "imagen"
@@ -96,8 +96,8 @@ global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo
 }}, { quoted: m }
 
 global.icono = [
-'https://qu.ax/Dfpfh.jpg',
-'https://qu.ax/bEUcE.jpg'
+'https://qu.ax/mfDtT.jpg',
+'https://qu.ax/mfDtT.jpg'
 ].getRandom()
 
 global.rcanal = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: 100, newsletterName: channelRD.name, }, externalAdReply: { showAdAttribution: true, title: packname, body: dev, mediaUrl: null, description: null, previewType: "PHOTO", thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false }, }, }}
