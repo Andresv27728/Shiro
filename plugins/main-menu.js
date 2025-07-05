@@ -1,4 +1,4 @@
-//* Código creado por Félix, no quites créditos *//
+//* Código creado por 💖💝 Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟ 💝 💖, no quites créditos *//
 
 import fs from 'fs';
 import fetch from 'node-fetch';
@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
   try {
     // Inicializamos el banner y el nombre por sesión si no existen
     if (!global.bannerUrls[conn.user.jid]) {
-      global.bannerUrls[conn.user.jid] = 'https://files.catbox.moe/5k9zhl.jpg'; // URL inicial de la imagen del menú
+      global.bannerUrls[conn.user.jid] = 'https://qu.ax/mfDtT.jpg'; // URL inicial de la imagen del menú
     }
     if (!global.botNames[conn.user.jid]) {
       global.botNames[conn.user.jid] = 'Bot'; // Nombre inicial del bot
@@ -26,35 +26,35 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
     // Comando para cambiar el banner (solo permitido para el socket activo)
     if (command === 'setbanner') {
       if (!isSocketActive) {
-        return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
+        return await m.reply('「🖤」Este comando solo puede ser usado por el socket.', m);
       }
       if (!text) {
         return await m.reply('✘ Por favor, proporciona un enlace válido para la nueva imagen del banner.', m);
       }
       global.bannerUrls[conn.user.jid] = text.trim(); // Actualiza el banner solo para esta sesión
-      return await m.reply('「🩵」El banner fue actualizado con éxito...', m);
+      return await m.reply('「🖤」El banner fue actualizado con éxito...', m);
     }
 
     // Comando para cambiar el nombre del bot (solo permitido para el socket activo)
     if (command === 'setname') {
       if (!isSocketActive) {
-        return await m.reply('「🩵」Este comando solo puede ser usado por el socket.', m);
+        return await m.reply('「🖤」Este comando solo puede ser usado por el socket.', m);
       }
       if (!text) {
-        return await m.reply('「🩵」¿Qué nombre deseas agregar al socket?', m);
+        return await m.reply('「🖤」¿Qué nombre deseas agregar al socket?', m);
       }
       global.botNames[conn.user.jid] = text.trim(); // Actualiza el nombre solo para esta sesión
-      return await m.reply('「🩵」El nombre fue actualizado con éxito...', m);
+      return await m.reply('「🖤」El nombre fue actualizado con éxito...', m);
     }
 
     // Comandos para el menú y "CARGANDO COMANDOS" (pueden ser usados por cualquier usuario)
     if (command === 'menu' || command === 'help' || command === 'menú') {
       // Variables para el contexto del canal
-      const dev = 'Félix Manuel';
-      const redes = 'https://github.com/Andresv27728/2.0';
-      const channelRD = { id: "120363400360651198@newsletter", name: "MAKIMA - FRASES" };
+      const dev = 'Harold';
+      const redes = 'https://github.com/Andresv27728';
+      const channelRD = { id: "120363402552103115@newsletter", name: "𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ" };
       let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
-      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/mqtxvp.jpg');
+      let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/mfDtT.jpg');
 
       // Mensaje de "CARGANDO COMANDOS..." con contexto de canal y respondiendo al mensaje
       await conn.sendMessage(m.chat, {
@@ -95,17 +95,16 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
       let uptime = clockString(_uptime);
       let totalreg = Object.keys(global.db.data.users).length;
       let taguser = '@' + m.sender.split("@s.whatsapp.net")[0];
-      const emojis = '🩵';
+      const emojis = '🖤';
       const error = '❌';
 
       let botname = global.botNames[conn.user.jid]; // Nombre del bot específico para esta sesión
       let menu = `¡Hola! ${taguser} soy ${botname} ${(conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)')} 
 
 ╭━━I N F O-B O-T━━
-┃Creador: 𓆩‌۫᷼ ִֶָღܾ݉͢ғ꯭ᴇ꯭፝ℓɪ꯭ͨא𓆪
+┃Creador: HAROLD
 ┃Tiempo activo: ${uptime}
 ┃Baileys: Multi device.
-┃Base: Oficial.
 ┃Registros: ${totalreg}
 ╰━━━━━━━━━━━━━
 
@@ -364,7 +363,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 ╰━━━━━━━━━━━━━━━━━━
 
 
-> © ⍴᥆ᥕᥱrᥱძ ᑲᥡ Félix Manuel`.trim(); // El resto del menú permanece igual
+> © ⍴᥆ᥕᥱrᥱძ ᑲᥡ HAROLD l`.trim(); // El resto del menú permanece igual
 
       // Enviar el menú con el banner y nombre específico para esta sesión y respondiendo al mensaje
       await conn.sendMessage(m.chat, {
@@ -380,7 +379,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
           },
           forwardingScore: 999,
           externalAdReply: {
-            title: '𝐌A͜͡𝑲𝑖𝐌ꪖ  𝐁o͟T͎ 𝙼𝙳',
+            title: '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ',
             body: dev,
             thumbnailUrl: perfil,
             sourceUrl: redes,
