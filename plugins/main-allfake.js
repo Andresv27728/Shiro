@@ -39,7 +39,7 @@ global.listo = ' *Aquí tienes ᕕ( ᐛ )ᕗ*'
 //Ids channel
 global.idchannel = '120363402552103115@newsletter'
 global.canalIdM = ["120363402552103115@newsletter", "120363419172960653@newsletter"]
-global.canalNombreM = ["𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ"Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟"]
+global.canalNombreM = ["𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ"⊘Estegrupoyanoestádisponible"]
 global.channelRD = await getRandomChannel()
 
 global.d = new Date(new Date + 3600000)
