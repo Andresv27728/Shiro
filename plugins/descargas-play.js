@@ -1,5 +1,5 @@
-// editado y reestructurado por 
-// https://github.com/deylin-eliac 
+// editado por
+// https://github.com/Ado-rgb
 
 import fetch from "node-fetch";
 import yts from "yt-search";
@@ -29,7 +29,7 @@ const ddownr = {
         const downloadUrl = await ddownr.cekProgress(id);
         return { id, title, image: info.image, downloadUrl };
       } else {
-        throw new Error("no se pudo encontrar los detalles del video.");
+        throw new Error("No se pudo encontrar los detalles del video.");
       }
     } catch (error) {
       console.error("❌ Error:", error);
@@ -52,7 +52,7 @@ const ddownr = {
         if (response.data?.success && response.data.progress === 1000) {
           return response.data.download_url;
         }
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
     } catch (error) {
       console.error("❌ Error:", error);
@@ -62,16 +62,16 @@ const ddownr = {
 };
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
-  await m.react('🎶');
+  await m.react('🔍');
 
   if (!text.trim()) {
-    return conn.reply(m.chat, "*𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ* | Dime el nombre de la canción que estás buscando", m, rcanal);
+    return conn.reply(m.chat, "✨ *𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼* te dice:\n\nDime el nombre de la canción que estás buscando 🎶", m);
   }
 
   try {
     const search = await yts(text);
     if (!search.all.length) {
-      return m.reply("*no se encontró nada con ese nombre...");
+      return m.reply("❌ No se encontró nada con ese nombre...");
     }
 
     const videoInfo = search.all[0];
@@ -79,66 +79,43 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const vistas = formatViews(views);
     const thumb = (await conn.getFile(thumbnail))?.data;
 
-    const infoMessage = `🖤❤️
-              \`𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ - Descargas 𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ\`
-*🎵 Título:* ${title}
-> 🎬 *Duración:* ${timestamp}
-> 👀 *Vistas:* ${vistas}
-> 🎤 *Canal:* ${(videoInfo.author?.name) || "Desconocido"}
-> 📅 *Publicado:* ${ago}
-> 🔗 *Enlace:* ${url}`;
+    const infoMessage = `
+🎧 𝗗𝗲𝘁𝗮𝗹𝗹𝗲𝘀 𝗱𝗲𝗹 𝘃𝗶𝗱𝗲𝗼
+━━━━━━━━━━━━━━━━━━━━━
+📌 Título: ${title}
+🎬 Canal: ${videoInfo.author?.name || "Desconocido"}
+⏱️ Duración: ${timestamp}
+👁️ Vistas: ${vistas}
+📅 Publicado: ${ago}
+🔗 URL: ${url}
+━━━━━━━━━━━━━━━━━━━━━
+`;
 
-    const JT = {
-      contextInfo: {
-        externalAdReply: {
-          title: "𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ",
-          body: "¡HINATA! El bot que necesitas.",
-          mediaType: 1,
-          previewType: 0,
-          mediaUrl: url,
-          sourceUrl: url,
-          thumbnail: thumb,
-          renderLargerThumbnail: true
-        }
-      }
-    };
-
-    await m.react('🎧');
-    await conn.reply(m.chat, infoMessage, m, JT);
+    await m.react('✅');
+    await conn.sendMessage(m.chat, { text: infoMessage }, { quoted: m });
 
     // Audio (play/yta/ytmp3)
     if (["play", "yta", "ytmp3"].includes(command)) {
+      await m.react('🎧');
       const api = await ddownr.download(url, "mp3");
 
       const doc = {
         audio: { url: api.downloadUrl },
         mimetype: 'audio/mpeg',
-        fileName: `${title}.mp3`,
-        contextInfo: {
-          externalAdReply: {
-            showAdAttribution: true,
-            mediaType: 2,
-            mediaUrl: url,
-            //title: title,
-            //body: `Duración: ${timestamp} | Vistas: ${vistas}`,
-            //sourceUrl: url,
-            thumbnailUrl: "https://cdn.russellxz.click/17cdc1bd.jpeg",
-            renderLargerThumbnail: true
-          }
-        }
+        fileName: `${title}.mp3`
       };
-
 
       return await conn.sendMessage(m.chat, doc, { quoted: m });
     }
 
     // Video (play2/ytv/ytmp4)
     if (["play2", "ytv", "ytmp4"].includes(command)) {
+      await m.react('📽️');
       const sources = [
         `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
         `https://api.zenkey.my.id/api/download/ytmp4?apikey=zenkey&url=${url}`,
         `https://axeel.my.id/api/download/video?url=${encodeURIComponent(url)}`,
-        `https://delirius-apiofc.vercel.app/download/ytmp4?url=${url}`
+        `https://theadonix-api.vercel.app/api/ytmp4?url=${url}`
       ];
 
       let success = false;
@@ -154,8 +131,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
               mimetype: "video/mp4",
-              caption: "🎬 Aquí tienes tu video, descargado POR 𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ",
-              thumbnail: thumb
+              caption: `𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼*\n\n${title}`
             }, { quoted: m });
             break;
           }
@@ -165,12 +141,12 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       }
 
       if (!success) {
-        return m.reply("❌ no se pudo encontrar un enlace válido para descargar.");
+        return m.reply("❌ No se pudo encontrar un enlace válido para descargar.");
       }
     }
 
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error("❌ Error general:", error);
     return m.reply(`⚠️ Ocurrió un error: ${error.message}`);
   }
 };
