@@ -29,7 +29,7 @@ const ddownr = {
         const downloadUrl = await ddownr.cekProgress(id);
         return { id, title, image: info.image, downloadUrl };
       } else {
-        throw new Error("⛔ 🤖🌕YᗩᘜIᖇᗩ-ᗷOT-ᗰᗪ🌕🤖 no pudo encontrar los detalles del video.");
+        throw new Error("no se pudo encontrar los detalles del video.");
       }
     } catch (error) {
       console.error("❌ Error:", error);
@@ -65,13 +65,13 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   await m.react('🎶');
 
   if (!text.trim()) {
-    return conn.reply(m.chat, "*Ｏ(≧∇≦)Ｏ🌕* *Pikachu-Bot* | Dime el nombre de la canción que estás buscando, PENDEJO", m, rcanal);
+    return conn.reply(m.chat, "*𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ* | Dime el nombre de la canción que estás buscando", m, rcanal);
   }
 
   try {
     const search = await yts(text);
     if (!search.all.length) {
-      return m.reply("*(>_<)🤖*YᗩᘜIᖇᗩ-ᗷOT no encontró nada con ese nombre...");
+      return m.reply("*no se encontró nada con ese nombre...");
     }
 
     const videoInfo = search.all[0];
@@ -79,8 +79,8 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const vistas = formatViews(views);
     const thumb = (await conn.getFile(thumbnail))?.data;
 
-    const infoMessage = `🌕🤖
-              \`YᗩᘜIᖇᗩ-ᗷOT-ᗰᗪ - Descargas YᗩᘜIᖇᗩ\`
+    const infoMessage = `🖤❤️
+              \`𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ - Descargas 𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ\`
 *🎵 Título:* ${title}
 > 🎬 *Duración:* ${timestamp}
 > 👀 *Vistas:* ${vistas}
@@ -91,8 +91,8 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const JT = {
       contextInfo: {
         externalAdReply: {
-          title: "🤖🌕YᗩᘜIᖇᗩ-ᗷOT-ᗰᗪ🌕🤖",
-          body: "¡YᗩᘜIᖇᗩ! El bot que necesitas.",
+          title: "𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ",
+          body: "¡HINATA! El bot que necesitas.",
           mediaType: 1,
           previewType: 0,
           mediaUrl: url,
@@ -122,7 +122,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
             //title: title,
             //body: `Duración: ${timestamp} | Vistas: ${vistas}`,
             //sourceUrl: url,
-            thumbnailUrl: "https://raw.githubusercontent.com/Deylin-Eliac/Pikachu-Bot/refs/heads/main/src/IMG-20250613-WA0194.jpg",
+            thumbnailUrl: "https://cdn.russellxz.click/17cdc1bd.jpeg",
             renderLargerThumbnail: true
           }
         }
@@ -154,7 +154,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
               mimetype: "video/mp4",
-              caption: "🎬 Aquí tienes tu video, descargado por *🤖🌕YᗩᘜIᖇᗩ-ᗷOT-ᗰᗪ🌕🤖* ⚡",
+              caption: "🎬 Aquí tienes tu video, descargado POR 𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ",
               thumbnail: thumb
             }, { quoted: m });
             break;
@@ -165,13 +165,13 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       }
 
       if (!success) {
-        return m.reply("❌ Pikachu no pudo encontrar un enlace válido para descargar.");
+        return m.reply("❌ no se pudo encontrar un enlace válido para descargar.");
       }
     }
 
   } catch (error) {
     console.error("❌ Error:", error);
-    return m.reply(`⚠️ Ocurrió un error eléctrico: ${error.message}`);
+    return m.reply(`⚠️ Ocurrió un error: ${error.message}`);
   }
 };
 
