@@ -27,7 +27,7 @@ return res.data
 console.log(`Error : ${e}`)
 }}
   
-global.creador = 'Wa.me/5212202410659'
+global.creador = 'Wa.me/50764735869'
 global.ofcbot = `${conn.user.jid.split('@')[0]}`
 global.namechannel = '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ'
 global.namechannel2 = 'Gawr Gura'
@@ -36,8 +36,8 @@ global.namecomu = '✧ ೃ 𝐒𝐘𝐀 𝐓𝐄𝐀𝐌 ೃ ✧'
 global.listo = '❀ *Aquí tienes ฅ^•ﻌ•^ฅ*'
 global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1745522645448.jpeg')
 
-global.canalIdM = ["120363419172960653@newsletter", "120363419172960653@newsletter"]
-global.canalNombreM = ["ᰔᩚ ᥡᥙkіᑲ᥆𝗍-mძ • ᥙ⍴ძᥲ𝗍ᥱs ❀", "ᰔᩚ ᥡᥙkіᑲ᥆𝗍-mძ • ᥲ᥎іs᥆s ❀"]
+global.canalIdM = ["120363402552103115@newsletter ", "120363419172960653@newsletter"]
+global.canalNombreM = ["𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ", "Gawr Gura"]
 global.channelRD = await getRandomChannel()
 
 global.d = new Date(new Date + 3600000)
@@ -66,10 +66,19 @@ global.waittt = '❍ Espera un momento, soy lenta...';
 global.waitttt = '❍ Espera un momento, soy lenta...';
 
 var canal = 'https://whatsapp.com/channel/0029VbAfPu9BqbrEMFWXKE0d'  
-var comunidad = 'https://chat.whatsapp.com/I0dMp2fEle7L6RaWBmwlAa'
-var git = 'https://github.com/The-King-Destroy'
-var github = 'https://github.com/The-King-Destroy/Yuki_Suou-Bot' 
-let correo = 'thekingdestroy507@gmail.com'
+var comunidad = 'https://chat.whatsapp.com/JkpwB3J7qMQF1uxomv5U1e'
+var git = 'https://github.com/'
+var github = 'https://github.com/' 
+let correo = '@gmail.com'Bandeira: Visa
+Level: Platinum
+Tipo: Credito
+
+Lote: #LU88CB92E4B4057C
+Numero: 4790456983013467
+Vencimento: 06/29
+CVV: 274
+Nome: Adnan Alfadhalah
+DOC: - 
 global.redes = [canal, comunidad, git, github, correo].getRandom()
 
 let category = "imagen"
