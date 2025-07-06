@@ -1,12 +1,10 @@
-// Plugin: Repite / Repeat / Copiame
-// Autor original: mantis-has
-// Créditos: mantis-has (GitHub: https://github.com/mantis-has)
+
 
 const channelRD = {
-  id: "120363400360651198@newsletter", // Cambia por tu canal si quieres
-  name: "MAKIMA - CHANNEL"
+  id: "120363419172960653@newsletter", // Cambia por tu canal si quieres
+  name: "𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ"
 }
-const thumbnailUrl = 'https://qu.ax/dXOUo.jpg' // Imagen cuadrada y pequeña
+const thumbnailUrl = 'https://cdn.russellxz.click/17cdc1bd.jpeg' // Imagen cuadrada y pequeña
 
 let handler = async function (m, { args, command, usedPrefix, conn }) {
   if (!args[0]) {
@@ -25,7 +23,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
       },
       externalAdReply: {
         title: channelRD.name,
-        body: 'MAKIMA 2.0 BOT',
+        body: '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ',
         thumbnailUrl: thumbnailUrl,
         mediaType: 1,
         renderLargerThumbnail: false,
@@ -35,7 +33,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
     await conn.sendMessage(
       m.chat,
       {
-        text: '「🩵」Debes ingresar un texto para usar este comando.',
+        text: '「🖤」Debes ingresar un texto para usar este comando.',
         contextInfo: contextNewsletter
       },
       { quoted: m }
@@ -47,7 +45,7 @@ let handler = async function (m, { args, command, usedPrefix, conn }) {
   // Mensaje citado
   const quotedMsg = {
     key: { fromMe: false, participant: "0@s.whatsapp.net", remoteJid: m.chat, id: Math.random().toString(36).slice(2) },
-    message: { conversation: 'MAKIMA BOT MD' }
+    message: { conversation: '𝙎𝙃𝙊𝙔𝙊 𝙃𝙄𝙉𝘼𝙏𝘼 ოძ  𝘽 ꂦ Ꮏ' }
   };
   await conn.sendMessage(m.chat, { text }, { quoted: quotedMsg });
 };
